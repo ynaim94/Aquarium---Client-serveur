@@ -32,7 +32,7 @@ long int getPortnumber(FILE* fd){
    if (ret < 65535)
     return ret;
    else
-    printf("invalid port number \n");
+    //printf("invalid port number \n");
    return -1;
 }
 unsigned int getTimeout(FILE* fd){

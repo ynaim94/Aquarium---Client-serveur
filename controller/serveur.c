@@ -21,6 +21,8 @@ int main (int argc, char* argv[])
 	int n;
 	FILE* f = open();
 	portno= getPortnumber(f);
+        if (portno<0)
+		error("ERROR invalid port number");
 	printf("%d \n",portno);
 	/*if(argc <2){
 		fprintf(stderr,"ERROR, no port provided \n");
