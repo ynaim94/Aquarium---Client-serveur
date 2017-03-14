@@ -18,7 +18,7 @@ FILE* open()
     }
    return fichier;
 }
-unsigned int getPortnumber(FILE* fd){
+long int getPortnumber(FILE* fd){
    char chaine[TAILLE_MAX+1] = "";
    char * pEnd;
    rewind(fd);
@@ -28,11 +28,12 @@ unsigned int getPortnumber(FILE* fd){
    caractereActuel = fgetc(fd);
    fgets(chaine, TAILLE_MAX, fd);
    long ret = strtol(chaine,&pEnd,10);
+   close(fd);
    if (ret < 65535)
     return ret;
    else
     printf("invalid port number \n");
-   //return 0;
+   return -1;
 }
 unsigned int getTimeout(FILE* fd){
     int i = 0;
@@ -46,6 +47,7 @@ unsigned int getTimeout(FILE* fd){
    caractereActuel = fgetc(fd);
    fgets(chaine, TAILLE_MAX, fd);
    long ret = strtol(chaine,&pEnd,10);
+   close(fd);
    return ret;
 }
 unsigned int getUpdateInterval(FILE* fd){
@@ -60,14 +62,15 @@ unsigned int getUpdateInterval(FILE* fd){
    caractereActuel = fgetc(fd);
    fgets(chaine, TAILLE_MAX, fd);
    long ret = strtol(chaine,&pEnd,10);
+   close(fd);
    return ret;
 }
 
-int main(int argc, char *argv[]){
+/*int main(int argc, char *argv[]){
  FILE* f = open();
  printf("%d \n",getPortnumber(f));
  printf("%d \n",getTimeout(f));
  printf("%d \n",getUpdateInterval(f));
  return 0;
 
-}
+}*/
