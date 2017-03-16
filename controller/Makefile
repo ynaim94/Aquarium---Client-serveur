@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=
-all : clean serveur 
+all : serveur 
 serveur: serveur.o config.o config.h
 	$(CC) -o $@ $(CFLAGS) $^ 
 serveur.o : serveur.c

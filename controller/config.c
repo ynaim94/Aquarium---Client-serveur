@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include"unistd.h"
 #include"config.h"
 #define TAILLE_MAX 1000
 FILE* open()
@@ -28,7 +29,7 @@ long int getPortnumber(FILE* fd){
    caractereActuel = fgetc(fd);
    fgets(chaine, TAILLE_MAX, fd);
    long ret = strtol(chaine,&pEnd,10);
-   close(fd);
+   fclose(fd);
    if (ret < 65535)
     return ret;
    else
@@ -47,7 +48,7 @@ unsigned int getTimeout(FILE* fd){
    caractereActuel = fgetc(fd);
    fgets(chaine, TAILLE_MAX, fd);
    long ret = strtol(chaine,&pEnd,10);
-   close(fd);
+   fclose(fd);
    return ret;
 }
 unsigned int getUpdateInterval(FILE* fd){
@@ -62,7 +63,7 @@ unsigned int getUpdateInterval(FILE* fd){
    caractereActuel = fgetc(fd);
    fgets(chaine, TAILLE_MAX, fd);
    long ret = strtol(chaine,&pEnd,10);
-   close(fd);
+   fclose(fd);
    return ret;
 }
 
