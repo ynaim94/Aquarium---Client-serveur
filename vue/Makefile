@@ -1,9 +1,9 @@
 all :  config
 
-config: Config.java 
+config: Config.java Client.java
 	javac $^ 
 clean: 
-	rm *.class
+	rm *.class *~
 
 
 
