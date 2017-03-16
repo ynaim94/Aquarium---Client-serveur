@@ -13,7 +13,7 @@ public class Config {
     private  String id;
     private  int tcpPort;
     private  int displayTimeoutValue;
-    private  int visualRepertory;
+    private  String visualRepertory;
 
     public Config (String configFile){
 	setProperties(configFile);
@@ -26,7 +26,7 @@ public class Config {
 
 	try {
 
-	    input = new FileInputStream("./affichage.cfg");
+	    input = new FileInputStream(configFile);
 
 	    // load a properties file
 	    prop.load(input);
@@ -36,7 +36,7 @@ public class Config {
 	    this.id = prop.getProperty("id");
 	    this.tcpPort = Integer.parseInt(prop.getProperty("controller-port"));
 	    this.displayTimeoutValue = Integer.parseInt(prop.getProperty("display-timeout-value"));
-	    this.visualRepertory = Integer.parseInt(prop.getProperty("resources"));
+	    this.visualRepertory = prop.getProperty("resources");
 
 	} catch (IOException ex) {
 	    ex.printStackTrace();
@@ -60,15 +60,15 @@ public class Config {
 	return id;
     }
 
-    private int getTcpPort(){
+    public int getTcpPort(){
 	return tcpPort;
     }
 
-    private int getDtv(){
+    public int getDtv(){
 	return displayTimeoutValue;
     }
 
-    private int visualRepertory(){
+    public String getVisualRepertory(){
 	return visualRepertory;
     }
     
