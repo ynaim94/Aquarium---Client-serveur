@@ -1,3 +1,5 @@
+package client;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -5,7 +7,6 @@ import java.util.Properties;
 
 import java.net.InetAddress;
 import java.lang.Integer;
-
     
 public class Config {
 
