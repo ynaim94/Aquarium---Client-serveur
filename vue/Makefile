@@ -1,7 +1,7 @@
 all : client aquarium
 
 run:
-	cd build/ && java -ea Client ../affichage.cfg	
+	cd build/ && java -ea client.Client ../affichage.cfg	
 
 client: Config.java Client.java
 	javac -d build -cp build $^
