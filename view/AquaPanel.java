@@ -19,18 +19,18 @@ class AquaPanel extends JPanel implements ActionListener{
 
     Timer timer = new Timer(60, (ActionListener) this);
     
-    public AquaPanel() {
+    public AquaPanel(String name) {
 
         timer.start();
         setOpaque(true);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
         setBackground(Color.WHITE);
-        String name = "";
+   
         for(int i=0; i<8;i++){
-            name=String.format("/images/fish%d.png", i);
+            String name1=name+String.format("/fish%d.png", i);
         try {
 
-            images[i] = ImageIO.read(getClass().getResource(name));
+            images[i] = ImageIO.read(getClass().getResource(name1));
 
         } catch(IOException ioe) {
 
