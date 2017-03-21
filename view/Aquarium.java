@@ -62,12 +62,13 @@ public class Aquarium {
 
 	/* create a scanner so we can read the command-line input*/
 	Scanner scanner = new Scanner(System.in);
-/*cmd : store the command written in the prompt*/
-/*response : to store the response recieved from the server later on to be written in the prompt */
+	
+	/*cmd : store the command written in the prompt*/
+	/*response : to store the response recieved from the server later on to be written in the prompt */
 	String cmd="",response ="NO RESPONSE YET\n\n";
 
-    System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
-//while(true){	  
+	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
+	//while(true){	  
 	/* prompt for the command*/
 	System.out.print(">"); 
 
@@ -77,8 +78,8 @@ public class Aquarium {
 	/*TODO recieve respnse from server*/
 	System.out.print("<"+response); //+server's response
 	System.out.println(String.format("your command is %s, your response is %s", cmd, response));	  
- //}
-/*TODO The Display of the Aquarium will be moved just after the acceptance of "Hello"*/ 
+	 //}
+	/*TODO The Display of the Aquarium will be moved just after the acceptance of "Hello"*/ 
 
 }
 }
