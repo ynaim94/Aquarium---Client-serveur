@@ -31,16 +31,7 @@ public class Aquarium {
 	String name = conf.getVisualRepertory();
 	InetAddress address = conf.getIpAddress();
 
-	/*Display the aquarium*/
-	SwingUtilities.invokeLater(new Runnable() {
-            
-           @Override
-            public void run() {
-            
-                new Aquarium().displayGUI(name);
-
-            }
-        });
+	
 
 
 	/*Socket*/
@@ -76,6 +67,22 @@ public class Aquarium {
 	    cmd = scanner.next(); // We can also use scanner.nextInt() to return an int if needed
 	/*TODO send cmd to server*/
 	/*TODO recieve respnse from server*/
+	cmd=cmd.intern();
+	/*Intégration de l'affichage*/
+	/*TODO cut the first word from both cmd and respnse to make the test on it (whatever the ID is)*/
+	if (cmd=="hello")//&&response =greeting 
+	{/*Display the aquarium*/
+	SwingUtilities.invokeLater(new Runnable() {
+            
+           @Override
+            public void run() {
+            
+                new Aquarium().displayGUI(name);
+
+            }
+        });
+}
+
 	System.out.print("<"+response); //+server's response
 	System.out.println(String.format("your command is %s, your response is %s", cmd, response));	  
 	 //}
