@@ -45,8 +45,9 @@ static void app(void)
       /* something from standard input : i.e keyboard */
       if(FD_ISSET(STDIN_FILENO, &rdfs))
       {
-         /* stop process when type on keyboard */
-         break;
+
+        /* stop process when type on keyboard */
+        break;
       }
       else if(FD_ISSET(sock, &rdfs))
       {
@@ -196,8 +197,9 @@ static int read_client(SOCKET sock, char *buffer)
       n = 0;
    }
    else if (n>0)
-    buffer[n-1] = '\0';
-
+    printf("n : %d , longeur : %d \n",n,strlen(buffer));
+    buffer[n-2] = '\0';
+    printf("n : %d , longeur : %d \n",n,strlen(buffer));
    return n;
 }
 
