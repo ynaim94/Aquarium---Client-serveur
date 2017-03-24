@@ -76,7 +76,7 @@ static void app(void)
 
          Client c = { csock };
          strncpy(c.name, buffer, BUF_SIZE - 1);
-         printf("le nom du host est : %s\n", c.name);
+         printf("Client name : %s\n", c.name);
          clients[actual] = c;
          actual++;
       }
@@ -88,22 +88,30 @@ static void app(void)
             /* a client is talking */
             if(FD_ISSET(clients[i].sock, &rdfs))
             {
-               printf("a client is talking \n" );
                Client client = clients[i];
                int c = read_client(clients[i].sock, buffer);
                /* client disconnected */
                if(c == 0)
                {
+                  char buffer1[BUF_SIZE];
                   closesocket(clients[i].sock);
                   remove_client(clients, i, &actual);
-                  strncpy(buffer, client.name, BUF_SIZE - 1);
-                  strncat(buffer, " disconnected !", BUF_SIZE - strlen(buffer) - 1);
-                  //send_message_to_all_clients(clients, client, actual, buffer, 1);
+                  strcpy(buffer,client.name);
+                  sprintf(buffer1, "%s%s",buffer," is disconnected !");
+                  /*strcpy(buffer1,client.name);
+                  printf("%s\n", buffer1 );
+                  strcat(buffer1," is disconnected !");*/
+                  printf("%s\n", buffer1 );
                }
                else
                {
-                  //send_message_to_all_clients(clients, client, actual, buffer, 0);
+
+                  printf("a client is talking \n" );
                   printf("%s\n", buffer );
+                  if (strcmp(buffer,"hello\0")==0)
+                  {
+                    write_client(clients[i].sock,"greeting" );
+                  }
                }
                break;
             }
@@ -187,8 +195,8 @@ static int read_client(SOCKET sock, char *buffer)
       /* if recv error we disonnect the client */
       n = 0;
    }
-
-   buffer[n] = '\0';
+   else if (n>0)
+    buffer[n-1] = '\0';
 
    return n;
 }
