@@ -14,6 +14,7 @@ static void app(void)
    /* the index for the array */
    int actual = 0;
    int max = sock;
+   int len =0;
    /* an array for all clients */
    Client clients[MAX_CLIENTS];
 
@@ -45,9 +46,13 @@ static void app(void)
       /* something from standard input : i.e keyboard */
       if(FD_ISSET(STDIN_FILENO, &rdfs))
       {
-
+          fgets(buffer, sizeof(buffer), stdin);
+          len = strlen(buffer) - 1;
+          if (buffer[len] == '\n')
+              buffer[len] = '\0';
+          printf("'%s' was read from stdin.\n", buffer);
         /* stop process when type on keyboard */
-        break;
+
       }
       else if(FD_ISSET(sock, &rdfs))
       {
