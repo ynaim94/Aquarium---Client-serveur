@@ -6,9 +6,12 @@
 
 #include "serveur.h"
 #include "client.h"
-#include "config.h"
+#include "config/config.h"
+#include "log/log.h"
 static void app(void)
 {
+   open_log("./log/log.txt");
+   insert_log("démarrage du serveur");
    SOCKET sock = init_connection();
    char buffer[BUF_SIZE];
    /* the index for the array */
@@ -124,7 +127,7 @@ static void app(void)
          }
       }
    }
-
+   close_log();
    clear_clients(clients, actual);
    end_connection(sock);
 }
@@ -150,14 +153,16 @@ static void remove_client(Client *clients, int to_remove, int *actual)
 static int init_connection(void)
 {
    int portno;
-   FILE* f = open();
-   portno= getPortnumber(f);
+   open_config("./config/controller.cfg");
+   portno= getPortnumber();
    if (portno<0)
    {
      perror("getPortnumber()");
      exit(errno);
 
    }
+   close_config();
+   insert_log("configuration du serveur avec succès ");
    SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
    SOCKADDR_IN sin = { 0 };
 
@@ -166,7 +171,7 @@ static int init_connection(void)
       perror("socket()");
       exit(errno);
    }
-
+   insert_log("création de socket avec succès");
    sin.sin_addr.s_addr = htonl(INADDR_ANY);
    sin.sin_port = htons(portno);
    sin.sin_family = AF_INET;
@@ -202,9 +207,7 @@ static int read_client(SOCKET sock, char *buffer)
       n = 0;
    }
    else if (n>0)
-    printf("n : %d , longeur : %d \n",n,strlen(buffer));
     buffer[n-2] = '\0';
-    printf("n : %d , longeur : %d \n",n,strlen(buffer));
    return n;
 }
 
