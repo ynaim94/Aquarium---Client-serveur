@@ -71,6 +71,7 @@ static void app(void)
          else
             printf("new client accepté\n");
 
+
          /* after connecting the client sends its name */
          if(read_client(csock, buffer) == -1)
          {
@@ -86,6 +87,10 @@ static void app(void)
          Client c = { csock };
          strncpy(c.name, buffer, BUF_SIZE - 1);
          printf("Client name : %s\n", c.name);
+         //strcpy(c.ip);
+         char buffer2[BUF_SIZE];
+         sprintf(c.ip,"%s",inet_ntoa(csin.sin_addr));
+         printf("adresse ip : %s\n",c.ip);
          clients[actual] = c;
          actual++;
       }
@@ -107,9 +112,6 @@ static void app(void)
                   remove_client(clients, i, &actual);
                   strcpy(buffer,client.name);
                   sprintf(buffer1, "%s%s",buffer," is disconnected !");
-                  /*strcpy(buffer1,client.name);
-                  printf("%s\n", buffer1 );
-                  strcat(buffer1," is disconnected !");*/
                   printf("%s\n", buffer1 );
                }
                else
