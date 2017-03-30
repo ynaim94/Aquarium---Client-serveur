@@ -9,11 +9,14 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
+#include <pthread.h>
+
 
 #include "serveur.h"
 #include "client.h"
 #include "config/config.h"
 #include "log/log.h"
+#include "pool/thpool.h"
 
 /**
  * @function  app
@@ -27,6 +30,8 @@ static void app(void)
    open_log("./log/log.txt");
 
    insert_log("");
+
+   threadpool thpool = thpool_init(8);
 
    SOCKET sock = init_connection();
    if (sock==-1)
