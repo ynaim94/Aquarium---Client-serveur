@@ -152,7 +152,7 @@ char* intern__load(const char* file_name, int state, int* aquarium){
 }
 
 
-char* intern_show(){
+char* intern__show(){
   int i;
   char *s,*msg;
   msg = malloc (nb_views*25 + 9);
@@ -169,7 +169,7 @@ char* intern_show(){
 
 }
 
-char* intern_add(View view){
+char* intern__add(View view){
 
   nb_views++;
   views[nb_views-1] = view;
@@ -177,13 +177,31 @@ char* intern_add(View view){
 }
 
 
+char* intern__del(int id){
+  int i;
+  char *msg;
+  for (i = 0; i < nb_views; i++){
+    if (views[i].id == id){
+      if (views[i].state == 1){
+	views[i].state = 0;
+	asprintf(&msg,"-> view N%d deleted.\n", id);
+	return msg;
+      }
+    }
+  }
+  return "-> view does not exist";
+}
+
 
 int main (char *args[]){
   
   printf("%s\n",intern__load("aquarium.info", 0, aquarium));
   View v = {7,1,2,3,4,1};
-  printf("%s\n",intern_add(v));
-  printf("%s\n", intern_show());
+  printf("%s\n",intern__add(v));
+  printf("%s\n", intern__show());
+  printf("%s\n", intern__del(1));
+  printf("%s\n", intern__show());
+  printf("%s\n", intern__del(9));
 }
 
 
