@@ -1,5 +1,5 @@
 /**
- * @file    parseur_socket.h
+ * @file    parseur_socket.c
  * @brief   the parseur_socket code file
  * @author  CHERIF Houssem
  */
@@ -22,6 +22,13 @@ const char *str_ping"^(ping[:space:]([:digit:]{4,5})){1}";
 /***************************
  *Functions implementations
  */
+/**
+* @function  parser
+* @brief     analyse and recognize the command receveid
+*
+* @param     s : input string to recognize
+* @return    an integer refering to the command recognized or an erreur code
+*/
 int parser(const char *s)
 {
   int len = 9;
@@ -39,4 +46,15 @@ int parser(const char *s)
     }
   }
   return len;
+}
+/**
+* @function  parser_hello
+* @brief     prepare the replay to hello command
+*
+* @param     replay : buffer to be filled with the replay message
+* @return    an integer refering to the command succeded oder failed
+*/
+int parser_hello(char* reply)
+{
+  
 }

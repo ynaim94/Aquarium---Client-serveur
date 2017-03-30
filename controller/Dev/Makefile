@@ -12,7 +12,7 @@ log.o: log/log.c
 	$(CC) $(CFLAGS) -c $^
 thpool.o: pool/thpool.c
 	$(CC) $(CFLAGS) -c $^
-clean: clean_o clean_app
+clean: clean_app clean_o
 
 clean_o:
 	rm *.o
