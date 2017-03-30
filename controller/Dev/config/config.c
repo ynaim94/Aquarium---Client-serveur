@@ -1,21 +1,44 @@
+/**
+ * @file    config.c
+ * @brief   configration system code file
+ * @author  CHERIF Houssem
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include"unistd.h"
 #include"config.h"
+
+
 #define TAILLE_MAX 1000
 FILE* configfile = NULL;
-void open_config(const char* path)
+
+/**
+ * @function  open_config
+ * @brief     opening a the configuration file in reading mode
+ *
+ * @param     path : string containing the path to configuration file
+ * @return    none
+ */
+int open_config(const char* path)
 {
     configfile = fopen(path, "r");
     if (configfile != NULL)
     {
-       printf("ouverture avec succ�s\n");
+       return 1;
     }
     else
     {
-        printf("Impossible d'ouvrir le fichier de configuration \n");
+       return 0;
     }
 }
+/**
+ * @function  getPortnumber
+ * @brief     get the port number to bind to from the configuration file
+ *
+ * @param     none
+ * @return    the port number
+ */
 long int getPortnumber(){
   char chaine[TAILLE_MAX+1] = "";
   char * pEnd;
@@ -33,6 +56,13 @@ long int getPortnumber(){
   else
     return -1;
 }
+/**
+ * @function  getTimeout
+ * @brief     get the Timeout value from the configuration file
+ *
+ * @param     none
+ * @return    the timeout value
+ */
 unsigned int getTimeout(){
   int i = 0;
   char chaine[TAILLE_MAX+1] = "";
@@ -49,6 +79,13 @@ unsigned int getTimeout(){
   long ret = strtol(chaine,&pEnd,10);
   return ret;
 }
+/**
+ * @function  getUpdateInterval
+ * @brief     get the update interval from the configuration file
+ *
+ * @param     none
+ * @return    the update interval value
+ */
 unsigned int getUpdateInterval(){
   int i = 0;
   char chaine[TAILLE_MAX+1] = "";
@@ -65,6 +102,13 @@ unsigned int getUpdateInterval(){
   long ret = strtol(chaine,&pEnd,10);
   return ret;
 }
+/**
+ * @function  close_config
+ * @brief     close the file descriptor to the configuration file
+ *
+ * @param     none
+ * @return    none
+ */
 void close_config()
 {
   if(configfile) fclose(configfile);
