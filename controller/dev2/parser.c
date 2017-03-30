@@ -16,9 +16,17 @@ int parse(const char *str_request){
     }
     i++;
   }
-  
   if ( match == REG_NOMATCH){
-    return 0;
+   return MAX;
+  }
+  else{
+    return i;
+  }
+}
+
+  /*
+  if ( match == REG_NOMATCH){
+      return 0;
   }
   else{
     switch (i) {
@@ -47,9 +55,9 @@ int parse(const char *str_request){
       printf("not recognized");
       return 0;
     }
-  }
+    }*/
     
-}
+
 
 //int parse_load(const char*);
 //int parse_show(const char*);

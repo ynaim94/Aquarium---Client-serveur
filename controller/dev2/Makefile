@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=
-all : server parser.o
+all : server parser.o intern.o
 server: server.o config.o config.h
 	$(CC) -o $@ $(CFLAGS) $^ 
 %.o : %.c
