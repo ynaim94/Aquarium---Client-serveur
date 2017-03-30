@@ -8,6 +8,8 @@
 
 #define n 3
 #define MAX 128
+#define FREE 1
+#define ATTACHED 0
 
 /**
  *  @struct View
@@ -22,7 +24,6 @@
  */
 
 typedef struct{
-	char buffer[n];
 	int x;
 	int y;
 	int height;
