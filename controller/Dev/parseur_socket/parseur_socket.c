@@ -4,6 +4,8 @@
  * @author  CHERIF Houssem
  */
 #include "parseur_socket.h"
+#include "../view.h"
+#include "../fish.h"
 /***************************
  *Regular expressions
  */

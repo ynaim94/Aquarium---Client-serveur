@@ -1,7 +1,7 @@
 /**
  * @file    view.h
  * @brief   the view header file
- * @author  MOURTADI Mehdi
+ * @author  MOURTADI Mehdi&CHERIF Houssem
  */
 #ifndef VIEW_H
 #define VIEW_H
