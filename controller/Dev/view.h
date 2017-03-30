@@ -1,10 +1,25 @@
+/**
+ * @file    view.h
+ * @brief   the view header file
+ * @author  MOURTADI Mehdi
+ */
 #ifndef VIEW_H
 #define VIEW_H
 
 #define n 3
 #define MAX 128
 
-int aquarium[2];
+/**
+ *  @struct View
+ *  @brief the view struct
+ *
+ *  @var buffer : the vue name
+ *  @var x : the view x position
+ *  @var y : the view y position
+ *  @var height : the view's height
+ *  @var width : the view's width
+ *  @var state : the view's state 0 if the view is free, 1 if there's a client attached to the view
+ */
 
 typedef struct{
 	char buffer[n];
@@ -16,5 +31,6 @@ typedef struct{
 }View;
 
 View views[MAX];
+int aquarium[2];
 
 #endif
