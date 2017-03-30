@@ -192,6 +192,21 @@ char* intern__del(int id){
   return "-> view does not exist";
 }
 
+char* intern__save(char* file_name){
+  
+  FILE* file = NULL;
+  file = fopen(file_name, "w");
+  if (file == NULL){
+    perror("fichier");
+    return EXIT_SUCCESS;
+  }
+  char *aqua = intern__show();
+  
+  fwrite(aqua,1,strlen(aqua),file);
+  return " ";
+
+  
+}
 
 int main (char *args[]){
   
@@ -202,6 +217,7 @@ int main (char *args[]){
   printf("%s\n", intern__del(1));
   printf("%s\n", intern__show());
   printf("%s\n", intern__del(9));
+  printf("%s\n", intern__save("aquarium_save.info"));
 }
 
 
