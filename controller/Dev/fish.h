@@ -1,3 +1,8 @@
+/**
+ * @file    fish.h
+ * @brief   the fish header file
+ * @author  MOURTADI Mehdi&CHERIF Houssem
+ */
 #ifndef FISH_H
 #define FISH_H
 
