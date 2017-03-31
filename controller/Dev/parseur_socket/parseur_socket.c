@@ -84,17 +84,30 @@ int parser_hello(char* reply)
 * @param     s : the input command containing the command
 * @return    an integer refering to the command succeded oder failed
 */
-int parser_hello_id(const char* s, char* reply);
+int parser_hello_id(const char* s, char* reply)
 {
+  char* req = malloc (sizeof(char)*(strlen(s)+1));
+  strcpy(req,s);
+  char* tok;
+  int id;
+  tok=strtok(req," ");
+  tok=strtok(NULL," ");
+  tok=strtok(NULL," ");
+  tok=strtok(NULL," ");
+  tok++;
+  id=atoi(tok);
+  printf("%d \n",id);
+
 
 }
 int main()
 {
   char buffer[MAX_1];
+  const char* test="hello in as N2";
   nb_views = 1;
   viewss[0].id=10;
   viewss[0].state=ATTACHED;
-  parser_hello(buffer);
-  printf("%s",buffer);
+  parser_hello_id(test,buffer);
+  //printf("%s",buffer);
 
 }
