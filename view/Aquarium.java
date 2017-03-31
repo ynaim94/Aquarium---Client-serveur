@@ -11,6 +11,7 @@ public class Aquarium {
     private AquaConnection aquaCon;
     static int port;
     static InetAddress address;
+	static ClientLog logger;
     private void displayGUI(String ImagesPath)
     {
 	
@@ -35,6 +36,7 @@ public class Aquarium {
 	    /*get the input as a String*/
 	    String cmd = scanner.next(); // We can also use scanner.nextInt() to return an int if needed
 	    /*TODO send cmd to server*/
+		logger.info("Client sent " + cmd);
 	    /*TODO recieve respnse from server*/
 	cmd=cmd.intern();
 
@@ -43,11 +45,15 @@ public class Aquarium {
 	static private void promptOut(String response)throws IOException
     {	
 	System.out.print("<"+response); //+server's response
+	logger.info("Client received " + response);
+
 
     }
 
     public static void main(String[] args) throws Exception
     {
+
+	ClientLog logger = new ClientLog();
 
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
@@ -61,6 +67,7 @@ public class Aquarium {
 	while(cmd==""){  
 	    cmd=promptIn();
 	    	if (cmd=="hello")//&&response =greeting 
+
 	    /*Display the aquarium*/
 	    SwingUtilities.invokeLater(new Runnable(){    
 		    @Override

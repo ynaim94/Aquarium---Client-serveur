@@ -3,7 +3,7 @@ all : aquarium
 run:
 	cd build/ && java aqua.Aquarium ../affichage.cfg
 
-aquarium:  Config.java AquaConnection.java AquaPanel.java Aquarium.java 
+aquarium:  Config.java AquaConnection.java AquaPanel.java ClientLog.java Aquarium.java 
 	   javac -d build -cp build  $^
 clean: 
 	rm -r build/aqua
