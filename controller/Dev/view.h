@@ -15,7 +15,7 @@
  *  @struct View
  *  @brief the view struct
  *
- *  @var buffer : the vue name
+ *  @var id : the vue name
  *  @var x : the view x position
  *  @var y : the view y position
  *  @var height : the view's height
@@ -24,6 +24,7 @@
  */
 
 typedef struct{
+	int id;
 	int x;
 	int y;
 	int height;
@@ -33,5 +34,5 @@ typedef struct{
 
 View views[MAX];
 int aquarium[2];
-
+int nb_views;
 #endif

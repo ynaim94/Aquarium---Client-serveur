@@ -30,7 +30,7 @@ typedef struct{
 	int destination[DIM];
 	int state; //start ou pas
 	int dimension[DIM];
-	int mobility
+	int mobility;
 }Fish;
 
 
