@@ -17,10 +17,12 @@ int main(){
   char buffer[BUFFER_SIZE];
   int len_read;
   int type;
+  char *str_request;
   char *msg;
   char *token;
   char *pEnd;
-
+  int i;
+  char *positionEntree;
   state = 0;
 
   while (1){
@@ -28,9 +30,16 @@ int main(){
       perror("read");
       return EXIT_FAILURE;
     }
-
+    buffer[len_read-1] = '\0';
+    str_request = malloc (sizeof(char)* len_read);
+    /* positionEntree = strchr(buffer,'\n');
+    if (positionEntree != NULL)
+      {
+	*positionEntree = '\0';
+	}*/
+    printf("str: %s strlen %d  \n",  buffer, strlen(buffer));
     type = parse (buffer);
-        printf("%d\n", type);  
+    printf("%d\n", type);  
     token =  strtok (buffer," ");
     
     switch (type) {
@@ -38,7 +47,7 @@ int main(){
     case 0 : //load
       {
 	token =  strtok (NULL, " ");
-	printf("%s\n", token);
+	printf("%s, len: \n", token,strlen(token));
 	msg = intern__load(token, state, aquarium);
       }
       break;
@@ -59,7 +68,8 @@ int main(){
 
     case 3 : //del
       {
-	token =  strtok (buffer, " ");
+	token =  strtok (NULL, " ");
+	token =  strtok (NULL, " ");
 	token++;
 	long ret = strtol(token, &pEnd, 10);
 	msg = intern__del (ret);
