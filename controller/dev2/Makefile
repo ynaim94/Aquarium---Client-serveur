@@ -1,12 +1,14 @@
 CC=gcc
 CFLAGS=
-all : server parser.o intern.o
+all : prompt
+prompt: prompt.o intern.o parser.o
+	$(CC) -g -o $@ $(CFLAGS) $^ 
 server: server.o config.o config.h
 	$(CC) -o $@ $(CFLAGS) $^ 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $^
 clean: 
-	rm *.o server 
+	rm *.o prompt server 
 
 
 

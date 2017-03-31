@@ -8,13 +8,6 @@
 
 
 
-char *str_regex[]= {
-  "load[:space:]*[:alnum:]*", //load
-  "show[:space:]*[:alnum:]*", //show
-  "add[:space:]*view[:space:]*[:alnum:]*", //add
-  "del[:space:]*view[:space:]*[:alnum:]*", //del
-  "save[:alnum:]*"  //save
-};   
  
 int parse (const char* str_request);
 /*int parse_load(const char* str_request);

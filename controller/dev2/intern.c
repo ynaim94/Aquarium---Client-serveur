@@ -70,7 +70,7 @@ int get_aquarium_views(FILE* fd, View* views){
   actual_char = fgetc(fd);
 
   /*While there is more view to read*/
-  while ( (actual_char != '\n') && (nb_views < MAX)){
+  while ( (actual_char != '\n') && (nb_views < MAX_VIEW)){
     /*get rid of the name of the view*/
     param[5] = malloc(TAILLE_MAX+1);
     actual_char = fgetc(fd);
@@ -208,7 +208,7 @@ char* intern__save(char* file_name){
   
 }
 
-int main (char *args[]){
+/*int main (char *args[]){
   
   printf("%s\n",intern__load("aquarium.info", 0, aquarium));
   View v = {7,1,2,3,4,1};
@@ -219,5 +219,5 @@ int main (char *args[]){
   printf("%s\n", intern__del(9));
   printf("%s\n", intern__save("aquarium_save.info"));
 }
-
+*/
 

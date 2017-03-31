@@ -1,11 +1,13 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#define MAX 128
+#define MAX_VIEW 128
 
 int nb_views;
 
 int aquarium[2];
+
+int state;
 
 typedef struct{
   int id;
@@ -16,6 +18,6 @@ typedef struct{
   int state; // if deleted or not
 }View;
 
-View views[MAX];
+View views[MAX_VIEW];
 
 #endif

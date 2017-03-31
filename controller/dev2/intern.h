@@ -4,7 +4,7 @@
 #include "view.h"
 
 char* intern__load(const char* file_name, int state, int* aquarium);
-char* intern_show();
+char* intern__show();
 char* intern__add(View view);
 char* intern__del(int id);
 char* intern__save(char* file_name);
