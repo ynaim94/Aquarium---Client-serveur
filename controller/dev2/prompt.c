@@ -32,14 +32,9 @@ int main(){
     }
     buffer[len_read-1] = '\0';
     str_request = malloc (sizeof(char)* len_read);
-    /* positionEntree = strchr(buffer,'\n');
-    if (positionEntree != NULL)
-      {
-	*positionEntree = '\0';
-	}*/
-    printf("str: %s strlen %d  \n",  buffer, strlen(buffer));
+   
     type = parse (buffer);
-    printf("%d\n", type);  
+   
     token =  strtok (buffer," ");
     
     switch (type) {
@@ -47,8 +42,7 @@ int main(){
     case 0 : //load
       {
 	token =  strtok (NULL, " ");
-	printf("%s, len: \n", token,strlen(token));
-	msg = intern__load(token, state, aquarium);
+	msg = intern__load(token, aquarium);
       }
       break;
 

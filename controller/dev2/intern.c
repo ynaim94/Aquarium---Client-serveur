@@ -125,7 +125,7 @@ char* concatenate_string(char* s1, char* s2){
  * param state: Boolean to know if it's already loaded or not
  *
  */
-char* intern__load(const char* file_name, int state, int* aquarium){
+char* intern__load(const char* file_name, int* aquarium){
   FILE* fd = NULL;
   int i = 0;
   char *msg;
@@ -135,6 +135,8 @@ char* intern__load(const char* file_name, int state, int* aquarium){
 
   nb_views = 0;
   
+  printf("state:%d\n", state);
+
   fd = open(file_name);
   if (fd == NULL){
     return "File does not exit";
@@ -147,6 +149,8 @@ char* intern__load(const char* file_name, int state, int* aquarium){
   fclose(fd);
 
   asprintf(&msg,"-> aquarium loaded (%d display view)\n", nb_views);
+
+  state = 1;
   
   return msg;
 }
