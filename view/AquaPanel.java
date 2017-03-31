@@ -16,11 +16,21 @@ class AquaPanel extends JPanel implements ActionListener{
 
     private int x=0, y=0;   
     private BufferedImage[]images = new BufferedImage[8];
+    ArrayList<Fish> Fishes;
 
     Timer timer = new Timer(60, (ActionListener) this);
+
+    void setFishes(ArrayList<Fish> Fishes){
+	this.Fishes=new ArrayList<Fish>(Fishes.size());
+	for (Fish item : Fishes){
+	    this.Fishes.add(item.clone());
+	}
+    }
     
     public AquaPanel(String name) {
 
+
+	
         timer.start();
         setOpaque(true);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
