@@ -137,7 +137,6 @@ char* intern__load(const char* file_name, int* aquarium){
 
   nb_views = 0;
   
-  printf("state:%d\n", state);
 
   fd = open(file_name);
   if (fd == NULL){
@@ -161,7 +160,6 @@ char* intern__load(const char* file_name, int* aquarium){
 char* intern__show(){
   int i;
   char *s,*msg;
-  printf("nb_views: %d\n",nb_views);
   msg = malloc (nb_views*25 + 9);
   asprintf(&s, "%dx%d\n", aquarium[0],aquarium[1]);
   strcpy(msg, s);
@@ -184,6 +182,8 @@ char* intern__add(View view){
       return "-> view name already exist";
     }
   }
+
+  //TODO: parametre plus petit que aquarium[0]*aquarium[1]
   nb_views++;
   views[nb_views-1] = view;
   return "-> view added\n";
@@ -217,9 +217,11 @@ char* intern__save(char* file_name){
   
   fwrite(aqua,1,strlen(aqua),file);
   
+  fclose(file);
+
   return " ";
 
-  fclose(file);
+
   
 }
 

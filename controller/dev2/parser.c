@@ -18,11 +18,8 @@ int parse(const char *str_request){
   int match = REG_NOMATCH;
   int i = -1;
   
-  //printf ("str_request: %s, len :%d\n", str_request, strlen (str_request));
-  
   while ((match == REG_NOMATCH) && (i < MAX-1)){
     i++;
-    //    printf ("str_regex[i]: %s, len :%d\n", str_regex[i], strlen (str_regex[i]));
     err = regcomp(&preg, str_regex[i], REG_NOSUB | REG_EXTENDED);
     if (err == 0){
       match = regexec (&preg, str_request, 0, NULL, 0);

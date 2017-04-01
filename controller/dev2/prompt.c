@@ -28,7 +28,6 @@ View* parse_view(char* str){
   int i, j;
   View *view = malloc (sizeof(View));
 
-  //  printf("%s\n",str);
   
   /* test if empty*/
   if ((str == NULL) || (str[0] =='\n')){
@@ -43,12 +42,10 @@ View* parse_view(char* str){
       {
 	param[i][j] = *str;
 	str++;
-	//	printf("%s\n",str);
 	j++;
       }
     str++;
     param[i][j] = '\0';
-    //    printf("%s\n", param[i]);
   }
   
   view->x = strtol(param[0],&pEnd,10);
@@ -85,7 +82,6 @@ int display_prompt(){
       msg = "Aquarium Not loaded";
     else {
 
-      printf("type: %d\n",type);
     
       token =  strtok (buffer," ");
     
