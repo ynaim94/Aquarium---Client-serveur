@@ -161,6 +161,7 @@ char* intern__load(const char* file_name, int* aquarium){
 char* intern__show(){
   int i;
   char *s,*msg;
+  printf("nb_views: %d\n",nb_views);
   msg = malloc (nb_views*25 + 9);
   asprintf(&s, "%dx%d\n", aquarium[0],aquarium[1]);
   strcpy(msg, s);
@@ -211,8 +212,10 @@ char* intern__save(char* file_name){
   char *aqua = intern__show();
   
   fwrite(aqua,1,strlen(aqua),file);
+  
   return " ";
 
+  fclose(file);
   
 }
 
