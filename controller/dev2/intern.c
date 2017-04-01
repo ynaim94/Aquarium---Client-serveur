@@ -51,6 +51,7 @@ int get_aquarium_dim(FILE* fd, int* aquarium){
   return 1;
 }
 
+
 int get_aquarium_views(FILE* fd, View* views){
   char line[TAILLE_MAX+1] = "";
   char *param[5]; //param[0] <=> x , param[1] <=> y, param[2] <=> width, param[3] <=> height
@@ -61,7 +62,7 @@ int get_aquarium_views(FILE* fd, View* views){
 
   rewind(fd);
   
-  /*get rid of first line and read second line*/
+  /*get rid of first line*/
   if (fgets(line,TAILLE_MAX,fd) == NULL){
     perror("fgets");
     return EXIT_FAILURE;
@@ -72,15 +73,15 @@ int get_aquarium_views(FILE* fd, View* views){
   /*While there is more view to read*/
   while ( (actual_char != '\n') && (nb_views < MAX_VIEW)){
     /*get rid of the name of the view*/
-    param[5] = malloc(TAILLE_MAX+1);
+    param[4] = malloc(TAILLE_MAX+1);
     actual_char = fgetc(fd);
     i = 0;
     while (actual_char != ' '){
-      param[5][i] = actual_char;
+      param[4][i] = actual_char;
       actual_char =  fgetc(fd);
       i++;
     }
-    views[nb_views].id = strtol(param[5],&pEnd,10);
+    param[4][i] = '\0';
     for (j = 0; j < 4; j++){
       /*Allocate space for the view parameters (x,y,width,heigh)*/
       param[j] = malloc(TAILLE_MAX+1);
@@ -102,6 +103,7 @@ int get_aquarium_views(FILE* fd, View* views){
     views[nb_views].y = strtol(param[1],&pEnd,10);
     views[nb_views].width = strtol(param[2],&pEnd,10);
     views[nb_views].height = strtol(param[3],&pEnd,10);
+    views[nb_views].id = strtol(param[4],&pEnd,10);
     views[nb_views].state = 1;
     nb_views++;
 
@@ -175,6 +177,8 @@ char* intern__show(){
 
 char* intern__add(View view){
 
+  //TODO : test if view not already in the file
+  
   nb_views++;
   views[nb_views-1] = view;
   return "-> view added\n";

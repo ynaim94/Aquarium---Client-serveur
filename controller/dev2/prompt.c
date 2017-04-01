@@ -9,9 +9,63 @@
 
 #include "intern.h"
 #include "parser.h"
-
+#include "view.h"
 
 #define BUFFER_SIZE  256
+#define TAILLE_MAX 1000 // A redéfinir avec TAILLE_MAX de intern.c
+
+int get_view_id(char* str){
+
+  if (str == NULL){
+    return -1;
+  }
+  char *pEnd,*res = malloc(sizeof(char)*TAILLE_MAX+1);
+  str++;
+  while (str != '\0'){
+    *res = *str;
+    res++;
+    str++;
+  }
+  free(res);
+  return strtol(str,&pEnd,10);
+}
+
+View* parse_view(char* str){
+  char* param[5], *pEnd;
+  int i, j;
+  View *view = malloc (sizeof(View));
+
+  /* test if empty*/
+  if ((str == NULL) || (str[0] =='\n')){
+    return NULL;
+  }
+
+  
+  /* while (*str != ' '){
+    str ++;
+  }
+  
+  str++;*/
+  
+  for ( i = 1; i < 5 ; i ++){
+    j = 0;
+    param[i] = malloc (sizeof(char)*5);
+    while ((*str != 'x') && (*str != '+') &&
+	   (*str != '\0'))
+      {
+	param[i][j] = *str;
+	str++;
+	j++;
+      }
+  }
+  
+  view->x = strtol(param[0],&pEnd,10);
+  view->y = strtol(param[1],&pEnd,10);
+  view->width = strtol(param[2],&pEnd,10);
+  view->height = strtol(param[3],&pEnd,10);
+  view->state = 0;
+
+}
 
 int main(){
   char buffer[BUFFER_SIZE];
@@ -34,7 +88,9 @@ int main(){
     str_request = malloc (sizeof(char)* len_read);
    
     type = parse (buffer);
-   
+
+    printf("type: %d\n",type);
+    
     token =  strtok (buffer," ");
     
     switch (type) {
@@ -57,6 +113,14 @@ int main(){
 	/*token[1]++;
 	int a = strtol (
 	msg = intern__add(token[1]);*/
+	token =  strtok (NULL, " ");
+	token =  strtok (NULL, " ");
+	int id = get_view_id(token);
+	token =  strtok (NULL, " ");
+	View* view = parse_view(token);
+	view->id= id;
+	msg = intern__add(*view);
+	free(view);
       }
       break;
 

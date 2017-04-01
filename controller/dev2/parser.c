@@ -5,10 +5,10 @@
 
 
 char *str_regex[]= {
-  "load[ ]*[:alnum:]*", //load
-  "show[ ]*aquarium", //show
-  "add[ ]*view[ ]*[:alnum:]*", //add
-  "del[ ]*view[ ][:alnum:]*", //del
+  "load[ ]+[:alnum:]+", //load
+  "show[ ]+aquarium", //show
+  "add[ ]+view[ ]+[:alnum:]*[ ]*[:alnum:]*", //add
+  "del[ ]+view[ ]+[:alnum:]*", //del
   "save[:alnum:]*"  //save
 };   
 
