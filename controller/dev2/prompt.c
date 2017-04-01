@@ -59,7 +59,7 @@ View* parse_view(char* str){
 
 }
 
-int main(){
+int display_prompt(){
   char buffer[BUFFER_SIZE];
   int len_read;
   int type;

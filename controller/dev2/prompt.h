@@ -1,7 +1,7 @@
 #ifndef PROMPT_H
 #define PROMPT_H
 
-const char* prompt(const char* str_request);
+int display_prompt();
 
 
 #endif //PROMPT_H
