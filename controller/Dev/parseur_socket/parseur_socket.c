@@ -7,19 +7,21 @@
 #include "../view.h"
 #include "../fish.h"
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #define MAX_1 20
 /***************************
  *Regular expressions
  */
-const char *str_hello_id="^(hello in as[:space:][:alnum:]+){1}";
-const char *str_hello="^(hello){1}";
+const char *str_hello_id="^(hello in as[ ]N[0-9]+){1}";//
+const char *str_hello="^(hello){1}";//
 const char *str_add_fish="^(addFish[:space:]([:alnum:]+)[:space:]at[:space:]([:digit:]{1,2})*([:digit:]{1,2}),[:space:]([:digit:]{1,2})*([:digit:]{1,2}),[:space:]([:alnum:]+)){1}";
-const char *str_del_fish="^(delFish[:space:][:alnum:]+){1}";
-const char *str_log_out="^(log out)";
-const char *str_start_fish="^(startFish[:space:][:alnum:]+){1}";
-const char *str_get_fish="^(getFishes){1}";
-const char *str_get_fish_continously="^(getFishesContinuously){1}";
-const char *str_ping="^(ping[:space:]([:digit:]{4,5})){1}";
+const char *str_del_fish="^(delFish[][[:alnum:]]+){1}";//
+const char *str_log_out="^(log out){1}";//
+const char *str_start_fish="^(startFish[ ][[:alnum:]]+){1}";//
+const char *str_get_fish="^(getFishes){1}";//
+const char *str_get_fish_continously="^(getFishesContinuously){1}";//
+const char *str_ping="^(ping[ ]+[0-9]{4,5})";//
 
 /***************************
  *Functions implementations
@@ -37,7 +39,7 @@ View viewss[MAX_1];
 int parser(const char *s)
 {
   int len = 9,i = 0;
-  const char* requests[] = {str_hello,str_hello_id,str_add_fish,str_del_fish,str_log_out,str_start_fish,str_get_fish,str_get_fish_continously,str_ping};
+  const char* requests[] = {str_hello_id,str_hello,str_add_fish,str_del_fish,str_log_out,str_start_fish,str_get_fish_continously,str_get_fish,str_ping};
   regex_t preg;
   int err;
 
@@ -89,6 +91,7 @@ int parser_hello_id(const char* s, char* reply)
   char* req = malloc (sizeof(char)*(strlen(s)+1));
   strcpy(req,s);
   char* tok;
+  int last_free=nb_views,i=0;
   int id;
   tok=strtok(req," ");
   tok=strtok(NULL," ");
@@ -97,17 +100,45 @@ int parser_hello_id(const char* s, char* reply)
   tok++;
   id=atoi(tok);
   printf("%d \n",id);
-
-
+  while ((i<nb_views) && (viewss[i].id != id))
+  {
+   if(viewss[i].state==FREE)
+    last_free=i;
+   i++;
+  }
+  if(((viewss[i].id == id))&&(viewss[i].state==FREE))
+  {
+    sprintf(reply,"%s%d%s","greeting N",viewss[i].id,"\n");
+  }
+  else if(((viewss[i].state==ATTACHED)||(i==nb_views))&&(last_free != nb_views))
+  {
+    sprintf(reply,"%s%d%s","greeting N",viewss[last_free].id,"\n");
+  }
+  else
+  {
+    sprintf(reply,"%s","no greeting\n");
+  }
+}
+/**
+* @function  parser_log_out
+* @brief     prepare the replay to logout command
+*
+* @param     reply : buffer to be filled with the replay message
+* @return    an integer refering to the command succeded oder failed
+*/
+int parser_log_out(char* reply)
+{
+  sprintf(reply,"%s","bye\n");
 }
 int main()
 {
   char buffer[MAX_1];
-  const char* test="hello in as N2";
+  int a;
+  const char* test="log out";
   nb_views = 1;
-  viewss[0].id=10;
-  viewss[0].state=ATTACHED;
-  parser_hello_id(test,buffer);
-  //printf("%s",buffer);
+  viewss[0].id=100;
+  viewss[0].state=FREE;
+  a = parser("hello");
+  printf("%d\n",a);
 
 }
