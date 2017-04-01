@@ -178,8 +178,12 @@ char* intern__show(){
 
 char* intern__add(View view){
 
-  //TODO : test if view not already in the file
-  
+  int i;
+  for (i = 0; i < nb_views; i++){
+    if (view.id == views[i].id){
+      return "-> view name already exist";
+    }
+  }
   nb_views++;
   views[nb_views-1] = view;
   return "-> view added\n";
@@ -218,6 +222,8 @@ char* intern__save(char* file_name){
   fclose(file);
   
 }
+
+
 
 /*int main (char *args[]){
   

@@ -81,60 +81,64 @@ int display_prompt(){
    
     type = parse (buffer);
 
-    printf("type: %d\n",type);
+    if ((type != 0) && (type != 5) && (state == 0))
+      msg = "Aquarium Not loaded";
+    else {
+
+      printf("type: %d\n",type);
     
-    token =  strtok (buffer," ");
+      token =  strtok (buffer," ");
     
-    switch (type) {
+      switch (type) {
 	
-    case 0 : //load
-      {
-	token =  strtok (NULL, " ");
-	msg = intern__load(token, aquarium);
-      }
-      break;
-
-    case 1 : //show
-      {
-	msg = intern__show();
-      }
-      break;
-
-    case 2 : //add
-      {
-	token =  strtok (NULL, " ");
-	token =  strtok (NULL, " ");
-	int id = get_view_id(token);
-	token =  strtok (NULL, " ");
-	View* view = parse_view(token);
-	view->id= id;
-	msg = intern__add(*view);
-	free(view);
-      }
-      break;
-
-    case 3 : //del
-      {
-	token =  strtok (NULL, " ");
-	token =  strtok (NULL, " ");
-	token++;
-	long ret = strtol(token, &pEnd, 10);
-	msg = intern__del (ret);
+      case 0 : //load
+	{
+	  token =  strtok (NULL, " ");
+	  msg = intern__load(token, aquarium);
+	}
 	break;
-      }
 
-    case 4 : //save
-      token =  strtok (NULL, " ");
-      char* file_name = token;
-      msg = intern__save(file_name);
-      break;
+      case 1 : //show
+	{
+	  msg = intern__show();
+	}
+	break;
+
+      case 2 : //add
+	{
+	  token =  strtok (NULL, " ");
+	  token =  strtok (NULL, " ");
+	  int id = get_view_id(token);
+	  token =  strtok (NULL, " ");
+	  View* view = parse_view(token);
+	  view->id= id;
+	  msg = intern__add(*view);
+	  free(view);
+	}
+	break;
+
+      case 3 : //del
+	{
+	  token =  strtok (NULL, " ");
+	  token =  strtok (NULL, " ");
+	  token++;
+	  long ret = strtol(token, &pEnd, 10);
+	  msg = intern__del (ret);
+	  break;
+	}
+
+      case 4 : //save
+	token =  strtok (NULL, " ");
+	char* file_name = token;
+	msg = intern__save(file_name);
+	break;
 	
-    default: 
-      msg = "not recognized\n";
+      default: 
+	msg = "not recognized\n";
+      }
     }
-
     if (msg != NULL)
-    printf ("%s\n", msg);
+      printf ("%s\n", msg);
   }
   
 }

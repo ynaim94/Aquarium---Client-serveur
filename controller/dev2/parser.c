@@ -7,13 +7,12 @@
 char *str_regex[]= {
   "load[ ]+[:alnum:]+", //load
   "show[ ]+aquarium", //show
-  "add[ ]+view[ ]+[:alnum:]*[ ]*[:alnum:]*", //add
-  "del[ ]+view[ ]+[:alnum:]*", //del
+  "add[ ]+view[ ]+N[0-9]+[ ]+[0-9]+x[0-9]+\\+[0-9]+\\+[0-9]+", //add
+  "del[ ]+view[ ]+N[0-9]+", //del
   "save[:alnum:]*"  //save
 };   
 
-int parse(const char *str_request){
-  
+int parse(const char *str_request){  
   int err;
   regex_t preg;
   int match = REG_NOMATCH;
