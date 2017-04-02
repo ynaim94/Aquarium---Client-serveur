@@ -209,7 +209,7 @@ int parser_add_fish(const char* s, char* reply, int index)
    if (y>100)
      fish_tmp.actualPosition[1]=viewss[index].y;
    else
-     fish_tmp.actualPosition[1]=viewss[index].x+(y*viewss[index].height);
+   fish_tmp.actualPosition[1]=viewss[index].x+(y*viewss[index].height);
    fish_tmp.destination[0]=0;
    fish_tmp.destination[1]=0;
    fish_tmp.dimension[0]=height;
@@ -226,6 +226,7 @@ int parser_add_fish(const char* s, char* reply, int index)
    sprintf(reply,"%s","OK\n");
   }
 }
+
 /**
 * @function  parser_del_fish
 * @brief     deleting a fish from the fishes array and prepare the replay to del fish command
@@ -307,13 +308,19 @@ int parser_get_fish(const char* s, char* reply, int index)
 }
 int main()
 {
-  char buffer[MAX_1];
-  int a;
+  char buffer[1000];
+  int a,i;
   const char* test="log out";
   nb_views = 1;
   viewss[0].id=100;
-  viewss[0].state=FREE;
-  a = parser_add_fish("addFish PoissonNain at 20x30,10x40, rand",buffer,0);
-  //printf("%s",buffer);
-
+  viewss[0].state=ATTACHED;
+  viewss[0].x=300;
+  viewss[0].y=100;
+  viewss[0].height=200;
+  viewss[0].width=200;
+  a = parser_add_fish("addFish PoissonNain at 20x30,10x40, RandomPathWay",buffer,0);
+  printf("%s",buffer);
+  a = parser_add_fish("addFish PoissonNain1 at 40x30,10x40, RandomPathWay",buffer,0);
+  printf("%s",buffer);
+  printf("%d \n",nb_fishes);
 }
