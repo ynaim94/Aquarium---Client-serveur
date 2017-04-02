@@ -17,7 +17,7 @@
 int parser(const char* s);
 int parser_hello(char* reply, int index);
 int parser_hello_id(const char* s, char* reply, int index);
-int parser_get_fish(const char* s, char* reply);
+int parser_get_fish(const char* s, char* reply, int index);
 int parser_get_fish_continuously(const char* s, char* reply);
 int parser_add_fish(const char* s, char* reply, int index);
 int parser_del_fish(const char* s, char* reply);

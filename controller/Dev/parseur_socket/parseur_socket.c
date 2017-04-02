@@ -172,7 +172,7 @@ int parser_add_fish(const char* s, char* reply, int index)
   strcpy(req,s);
   char **argv = NULL;
   char *p = NULL;
-  int i = 0,j=0, eight=0,width=0;
+  int i = 0,j=0, height=0,width=0;
   double x=0, y=0;
   argv = malloc(sizeof(char *) * MAX_ARG);
   p = strtok(req, " ,x");
@@ -250,13 +250,14 @@ int parser_del_fish(const char* s, char* reply)
   {
     for(i=j;j<nb_fishes-1;i++)
     {
-      fishess[i]=fishess[i+1]
+      fishess[i]=fishess[i+1];
     }
     nb_fishes--;
     sprintf(reply,"%s","OK \n");
   }
 
-}/**
+}
+/**
 * @function  parser_start_fish
 * @brief     starting a fish from the fishes array and prepare the replay to startFish command
 *
@@ -280,6 +281,28 @@ int parser_start_fish(const char* s, char* reply)
   {
     fishess[j].state=STARTED;
     sprintf(reply,"%s","OK\n");
+  }
+}
+/**
+* @function  parser_get_fish
+* @brief     prepare the replay to getFish command
+*
+* @param     reply : buffer to be filled with the replay message
+* @param     s : the input command containing the command
+* @return    an integer refering to the command succeded oder failed
+*/
+int parser_get_fish(const char* s, char* reply, int index)
+{
+  int i=0,x,y;
+  sprintf(reply,"%s","list ");
+  for(i=0;i<nb_fishes;i++)
+  {
+    if((fishess[i].destination[0]>viewss[index].x)&&(fishess[i].destination[0]<viewss[index].x+viewss[index].width)&&(fishess[i].destination[1]>viewss[index].y)&&(fishess[i].destination[1]<viewss[index].y+viewss[index].height))
+    {
+      x=(fishess[i].destination[0]-viewss[index].x)/viewss[index].width*100;
+      y=(fishess[i].destination[1]-viewss[index].x)/viewss[index].width*100;
+      sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s",reply," [",fishess[i].name," at ",x,"x",y,",",fishess[i].dimension[0],"x",fishess[i].dimension[1],",5]");
+    }
   }
 }
 int main()
