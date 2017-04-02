@@ -25,7 +25,7 @@ typedef struct in_addr IN_ADDR;
 
 
 #define CRLF		"\r\n"
-#define MAX_CLIENTS 	100
+
 
 #define BUF_SIZE	1024
 

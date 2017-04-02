@@ -12,6 +12,7 @@
 #define STOPED 2
 #define RandomPathWay 0
 
+
 /**
  *  @struct Fish
  *  @brief the fish description
@@ -35,5 +36,5 @@ typedef struct{
 
 
 Fish fishes[MAX];
-
+int nb_fishes;
 #endif

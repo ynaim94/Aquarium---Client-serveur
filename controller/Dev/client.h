@@ -6,9 +6,10 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 #define BUFFER_SIZE 1024
+#define MAX_CLIENTS 	100
 #define IP_SIZE 20
-#define ACCEPTED 1
-#define REJECTED 0
+#define REJECTED -1
+
 
 /**
  *  @struct Client
@@ -26,5 +27,5 @@ typedef struct
    char ip[IP_SIZE];
    int state;
 }Client;
-
+Client clients[MAX_CLIENTS];
 #endif

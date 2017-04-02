@@ -6,17 +6,19 @@
 #include "parseur_socket.h"
 #include "../view.h"
 #include "../fish.h"
+#include "../client.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #define MAX_1 20
+#define MAX_ARG 10
 /***************************
  *Regular expressions
  */
 const char *str_hello_id="^(hello in as[ ]N[0-9]+){1}";//
 const char *str_hello="^(hello){1}";//
-const char *str_add_fish="^(addFish[:space:]([:alnum:]+)[:space:]at[:space:]([:digit:]{1,2})*([:digit:]{1,2}),[:space:]([:digit:]{1,2})*([:digit:]{1,2}),[:space:]([:alnum:]+)){1}";
-const char *str_del_fish="^(delFish[][[:alnum:]]+){1}";//
+const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}";
+const char *str_del_fish="^(delFish[ ][[:alnum:]]+){1}";//
 const char *str_log_out="^(log out){1}";//
 const char *str_start_fish="^(startFish[ ][[:alnum:]]+){1}";//
 const char *str_get_fish="^(getFishes){1}";//
@@ -34,8 +36,10 @@ const char *str_ping="^(ping[ ]+[0-9]{4,5})";//
 * @return    an integer refering to the command recognized or an erreur code
 */
 
-int nb_views;
+int nb_views=0;
 View viewss[MAX_1];
+int nb_fishes=0;
+Fish fishess[MAX_1];
 int parser(const char *s)
 {
   int len = 9,i = 0;
@@ -61,7 +65,7 @@ int parser(const char *s)
 * @param     replay : buffer to be filled with the replay message
 * @return    an integer refering to the command succeded oder failed
 */
-int parser_hello(char* reply)
+int parser_hello(char* reply,int index)
 {
   int i=0;
   //char* a = malloc(sizeof(char)*13);
@@ -69,6 +73,7 @@ int parser_hello(char* reply)
     i++;
   if(i<nb_views)
   {
+      clients[index].state = i;
       sprintf(reply,"%s%d%s","greeting N",viewss[i].id,"\n");
   }
   else
@@ -84,9 +89,10 @@ int parser_hello(char* reply)
 *
 * @param     reply : buffer to be filled with the replay message
 * @param     s : the input command containing the command
+* @param     index : the sender view's index
 * @return    an integer refering to the command succeded oder failed
 */
-int parser_hello_id(const char* s, char* reply)
+int parser_hello_id(const char* s, char* reply, int index)
 {
   char* req = malloc (sizeof(char)*(strlen(s)+1));
   strcpy(req,s);
@@ -99,7 +105,7 @@ int parser_hello_id(const char* s, char* reply)
   tok=strtok(NULL," ");
   tok++;
   id=atoi(tok);
-  printf("%d \n",id);
+  printf("%d \n",id);//à commenter
   while ((i<nb_views) && (viewss[i].id != id))
   {
    if(viewss[i].state==FREE)
@@ -108,10 +114,12 @@ int parser_hello_id(const char* s, char* reply)
   }
   if(((viewss[i].id == id))&&(viewss[i].state==FREE))
   {
+    clients[index].state = i;
     sprintf(reply,"%s%d%s","greeting N",viewss[i].id,"\n");
   }
   else if(((viewss[i].state==ATTACHED)||(i==nb_views))&&(last_free != nb_views))
   {
+    clients[index].state = i;
     sprintf(reply,"%s%d%s","greeting N",viewss[last_free].id,"\n");
   }
   else
@@ -130,6 +138,150 @@ int parser_log_out(char* reply)
 {
   sprintf(reply,"%s","bye\n");
 }
+/**
+* @function  parser_ping
+* @brief     prepare the replay to ping command
+*
+* @param     reply : buffer to be filled with the replay message
+* @param     s : the input command containing the command
+* @return    an integer refering to the command succeded oder failed
+*/
+int parser_ping(const char* s, char* reply)
+{
+  char* req = malloc (sizeof(char)*(strlen(s)+1));
+  strcpy(req,s);
+  char* tok;
+  int id;
+  tok=strtok(req," ");
+  tok=strtok(NULL," ");
+  id=atoi(tok);
+  sprintf(reply,"%s%d%s","pong ",id,"\n");
+}
+/**
+* @function  parser_add_fish
+* @brief     adding fish to array and prepare the replay to add fish command
+*
+* @param     reply : buffer to be filled with the replay message
+* @param     s : the input command containing the command
+* @param     index : the sender view's index
+* @return    an integer refering to the command succeded oder failed
+*/
+int parser_add_fish(const char* s, char* reply, int index)
+{
+  char* req = malloc (sizeof(char)*(strlen(s)+1));
+  strcpy(req,s);
+  char **argv = NULL;
+  char *p = NULL;
+  int i = 0,j=0, eight=0,width=0;
+  double x=0, y=0;
+  argv = malloc(sizeof(char *) * MAX_ARG);
+  p = strtok(req, " ,x");
+  while(p != NULL)
+   {
+      if(i < MAX_ARG)
+      {
+         argv[i] = malloc(sizeof(char) * (1+strlen(p)));
+         strcpy(argv[i], p);
+         i++;
+      }
+      else
+         break;
+      p = strtok(NULL, " ,x");
+   }
+  Fish fish_tmp;
+  while((j<nb_fishes)&&(strcmp(argv[1],fishess[j].name) != 0))
+   j++;
+  if (j<nb_fishes)
+    sprintf(reply,"%s","NOK\n");
+  else if(strcmp(argv[7],"RandomPathWay") != 0)
+    sprintf(reply,"%s","NOK : mobility modele not supported\n");
+  else
+  {
+   strcpy(fish_tmp.name,argv[1]);
+   x=atoi(argv[3])/100.0;
+   y=atoi(argv[4])/100.0;
+   height=atoi(argv[5]);
+   width=atoi(argv[6]);
+   if (x>100)
+    fish_tmp.actualPosition[0]=viewss[index].x;
+   else
+    fish_tmp.actualPosition[0]=viewss[index].x+(x*viewss[index].width);
+   if (y>100)
+     fish_tmp.actualPosition[1]=viewss[index].y;
+   else
+     fish_tmp.actualPosition[1]=viewss[index].x+(y*viewss[index].height);
+   fish_tmp.destination[0]=0;
+   fish_tmp.destination[1]=0;
+   fish_tmp.dimension[0]=height;
+   fish_tmp.dimension[1]=width;
+   fish_tmp.state= STOPED;
+   fish_tmp.mobility=RandomPathWay;
+   fishess[nb_fishes]=fish_tmp;
+   nb_fishes++;
+   for(i = 0; argv[i] != NULL; i++)
+   {
+      free(argv[i]);
+   }
+   free(argv);
+   sprintf(reply,"%s","OK\n");
+  }
+}
+/**
+* @function  parser_del_fish
+* @brief     deleting a fish from the fishes array and prepare the replay to del fish command
+*
+* @param     reply : buffer to be filled with the replay message
+* @param     s : the input command containing the command
+* @return    an integer refering to the command succeded oder failed
+*/
+int parser_del_fish(const char* s, char* reply)
+{
+  char* tok;
+  int j=0, i=0;
+  char* req = malloc (sizeof(char)*(strlen(s)+1));
+  strcpy(req,s);
+  tok=strtok(req," ");
+  tok=strtok(NULL," ");
+  while((j<nb_fishes)&&(strcmp(tok,fishess[j].name) != 0))
+   j++;
+  if (j==nb_fishes)
+   sprintf(reply,"%s","NOK : Poisson inexistant\n");
+  else
+  {
+    for(i=j;j<nb_fishes-1;i++)
+    {
+      fishess[i]=fishess[i+1]
+    }
+    nb_fishes--;
+    sprintf(reply,"%s","OK \n");
+  }
+
+}/**
+* @function  parser_start_fish
+* @brief     starting a fish from the fishes array and prepare the replay to startFish command
+*
+* @param     reply : buffer to be filled with the replay message
+* @param     s : the input command containing the command
+* @return    an integer refering to the command succeded oder failed
+*/
+int parser_start_fish(const char* s, char* reply)
+{
+  char* tok;
+  int j=0, i=0;
+  char* req = malloc (sizeof(char)*(strlen(s)+1));
+  strcpy(req,s);
+  tok=strtok(req," ");
+  tok=strtok(NULL," ");
+  while((j<nb_fishes)&&(strcmp(tok,fishess[j].name) != 0))
+   j++;
+  if (j==nb_fishes)
+   sprintf(reply,"%s","NOK : Poisson inexistant\n");
+  else
+  {
+    fishess[j].state=STARTED;
+    sprintf(reply,"%s","OK\n");
+  }
+}
 int main()
 {
   char buffer[MAX_1];
@@ -138,7 +290,7 @@ int main()
   nb_views = 1;
   viewss[0].id=100;
   viewss[0].state=FREE;
-  a = parser("hello");
-  printf("%d\n",a);
+  a = parser_add_fish("addFish PoissonNain at 20x30,10x40, rand",buffer,0);
+  //printf("%s",buffer);
 
 }

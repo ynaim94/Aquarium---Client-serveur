@@ -25,6 +25,7 @@
  * @param     none
  * @return    none
  */
+extern Client clients[MAX_CLIENTS];
 static void app(void)
 {
    open_log("./log/log.txt");
@@ -43,7 +44,7 @@ static void app(void)
    int max = sock;
    int len =0;
    /* an array for all clients */
-   Client clients[MAX_CLIENTS];
+
 
    fd_set rdfs;
 
@@ -113,6 +114,7 @@ static void app(void)
          printf("Client name : %s\n", c.name);
          char buffer2[BUF_SIZE];
          sprintf(c.ip,"%s",inet_ntoa(csin.sin_addr));
+         c.state = REJECTED;
          printf("adresse ip : %s\n",c.ip);
          clients[actual] = c;
          actual++;
