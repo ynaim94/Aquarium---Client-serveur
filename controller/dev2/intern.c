@@ -149,7 +149,7 @@ char* intern__load(const char* file_name, int* aquarium){
   
   fclose(fd);
 
-  asprintf(&msg,"-> aquarium loaded (%d display view)\n", nb_views);
+  asprintf(&msg,"-> aquarium loaded (%d display view)", nb_views);
 
   state = 1;
   
@@ -165,7 +165,7 @@ char* intern__show(){
   strcpy(msg, s);
   for (i = 0; i < nb_views; i++){
     if (views[i].state){
-      asprintf(&s, "N%d %dx%d+%d+%d\n", views[i].id, views[i].x, views[i].y, views[i].width, views[i].height);
+      asprintf(&s, "N%d %dx%d+%d+%d", views[i].id, views[i].x, views[i].y, views[i].width, views[i].height);
       strcat(msg,s);
     }
   }
@@ -184,9 +184,13 @@ char* intern__add(View view){
   }
 
   //TODO: parametre plus petit que aquarium[0]*aquarium[1]
+  if ((view.x <0) || (view.x > aquarium[0]) || (view.x + view.width > aquarium[0]) ||
+      (view.y <0) || (view.y > aquarium[1]) || (view.y + view.height > aquarium[1]) ) {
+    return "-> view parameters don't fit in the aquarium";
+  }
   nb_views++;
   views[nb_views-1] = view;
-  return "-> view added\n";
+  return "-> view added";
 }
 
 
@@ -197,7 +201,7 @@ char* intern__del(int id){
     if (views[i].id == id){
       if (views[i].state == 1){
 	views[i].state = 0;
-	asprintf(&msg,"-> view N%d deleted.\n", id);
+	asprintf(&msg,"-> view N%d deleted.", id);
 	return msg;
       }
     }
@@ -206,8 +210,9 @@ char* intern__del(int id){
 }
 
 char* intern__save(char* file_name){
-  
+  int nb_valid_views = 0,i;
   FILE* file = NULL;
+  char *msg;
   file = fopen(file_name, "w");
   if (file == NULL){
     perror("fichier");
@@ -218,11 +223,15 @@ char* intern__save(char* file_name){
   fwrite(aqua,1,strlen(aqua),file);
   
   fclose(file);
-
-  return " ";
-
-
   
+  for (i = 0; i < nb_views; i++){
+    if (views[i].state == 1){
+      nb_valid_views++;
+    }
+  }
+
+  asprintf(&msg, "-> Aquarium saved !(%d display view)", nb_valid_views);
+  return msg;
 }
 
 

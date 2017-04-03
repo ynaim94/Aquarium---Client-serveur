@@ -11,7 +11,7 @@ test: test.o prompt.o intern.o parser.o
 
 clean: 
 	rm *.o
-	rm test
+
 
 
 

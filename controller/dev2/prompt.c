@@ -130,11 +130,11 @@ int display_prompt(){
 	break;
 	
       default: 
-	msg = "not recognized\n";
+	msg = "not recognized";
       }
     }
     if (msg != NULL)
-      printf ("%s\n", msg);
+      printf ("%s\n\n", msg);
   }
   
 }
