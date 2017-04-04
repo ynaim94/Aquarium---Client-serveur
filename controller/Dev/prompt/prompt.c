@@ -28,12 +28,12 @@ View* parse_view(char* str){
   int i, j;
   View *view = malloc (sizeof(View));
 
-  
+
   /* test if empty*/
   if ((str == NULL) || (str[0] =='\n')){
     return NULL;
   }
-  
+
   for ( i = 0; i < 4 ; i ++){
     j = 0;
     param[i] = malloc (sizeof(char)*5);
@@ -47,7 +47,7 @@ View* parse_view(char* str){
     str++;
     param[i][j] = '\0';
   }
-  
+
   view->x = strtol(param[0],&pEnd,10);
   view->y = strtol(param[1],&pEnd,10);
   view->width = strtol(param[2],&pEnd,10);
@@ -66,7 +66,6 @@ int display_prompt(){
   char *pEnd;
   int i;
   char *positionEntree;
-  state = 0;
 
   if  ((len_read = read(STDIN_FILENO, buffer, BUFFER_SIZE)) == -1){
       perror("read");
@@ -74,18 +73,18 @@ int display_prompt(){
     }
     buffer[len_read-1] = '\0';
     str_request = malloc (sizeof(char)* len_read);
-   
+
     type = parse (buffer);
 
     if ((type != 0) && (type != 5) && (state == 0))
       msg = "Aquarium Not loaded";
     else {
 
-    
+
       token =  strtok (buffer," ");
-    
+
       switch (type) {
-	
+
       case 0 : //load
 	{
 	  token =  strtok (NULL, " ");
@@ -127,13 +126,13 @@ int display_prompt(){
 	char* file_name = token;
 	msg = intern__save(file_name);
 	break;
-	
-      default: 
+
+      default:
 	msg = "not recognized";
       }
     }
     if (msg != NULL)
       printf ("%s\n\n", msg);
-    
-    
+
+
 }
