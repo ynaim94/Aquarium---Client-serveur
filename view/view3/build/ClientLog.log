@@ -1,0 +1,8 @@
+avr. 04, 2017 4:42:23 PM aqua.ClientLog <init>
+CONFIG: Client logging ..
+avr. 04, 2017 4:42:25 PM aqua.ClientLog info
+INFOS: Client sent hello
+avr. 04, 2017 4:42:25 PM aqua.ClientLog info
+INFOS: Client received NO RESPONSE YET
+
+
