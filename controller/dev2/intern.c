@@ -13,6 +13,20 @@
 
 #define TAILLE_MAX 1000
 
+
+int del__element(View t[], int id, int* length){
+  int i = id+1;
+  if (id > *length - 1){
+    return 0;
+  }
+  for (i; i < *length; i++){
+    t[i-1] = t[i];
+  }
+  *length--;
+  return 1;
+}
+
+
 FILE* open(const char* file_name){
   FILE* file = NULL;
   file = fopen(file_name, "r");
@@ -104,7 +118,7 @@ int get_aquarium_views(FILE* fd, View* views){
     views[nb_views].width = strtol(param[2],&pEnd,10);
     views[nb_views].height = strtol(param[3],&pEnd,10);
     views[nb_views].id = strtol(param[4],&pEnd,10);
-    views[nb_views].state = 1;
+    views[nb_views].state = FREE;
     nb_views++;
 
     for (j = 0; j < 5; j++){
@@ -116,10 +130,6 @@ int get_aquarium_views(FILE* fd, View* views){
   return EXIT_SUCCESS;
 }
 
-/* //concatenate two string in the tas
-char* concatenate_string(char* s1, char* s2){
-  char* res = malloc[TAILLE_MA
-}*/
 
 /*
  * Load an aquarium file and return the answer message for the prompt
@@ -163,11 +173,10 @@ char* intern__show(){
   msg = malloc (nb_views*25 + 9);
   asprintf(&s, "%dx%d\n", aquarium[0],aquarium[1]);
   strcpy(msg, s);
+  //TODO
   for (i = 0; i < nb_views; i++){
-    if (views[i].state){
-      asprintf(&s, "N%d %dx%d+%d+%d", views[i].id, views[i].x, views[i].y, views[i].width, views[i].height);
+      asprintf(&s, "N%d %dx%d+%d+%d\n", views[i].id, views[i].x, views[i].y, views[i].width, views[i].height);
       strcat(msg,s);
-    }
   }
 
   return msg;
@@ -199,18 +208,17 @@ char* intern__del(int id){
   char *msg;
   for (i = 0; i < nb_views; i++){
     if (views[i].id == id){
-      if (views[i].state == 1){
-	views[i].state = 0;
-	asprintf(&msg,"-> view N%d deleted.", id);
-	return msg;
-      }
+      //TODO
+      del__element(views,i,&nb_views);
+      asprintf(&msg,"-> view N%d deleted.", id);
+      nb_views--;
+      return msg;
     }
   }
   return "-> view does not exist";
 }
 
 char* intern__save(char* file_name){
-  int nb_valid_views = 0,i;
   FILE* file = NULL;
   char *msg;
   file = fopen(file_name, "w");
@@ -224,13 +232,7 @@ char* intern__save(char* file_name){
   
   fclose(file);
   
-  for (i = 0; i < nb_views; i++){
-    if (views[i].state == 1){
-      nb_valid_views++;
-    }
-  }
-
-  asprintf(&msg, "-> Aquarium saved !(%d display view)", nb_valid_views);
+  asprintf(&msg, "-> Aquarium saved !(%d display view)", nb_views);
   return msg;
 }
 
