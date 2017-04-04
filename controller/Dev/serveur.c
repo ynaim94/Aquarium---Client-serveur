@@ -17,6 +17,7 @@
 #include "config/config.h"
 #include "log/log.h"
 #include "pool/thpool.h"
+#include "prompt/prompt.h"
 
 /**
  * @function  app
@@ -74,11 +75,7 @@ static void app(void)
       /* something from standard input : i.e keyboard */
       if(FD_ISSET(STDIN_FILENO, &rdfs))
       {
-          fgets(buffer, sizeof(buffer), stdin);
-          len = strlen(buffer) - 1;
-          if (buffer[len] == '\n')
-              buffer[len] = '\0';
-          printf("'%s' was read from stdin.\n", buffer);
+        thpool_add_work(thpool, (void*)display_prompt, NULL);
         /* stop process when type on keyboard */
       }
       else if(FD_ISSET(sock, &rdfs))
