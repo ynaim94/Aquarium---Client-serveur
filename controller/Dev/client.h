@@ -9,6 +9,7 @@
 #define MAX_CLIENTS 	100
 #define IP_SIZE 20
 #define REJECTED -1
+#include <sys/time.h>
 
 
 /**
@@ -19,6 +20,7 @@
  *  @var name : buffer containing the client's name
  *  @var ip : buffer containing the client's ip adresse
  *  @var state : is the client accepted after hello or not
+ *  @var last_update : the last update time;
  */
 typedef struct
 {
@@ -26,6 +28,7 @@ typedef struct
    char name[BUFFER_SIZE];
    char ip[IP_SIZE];
    int state;
+   struct timeval last_update;
 }Client;
 Client clients[MAX_CLIENTS];
 #endif

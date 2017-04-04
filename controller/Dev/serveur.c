@@ -111,6 +111,9 @@ static void app(void)
          char buffer2[BUF_SIZE];
          sprintf(c.ip,"%s",inet_ntoa(csin.sin_addr));
          c.state = REJECTED;
+         update_freshness(c);
+
+
          printf("adresse ip : %s\n",c.ip);
          clients[actual] = c;
          actual++;
@@ -137,7 +140,7 @@ static void app(void)
                }
                else
                {
-
+                  update_freshness(client);
                   printf("a client is talking \n" );
                   printf("%s\n", buffer );
                   if (strcmp(buffer,"hello\0")==0)
@@ -300,7 +303,18 @@ static void write_client(SOCKET sock, const char *buffer)
       exit(errno);
    }
 }
-
+/**
+ * @function  update_freshness
+ * @brief     update the client last communication with the server time
+ *
+ * @param     client: the client to update;
+ * @return    none
+ */
+void update_freshness(Client client)
+{
+  gettimeofday(&client.last_update,0);
+  //printf("time : %d", client.last_update.tv_sec);
+}
 /**
  * @function  main
  * @brief     launch the app function
