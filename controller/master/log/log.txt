@@ -1,0 +1,18 @@
+[03/29/17 18:15:49]   démarrage du serveur
+[03/29/17 18:15:49]   configuration du serveur avec succès 
+[03/29/17 18:15:49]   création de socket avec succès
+[03/31/17 09:20:54]   
+[03/31/17 09:20:54]   configuration success
+[03/31/17 09:20:54]   création de socket avec succès
+[04/04/17 17:37:53]   
+[04/04/17 17:37:53]   configuration success
+[04/04/17 17:37:53]   création de socket avec succès
+[04/04/17 17:43:58]   
+[04/04/17 17:43:58]   configuration success
+[04/04/17 17:43:58]   création de socket avec succès
+[04/04/17 18:16:01]   
+[04/04/17 18:16:01]   configuration success
+[04/04/17 18:16:01]   création de socket avec succès
+[04/04/17 18:16:21]   
+[04/04/17 18:16:21]   configuration success
+[04/04/17 18:16:21]   création de socket avec succès
