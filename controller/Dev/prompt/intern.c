@@ -13,7 +13,7 @@
 
 #define TAILLE_MAX 1000
 
-
+extern int state;
 int del__element(View t[], int id, int* length){
   int i = id+1;
   if (id > *length - 1){
@@ -37,11 +37,11 @@ FILE* open(const char* file_name){
   return file;
 }
 
-/* 
- * put the heigh and width from the file in the array aquarium 
+/*
+ * put the heigh and width from the file in the array aquarium
  * param fd : pointer of an opened file
  * param aquarium: array aquarium that we'll change
- * 
+ *
  */
 int get_aquarium_dim(FILE* fd, int* aquarium){
   char chaine1[TAILLE_MAX+1] = "";
@@ -50,7 +50,7 @@ int get_aquarium_dim(FILE* fd, int* aquarium){
   long heigh;
   int  i = 0;
   rewind(fd);
-  
+
   chaine1[i] = fgetc(fd);
   while (chaine1[i] != 'x') {
     i++;
@@ -75,7 +75,7 @@ int get_aquarium_views(FILE* fd, View* views){
   char actual_char;
 
   rewind(fd);
-  
+
   /*get rid of first line*/
   if (fgets(line,TAILLE_MAX,fd) == NULL){
     perror("fgets");
@@ -111,7 +111,7 @@ int get_aquarium_views(FILE* fd, View* views){
       }
       param[j][i] = '\0';
     }
-    
+
     /* affect value of each parameter*/
     views[nb_views].x = strtol(param[0],&pEnd,10);
     views[nb_views].y = strtol(param[1],&pEnd,10);
@@ -146,23 +146,23 @@ char* intern__load(const char* file_name, int* aquarium){
   }
 
   nb_views = 0;
-  
+
 
   fd = open(file_name);
   if (fd == NULL){
     return "File does not exit";
   }
-  
+
   get_aquarium_dim(fd,aquarium);// TODO: Tester si success ou failure
   get_aquarium_views(fd,views); // TODO: Tester si success ou failure
   state = 1; //TODO : 0 if failure
-  
+
   fclose(fd);
 
   asprintf(&msg,"-> aquarium loaded (%d display view)", nb_views);
 
   state = 1;
-  
+
   return msg;
 }
 
@@ -227,11 +227,11 @@ char* intern__save(char* file_name){
     return EXIT_SUCCESS;
   }
   char *aqua = intern__show();
-  
+
   fwrite(aqua,1,strlen(aqua),file);
-  
+
   fclose(file);
-  
+
   asprintf(&msg, "-> Aquarium saved !(%d display view)", nb_views);
   return msg;
 }
@@ -239,7 +239,7 @@ char* intern__save(char* file_name){
 
 
 /*int main (char *args[]){
-  
+
   printf("%s\n",intern__load("aquarium.info", 0, aquarium));
   View v = {7,1,2,3,4,1};
   printf("%s\n",intern__add(v));
@@ -250,4 +250,3 @@ char* intern__save(char* file_name){
   printf("%s\n", intern__save("aquarium_save.info"));
 }
 */
-
