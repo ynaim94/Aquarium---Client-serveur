@@ -80,7 +80,6 @@ static void app(void)
               buffer[len] = '\0';
           printf("'%s' was read from stdin.\n", buffer);
         /* stop process when type on keyboard */
-
       }
       else if(FD_ISSET(sock, &rdfs))
       {

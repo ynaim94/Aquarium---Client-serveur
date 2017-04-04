@@ -8,8 +8,8 @@
 
 #define n 3
 #define MAX 128
-#define FREE 1
-#define ATTACHED 0
+#define FREE 0
+#define ATTACHED 1
 
 /**
  *  @struct View
@@ -35,4 +35,5 @@ typedef struct{
 View views[MAX];
 int aquarium[2];
 int nb_views;
+int state;
 #endif

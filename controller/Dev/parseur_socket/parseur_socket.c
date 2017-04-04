@@ -69,11 +69,12 @@ int parser_hello(char* reply,int index)
 {
   int i=0;
   //char* a = malloc(sizeof(char)*13);
-  while ((i<nb_views) && (viewss[i].state==ATTACHED))
+  while ((i<nb_views) && (viewss[i].state ==ATTACHED))
     i++;
   if(i<nb_views)
   {
       clients[index].state = i;
+      viewss[i].state=ATTACHED;
       sprintf(reply,"%s%d%s","greeting N",viewss[i].id,"\n");
   }
   else
@@ -115,11 +116,13 @@ int parser_hello_id(const char* s, char* reply, int index)
   if(((viewss[i].id == id))&&(viewss[i].state==FREE))
   {
     clients[index].state = i;
+    viewss[i].state=ATTACHED;
     sprintf(reply,"%s%d%s","greeting N",viewss[i].id,"\n");
   }
-  else if(((viewss[i].state==ATTACHED)||(i==nb_views))&&(last_free != nb_views))
+  else if(((viewss[i].state ==ATTACHED)||(i==nb_views))&&(last_free != nb_views))
   {
     clients[index].state = i;
+    viewss[last_free].state=ATTACHED;
     sprintf(reply,"%s%d%s","greeting N",viewss[last_free].id,"\n");
   }
   else
@@ -134,8 +137,9 @@ int parser_hello_id(const char* s, char* reply, int index)
 * @param     reply : buffer to be filled with the replay message
 * @return    an integer refering to the command succeded oder failed
 */
-int parser_log_out(char* reply)
+int parser_log_out(char* reply, int index)
 {
+  viewss[i].state=FREE;
   sprintf(reply,"%s","bye\n");
 }
 /**
