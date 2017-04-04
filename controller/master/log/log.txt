@@ -1,21 +1,36 @@
-[03/29/17 18:15:49]   démarrage du serveur
-[03/29/17 18:15:49]   configuration du serveur avec succès 
-[03/29/17 18:15:49]   création de socket avec succès
-[03/31/17 09:20:54]   
-[03/31/17 09:20:54]   configuration success
-[03/31/17 09:20:54]   création de socket avec succès
-[04/04/17 17:37:53]   
-[04/04/17 17:37:53]   configuration success
-[04/04/17 17:37:53]   création de socket avec succès
-[04/04/17 17:43:58]   
-[04/04/17 17:43:58]   configuration success
-[04/04/17 17:43:58]   création de socket avec succès
-[04/04/17 18:16:01]   
-[04/04/17 18:16:01]   configuration success
-[04/04/17 18:16:01]   création de socket avec succès
-[04/04/17 18:16:21]   
-[04/04/17 18:16:21]   configuration success
-[04/04/17 18:16:21]   création de socket avec succès
-[04/04/17 22:51:23]   
-[04/04/17 22:51:23]   configuration success
-[04/04/17 22:51:23]   création de socket avec succès
+[03/29/17 14:24:02]   démarrage du serveur
+[03/29/17 14:24:02]   configuration du serveur avec succès 
+[03/29/17 14:24:02]   création de socket avec succès
+[03/29/17 14:28:11]   démarrage du serveur
+[03/29/17 14:28:11]   configuration du serveur avec succès 
+[03/29/17 14:28:11]   création de socket avec succès
+[03/29/17 14:30:50]   démarrage du serveur
+[03/29/17 14:30:50]   configuration du serveur avec succès 
+[03/29/17 14:30:50]   création de socket avec succès
+[03/29/17 14:33:18]   démarrage du serveur
+[03/29/17 14:33:18]   configuration du serveur avec succès 
+[03/29/17 14:33:18]   création de socket avec succès
+[03/29/17 14:38:51]   démarrage du serveur
+[03/29/17 14:38:51]   configuration du serveur avec succès 
+[03/29/17 14:38:51]   création de socket avec succès
+[03/29/17 14:39:48]   démarrage du serveur
+[03/29/17 14:39:48]   configuration du serveur avec succès 
+[03/29/17 14:39:48]   création de socket avec succès
+[04/02/17 14:38:04]   
+[04/02/17 14:38:04]   configuration success
+[04/02/17 14:38:04]   création de socket avec succès
+[04/02/17 14:55:05]   
+[04/02/17 14:55:05]   configuration success
+[04/02/17 14:55:05]   création de socket avec succès
+[04/02/17 14:57:43]   
+[04/02/17 14:57:43]   configuration success
+[04/02/17 14:57:43]   création de socket avec succès
+[04/04/17 22:52:52]   
+[04/04/17 22:52:52]   configuration success
+[04/04/17 22:52:52]   création de socket avec succès
+[04/04/17 22:54:50]   
+[04/04/17 22:54:50]   configuration success
+[04/04/17 22:54:50]   création de socket avec succès
+[04/04/17 22:57:17]   
+[04/04/17 22:57:17]   configuration success
+[04/04/17 22:57:17]   création de socket avec succès
