@@ -7,9 +7,10 @@
 #define VIEW_H
 
 #define n 3
-#define MAX 128
+#define MAX_VIEW 128
 #define FREE 0
 #define ATTACHED 1
+
 
 /**
  *  @struct View
@@ -24,16 +25,17 @@
  */
 
 typedef struct{
-	int id;
-	int x;
-	int y;
-	int height;
-	int width;
-	int state;
+  int id;
+  int x;
+  int y;
+  int height;
+  int width;
+  int state;
 }View;
 
-View views[MAX];
+View views[MAX_VIEW];
 int aquarium[2];
 int nb_views;
 int state;
-#endif
+
+#endif //VIEW_H

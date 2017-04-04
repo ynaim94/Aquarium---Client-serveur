@@ -1,7 +1,7 @@
 #ifndef INTERN_H
 #define INTER_H
 
-#include "view.h"
+#include "../view.h"
 
 char* intern__load(const char* file_name,  int* aquarium);
 char* intern__show();

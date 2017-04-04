@@ -9,7 +9,7 @@
 
 #include "intern.h"
 #include "parser.h"
-#include "view.h"
+#include "../view.h"
 
 #define BUFFER_SIZE  256
 #define TAILLE_MAX 1000 // A redéfinir avec TAILLE_MAX de intern.c
@@ -68,8 +68,7 @@ int display_prompt(){
   char *positionEntree;
   state = 0;
 
-  while (1){
-    if  ((len_read = read(STDIN_FILENO, buffer, BUFFER_SIZE)) == -1){
+  if  ((len_read = read(STDIN_FILENO, buffer, BUFFER_SIZE)) == -1){
       perror("read");
       return EXIT_FAILURE;
     }
@@ -135,6 +134,6 @@ int display_prompt(){
     }
     if (msg != NULL)
       printf ("%s\n\n", msg);
-  }
-  
+    
+    
 }
