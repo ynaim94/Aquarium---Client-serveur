@@ -1,6 +1,7 @@
-avr. 11, 2017 1:41:34 PM aqua.ClientLog <init>
+avr. 11, 2017 5:35:41 PM aqua.ClientLog <init>
 CONFIG: Client logging ..
-avr. 11, 2017 1:41:36 PM aqua.ClientLog info
+avr. 11, 2017 5:35:44 PM aqua.ClientLog info
 INFOS: Client sent hello
-avr. 11, 2017 1:41:36 PM aqua.ClientLog info
-INFOS: Client received greeting fsffjksfm
+avr. 11, 2017 5:35:44 PM aqua.ClientLog info
+INFOS: Client received OK
+

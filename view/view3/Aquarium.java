@@ -12,7 +12,9 @@ public class Aquarium {
     private AquaConnection aquaCon;
     static int port;
     static InetAddress address;
-	static ClientLog logger;
+    static ClientLog logger;
+    /*Boolean var to detect connection state*/
+    static   private	boolean connected=false;
     private void displayGUI(String ImagesPath)
     {
 	
@@ -23,7 +25,10 @@ public class Aquarium {
         frame.pack();
         frame.setLocationByPlatform(true);
         //frame.setSize(1200,600);
-        frame.setVisible(true);
+	if(connected==false)
+	    frame.setVisible(false);
+	else
+	    frame.setVisible(true);
 	// frame.setResizable(false);
     }
 
@@ -55,9 +60,9 @@ public class Aquarium {
     }
 
     public static void main(String[] args) throws Exception
-    {
-
-       	ClientLog logger = new ClientLog();
+    { 
+	logger = new ClientLog();
+	// 	ClientLog logger = new ClientLog();
 
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
@@ -71,13 +76,15 @@ public class Aquarium {
 	pattern[0]=Pattern.compile("OK");//,Pattern.CASE_INSENSITIVE);
 	pattern[1]= Pattern.compile("hello");
 	pattern[2]= Pattern.compile("^greeting \\w+");
-	pattern[3] = Pattern.compile("addFish");
+	pattern[3]= Pattern.compile("addFish");
 	pattern[4]= Pattern.compile("delFish");
 	pattern[5]= Pattern.compile("startFish");
-
+	pattern[6]= Pattern.compile("^logout");
+	pattern[7]= Pattern.compile("^bye");
+	pattern[8]= Pattern.compile("^getFishes");
 	/*Prompt*/
 	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
-	String response ="greeting fsffjksfm",cmd="";
+	String response ="OK\n",cmd="";
 	while(cmd==""){  
 	    cmd=promptIn();
 	    	if (cmd=="hello")//&&response =greeting 
@@ -86,22 +93,36 @@ public class Aquarium {
 	    
 		promptOut(response);
 		/*Handling response*/
-		if((pattern[2].matcher(response).matches())&&(pattern[1].matcher(cmd).find()))
+response ="greeting N1";
+		if((pattern[2].matcher(response).matches())&&(pattern[1].matcher(cmd).find())){ 
+		     connected=true;
 		    /*Display the aquarium*/
 		    SwingUtilities.invokeLater(new Runnable(){    
 			    @Override
 			    public void run() {
-				new Aquarium().displayGUI(ImagesPath);
+			
+				    new Aquarium().displayGUI(ImagesPath);
 				
 			    }
 			});
+		}
 		else
-		    if(pattern[0].matcher(response).matches()){
-			if(pattern[3].matcher(cmd).find())  /*calling a addFish methode*/ ;
-			if(pattern[4].matcher(cmd).find()) /*calling a delFish methode*/  ;
-			if(pattern[5].matcher(cmd).find()) /*calling a startFish methode*/ ;
+		    {
+			if(pattern[0].matcher(response).matches()){
+			    if(pattern[3].matcher(cmd).find())  /*calling a addFish methode*/ ;
+			    if(pattern[4].matcher(cmd).find()) /*calling a delFish methode*/  ;
+			    if(pattern[5].matcher(cmd).find()) /*calling a startFish methode*/ ;
+			}
+			
+			else{
+			    response ="bye";
+			    if((pattern[6].matcher(cmd).matches())&&(pattern[7].matcher(response).matches())){
+				connected =false;
+				//	System.out.println(connected);
+
+			    }
+			}		
 		    }
-		
 		/*  TO be Used in treating response
 		// compilation de la regex
 		Pattern p = Pattern.compile(":");
