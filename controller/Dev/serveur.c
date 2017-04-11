@@ -48,6 +48,8 @@ static void app(void)
 
 
    fd_set rdfs;
+   int* p=&actual;
+   thpool_add_work(thpool, (void*)check_timeout,(void*)&actual);
 
    while(1)
    {
@@ -111,11 +113,13 @@ static void app(void)
          char buffer2[BUF_SIZE];
          sprintf(c.ip,"%s",inet_ntoa(csin.sin_addr));
          c.state = REJECTED;
-         update_freshness(c);
+         update_freshness(&c);
 
 
-         printf("adresse ip : %s\n",c.ip);
          clients[actual] = c;
+         printf("Client name : %s\n",clients[actual].name);
+         printf("adresse ip : %s\n",clients[actual].ip);
+         printf("time : %d \n", clients[actual].last_update.tv_sec);
          actual++;
       }
       else
@@ -140,12 +144,14 @@ static void app(void)
                }
                else
                {
-                  update_freshness(client);
+                  update_freshness(&clients[i]);
                   printf("a client is talking \n" );
                   printf("%s\n", buffer );
-                  if (strcmp(buffer,"hello\0")==0)
+                  if (strcmp(buffer,"logout\0")==0)
                   {
-                    write_client(clients[i].sock,"greeting" );
+                    closesocket(clients[i].sock);
+                    remove_client(clients, i, &actual);
+                    //write_client(clients[i].sock,"greeting" );
                   }
                }
                break;
@@ -310,10 +316,64 @@ static void write_client(SOCKET sock, const char *buffer)
  * @param     client: the client to update;
  * @return    none
  */
-void update_freshness(Client client)
+void update_freshness(Client* client)
 {
-  gettimeofday(&client.last_update,0);
+  gettimeofday(&(client->last_update),0);
   //printf("time : %d", client.last_update.tv_sec);
+}
+/**
+ * @function  check_timeout
+ * @brief     check wether the client reached the timeout and remove it if so;
+ *
+ * @param     client: the client to update;
+ * @return    none
+ */
+int check_timeout(int* nb_client)
+{
+  struct timeval current_time;
+  int i=0;
+  int timeout;
+  int e;
+  int a;
+
+  e=open_config("./config/controller.cfg");
+  if(e==0)
+  {
+    insert_log("configuration failed...aborting the controller");
+    return -1;
+  }
+
+  timeout = getTimeout();
+  printf("le timeout est : %d \n", timeout );
+
+  close_config();
+
+  while(1)
+  {
+    printf("le nombre de client à tester est : %d \n", *nb_client);
+    gettimeofday(&current_time,0);
+
+    for(i=0;i<*nb_client;i++)
+    {
+      a = current_time.tv_sec-(clients[i].last_update.tv_sec+timeout);
+      printf("current_time : %d\n", current_time.tv_sec);
+      printf("client_time: %d\n",clients[i].last_update.tv_sec);
+      printf("la différence est : %d\n", a);
+      if(a>0)
+      {
+        printf("le nombre de client à tester est : %d \n", *nb_client);
+        Client client = clients[i];
+        char buffer1[BUF_SIZE];
+        closesocket(clients[i].sock);
+        remove_client(clients, i, nb_client);
+        strcpy(buffer1,client.name);
+        sprintf(buffer1, "%s%s",buffer1," is ejected due to timeout !");
+        printf("%s\n", buffer1 );
+      }
+    }
+    sleep(20);
+
+  }
 }
 /**
  * @function  main
