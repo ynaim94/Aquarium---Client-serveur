@@ -1,4 +1,5 @@
 package aqua;
+import java.util.ArrayList;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,30 +14,35 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.util.*;
 
+
 class AquaPanel extends JPanel implements ActionListener{
 
     private int x=0, y=0;   
     private BufferedImage[]images = new BufferedImage[8];
     ArrayList<Fish> Fishes;
-
   
 
-    void setFishes(ArrayList<Fish> Fishes){
-	this.Fishes=new ArrayList<Fish>(Fishes.size());
-	for (Fish item : Fishes){
-	    this.Fishes.add(item.clone());
+    void setFishes(ArrayList<Fish> newFishes){
+	/* initialisation ? */
+	/*/!\ traiter tous les cas avec les positions additionnelles */
+	for(Fish newItem : newFishes){
+	    if (this.Fishes.contains(newItem)){
+		Fish item=this.Fishes.get(indexOf(newItem));
+		item.initPosition=ArrayUtils.addAll(item.initPosition, newItem.initPosition);
+	    }
+	    else {
+		this.Fishes.add(newItem);
+	    }
 	}
     }
     Timer timer = new Timer(60, (ActionListener) this);
     public AquaPanel(String name) {
-
-
 	
         timer.start();
         setOpaque(true);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
         setBackground(Color.WHITE);
-   
+	Fishes=new ArrayList<Fish>();
         for(int i=0; i<8;i++){
             String name1=name+String.format("/fish%d.png", i);
         try {

@@ -2,6 +2,7 @@ package aqua;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class AquaConnection extends Thread{
     Scanner scanner;
@@ -15,6 +16,13 @@ public class AquaConnection extends Thread{
     static private Socket socket;
     // } catch(IOException e){	System.out.println("Sorry..Error while creating Socket");}
 
+    private ArrayList<Fish> Fishes;
+    
+
+    ArrayList<Fish> getFishes(){
+	return Fishes;
+    }
+    
     public AquaConnection(InetAddress address, int port)
     {
 	address=address;
