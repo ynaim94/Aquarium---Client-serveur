@@ -1,12 +1,13 @@
 package aqua;
-
+import java.util.regex.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
 import java.util.Scanner;
 
 public class Aquarium {
-
+    private static Pattern [] pattern;
+    private static Matcher matcher;
     private AquaPanel contentPane;
     private AquaConnection aquaCon;
     static int port;
@@ -27,11 +28,14 @@ public class Aquarium {
     }
 
     static private String promptIn()throws IOException
-    {    
+    { 
+
+       
+
 	/* create a scanner so we can read the command-line input*/
 	Scanner	scanner = new Scanner(System.in);
-
-	    /* prompt for the command*/
+	
+	/* prompt for the command*/
 	    System.out.print(">"); 
 	    /*get the input as a String*/
 	    String cmd = scanner.next(); // We can also use scanner.nextInt() to return an int if needed
@@ -53,7 +57,7 @@ public class Aquarium {
     public static void main(String[] args) throws Exception
     {
 
-	ClientLog logger = new ClientLog();
+       	ClientLog logger = new ClientLog();
 
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
@@ -61,23 +65,51 @@ public class Aquarium {
 	final String ImagesPath = conf.getVisualRepertory();
 	address = conf.getIpAddress();
 
+	/*cmd patterns*/
+	pattern=new Pattern[10];  
+
+	pattern[0]=Pattern.compile("OK");//,Pattern.CASE_INSENSITIVE);
+	pattern[1]= Pattern.compile("hello");
+	pattern[2]= Pattern.compile("^greeting \\w+");
+	pattern[3] = Pattern.compile("addFish");
+	pattern[4]= Pattern.compile("delFish");
+	pattern[5]= Pattern.compile("startFish");
+
 	/*Prompt*/
 	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
-	String response ="NO RESPONSE YET\n\n",cmd="";
+	String response ="greeting fsffjksfm",cmd="";
 	while(cmd==""){  
 	    cmd=promptIn();
 	    	if (cmd=="hello")//&&response =greeting 
 
-	    /*Display the aquarium*/
-	    SwingUtilities.invokeLater(new Runnable(){    
-		    @Override
-		    public void run() {
-			new Aquarium().displayGUI(ImagesPath);
-			
-		    }
-		});
+	   
 	    
 		promptOut(response);
+		/*Handling response*/
+		if((pattern[2].matcher(response).matches())&&(pattern[1].matcher(cmd).find()))
+		    /*Display the aquarium*/
+		    SwingUtilities.invokeLater(new Runnable(){    
+			    @Override
+			    public void run() {
+				new Aquarium().displayGUI(ImagesPath);
+				
+			    }
+			});
+		else
+		    if(pattern[0].matcher(response).matches()){
+			if(pattern[3].matcher(cmd).find())  /*calling a addFish methode*/ ;
+			if(pattern[4].matcher(cmd).find()) /*calling a delFish methode*/  ;
+			if(pattern[5].matcher(cmd).find()) /*calling a startFish methode*/ ;
+		    }
+		
+		/*  TO be Used in treating response
+		// compilation de la regex
+		Pattern p = Pattern.compile(":");
+		// séparation en sous-chaînes
+		String[] items = p.split("un:deux:trois");
+		*/
+		
+		//		System.out.println(pattern[0].matcher(cmd).find());
 		/*   try{
 		
 	    }

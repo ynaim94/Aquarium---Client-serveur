@@ -23,9 +23,9 @@ class AquaPanel extends JPanel implements ActionListener{
 
     void setFishes(ArrayList<Fish> Fishes){
 	this.Fishes=new ArrayList<Fish>(Fishes.size());
-	for (Fish item : Fishes){
-	    this.Fishes.add(item.clone());
-	}
+	//	for (Fish item : Fishes){
+	//	    this.Fishes.add(item.clone());
+	//	}
     }
     Timer timer = new Timer(60, (ActionListener) this);
     public AquaPanel(String name) {
