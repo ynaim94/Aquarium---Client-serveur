@@ -48,7 +48,6 @@ static void app(void)
 
 
    fd_set rdfs;
-   int* p=&actual;
    thpool_add_work(thpool, (void*)check_timeout,(void*)&actual);
 
    while(1)
@@ -151,6 +150,8 @@ static void app(void)
                   {
                     closesocket(clients[i].sock);
                     remove_client(clients, i, &actual);
+                    //printf("supression du socket\n");
+                    //printf("le socket du client à éjecter est : %d \n", clients[i].sock);
                     //write_client(clients[i].sock,"greeting" );
                   }
                }
@@ -350,21 +351,16 @@ int check_timeout(int* nb_client)
 
   while(1)
   {
-    printf("le nombre de client à tester est : %d \n", *nb_client);
     gettimeofday(&current_time,0);
 
     for(i=0;i<*nb_client;i++)
     {
       a = current_time.tv_sec-(clients[i].last_update.tv_sec+timeout);
-      printf("current_time : %d\n", current_time.tv_sec);
-      printf("client_time: %d\n",clients[i].last_update.tv_sec);
-      printf("la différence est : %d\n", a);
       if(a>0)
       {
-        printf("le nombre de client à tester est : %d \n", *nb_client);
         Client client = clients[i];
         char buffer1[BUF_SIZE];
-        closesocket(clients[i].sock);
+        shutdown(clients[i].sock,2);
         remove_client(clients, i, nb_client);
         strcpy(buffer1,client.name);
         sprintf(buffer1, "%s%s",buffer1," is ejected due to timeout !");
