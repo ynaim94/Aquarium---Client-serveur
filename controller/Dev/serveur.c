@@ -151,8 +151,8 @@ static void app(void)
                {
                   update_freshness(&clients[i]);
                   printf("a client is talking : %s [fin]\n", buffer_msg);
-                  //thpool_add_work(thpool,(void*)parse_socket,(void*)i);
-                  parse_socket(i);
+                  thpool_add_work(thpool,(void*)parse_socket,(void*)i);
+                  //parse_socket(i);
 
                }
                break;
@@ -382,10 +382,6 @@ int parse_socket(int index)
   if (state == 0 )
   {
     sprintf(reply,"%s","no aquarium loaded yet, try again later\n");
-  }
-  else if (clients[index].state!=REJECTED)
-  {
-    sprintf(reply,"%s"," you have already a vue attached\n");
   }
   else
   {

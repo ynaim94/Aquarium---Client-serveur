@@ -69,6 +69,11 @@ int parser(const char *s)
 int parser_hello(char* reply,int index)
 {
   int i=0;
+  if (clients[index].state!=REJECTED)
+  {
+    sprintf(reply,"%s","you have already a vue attached\n");
+    return -1;
+  }
   //char* a = malloc(sizeof(char)*13);
   while ((i<nb_views) && (views[i].state == 1))
     i++;
@@ -79,10 +84,12 @@ int parser_hello(char* reply,int index)
       views[i].state=ATTACHED;
       printf("le state du view choisie : %d \n",views[i].state);
       sprintf(reply,"%s%d%s","greeting N",views[i].id,"\n");
+      return 0;
   }
   else
   {
      sprintf(reply,"%s","no greeting\n");
+     return -1;
   }
 
 
