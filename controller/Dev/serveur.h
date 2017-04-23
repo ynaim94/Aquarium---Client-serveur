@@ -40,6 +40,7 @@ static void remove_client(Client *clients, int to_remove, int *actual);
 static void clear_clients(Client *clients, int actual);
 static void update_freshness(Client* client);
 int check_timeout(int* nb_client);
+int parse_socket(int index);
 
 
 #endif /* guard */

@@ -16,7 +16,7 @@
  *Regular expressions
  */
 const char *str_hello_id="^(hello in as[ ]N[0-9]+){1}";//
-const char *str_hello="^(hello){1}";//
+const char *str_hello="(hello)+";//
 const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}";
 const char *str_del_fish="^(delFish[ ][[:alnum:]]+){1}";//
 const char *str_log_out="^(log out){1}";//
@@ -36,7 +36,8 @@ const char *str_ping="^(ping[ ]+[0-9]{4,5})";//
 * @return    an integer refering to the command recognized or an erreur code
 */
 
-int nb_views=0;
+extern int nb_views;
+extern View views[MAX_VIEW];
 View viewss[MAX_1];
 int nb_fishes=0;
 Fish fishess[MAX_1];
@@ -68,14 +69,17 @@ int parser(const char *s)
 int parser_hello(char* reply,int index)
 {
   int i=0;
+  printf("le nombre de vue : %d \n", nb_views);
   //char* a = malloc(sizeof(char)*13);
-  while ((i<nb_views) && (viewss[i].state ==ATTACHED))
+  while ((i<nb_views) && (views[i].state == 1))
     i++;
+  printf("l'index choisie : %d \n", i);
   if(i<nb_views)
   {
       clients[index].state = i;
-      viewss[i].state=ATTACHED;
-      sprintf(reply,"%s%d%s","greeting N",viewss[i].id,"\n");
+      views[i].state=ATTACHED;
+      printf("le state du view choisie : %d \n",views[i].state);
+      sprintf(reply,"%s%d%s","greeting N",views[i].id,"\n");
   }
   else
   {
@@ -107,23 +111,23 @@ int parser_hello_id(const char* s, char* reply, int index)
   tok++;
   id=atoi(tok);
   printf("%d \n",id);//à commenter
-  while ((i<nb_views) && (viewss[i].id != id))
+  while ((i<nb_views) && (views[i].id != id))
   {
-   if(viewss[i].state==FREE)
+   if(views[i].state==FREE)
     last_free=i;
    i++;
   }
-  if(((viewss[i].id == id))&&(viewss[i].state==FREE))
+  if(((views[i].id == id))&&(views[i].state==FREE))
   {
     clients[index].state = i;
-    viewss[i].state=ATTACHED;
-    sprintf(reply,"%s%d%s","greeting N",viewss[i].id,"\n");
+    views[i].state=ATTACHED;
+    sprintf(reply,"%s%d%s","greeting N",views[i].id,"\n");
   }
-  else if(((viewss[i].state ==ATTACHED)||(i==nb_views))&&(last_free != nb_views))
+  else if(((views[i].state ==ATTACHED)||(i==nb_views))&&(last_free != nb_views))
   {
     clients[index].state = i;
-    viewss[last_free].state=ATTACHED;
-    sprintf(reply,"%s%d%s","greeting N",viewss[last_free].id,"\n");
+    views[last_free].state=ATTACHED;
+    sprintf(reply,"%s%d%s","greeting N",views[last_free].id,"\n");
   }
   else
   {
@@ -139,7 +143,7 @@ int parser_hello_id(const char* s, char* reply, int index)
 */
 int parser_log_out(char* reply, int index)
 {
-  viewss[i].state=FREE;
+  viewss[index].state=FREE;
   sprintf(reply,"%s","bye\n");
 }
 /**
@@ -310,7 +314,7 @@ int parser_get_fish(const char* s, char* reply, int index)
     }
   }
 }
-int main()
+/*int main()
 {
   char buffer[1000];
   int a,i;
@@ -327,4 +331,4 @@ int main()
   a = parser_add_fish("addFish PoissonNain1 at 40x30,10x40, RandomPathWay",buffer,0);
   printf("%s",buffer);
   printf("%d \n",nb_fishes);
-}
+}*/

@@ -18,6 +18,7 @@
 #include "log/log.h"
 #include "pool/thpool.h"
 #include "prompt/prompt.h"
+#include "parseur_socket/parseur_socket.h"
 
 /**
  * @function  app
@@ -27,6 +28,8 @@
  * @return    none
  */
 extern Client clients[MAX_CLIENTS];
+extern state;
+char buffer_msg[BUF_SIZE];
 static void app(void)
 {
    open_log("./log/log.txt");
@@ -39,16 +42,18 @@ static void app(void)
    if (sock==-1)
     return;
 
-   char buffer[BUF_SIZE];
+
    /* the index for the array */
    int actual = 0;
    int max = sock;
    int len =0;
+   int i=0;
+   char buffer[BUF_SIZE];
    /* an array for all clients */
 
 
    fd_set rdfs;
-   thpool_add_work(thpool, (void*)check_timeout,(void*)&actual);
+   //thpool_add_work(thpool, (void*)check_timeout,(void*)&actual);
 
    while(1)
    {
@@ -123,14 +128,15 @@ static void app(void)
       }
       else
       {
-         int i = 0;
+         //int i = 0;
          for(i = 0; i < actual; i++)
          {
             /* a client is talking */
             if(FD_ISSET(clients[i].sock, &rdfs))
             {
                Client client = clients[i];
-               int c = read_client(clients[i].sock, buffer);
+
+               int c = read_client(clients[i].sock, buffer_msg);
                /* client disconnected */
                if(c == 0)
                {
@@ -145,15 +151,8 @@ static void app(void)
                {
                   update_freshness(&clients[i]);
                   printf("a client is talking \n" );
-                  printf("%s\n", buffer );
-                  if (strcmp(buffer,"logout\0")==0)
-                  {
-                    closesocket(clients[i].sock);
-                    remove_client(clients, i, &actual);
-                    //printf("supression du socket\n");
-                    //printf("le socket du client à éjecter est : %d \n", clients[i].sock);
-                    //write_client(clients[i].sock,"greeting" );
-                  }
+                  thpool_add_work(thpool, (void*)parse_socket,(void*)i);
+
                }
                break;
             }
@@ -371,6 +370,46 @@ int check_timeout(int* nb_client)
 
   }
 }
+
+int parse_socket(int index)
+{
+  char buffer[BUF_SIZE];
+  char reply[BUF_SIZE];
+  int to_parse;
+  strcpy(buffer,buffer_msg);
+  if (state == 0)
+  {
+    return -1;
+  }
+  else
+  {
+    //read_client(clients[index].sock,buffer);
+    //printf("%s\n",buffer);
+    to_parse=parser(buffer);
+    printf("expression reconnu : %d \n",to_parse);
+    switch(to_parse)
+    {
+        case 0:
+        {
+          parser_hello_id(buffer, reply,index);
+        }
+        break;
+        case 1:
+        {
+          parser_hello(reply,index);
+        }
+        break;
+        case 9:
+        sprintf(reply,"%s","unkown command try again");
+        break;
+
+
+    }
+    printf("%s \n", reply);
+    write_client(clients[index].sock, reply);
+  }
+}
+
 /**
  * @function  main
  * @brief     launch the app function
