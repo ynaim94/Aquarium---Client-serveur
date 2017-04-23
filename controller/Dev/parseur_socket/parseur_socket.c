@@ -16,7 +16,7 @@
  *Regular expressions
  */
 const char *str_hello_id="^(hello in as[ ]N[0-9]+){1}";//
-const char *str_hello="(hello)+";//
+const char *str_hello="^(hello){1}";//
 const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}";
 const char *str_del_fish="^(delFish[ ][[:alnum:]]+){1}";//
 const char *str_log_out="^(log out){1}";//
@@ -69,7 +69,6 @@ int parser(const char *s)
 int parser_hello(char* reply,int index)
 {
   int i=0;
-  printf("le nombre de vue : %d \n", nb_views);
   //char* a = malloc(sizeof(char)*13);
   while ((i<nb_views) && (views[i].state == 1))
     i++;

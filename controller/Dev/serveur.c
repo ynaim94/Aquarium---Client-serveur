@@ -28,7 +28,7 @@
  * @return    none
  */
 extern Client clients[MAX_CLIENTS];
-extern state;
+extern int state;
 char buffer_msg[BUF_SIZE];
 static void app(void)
 {
@@ -36,7 +36,7 @@ static void app(void)
 
    insert_log("");
 
-   threadpool thpool = thpool_init(8);
+   threadpool thpool = thpool_init(4);
 
    SOCKET sock = init_connection();
    if (sock==-1)
@@ -89,7 +89,7 @@ static void app(void)
          /* new client */
          SOCKADDR_IN csin = { 0 };
          size_t sinsize = sizeof csin;
-         int csock = accept(sock, (SOCKADDR *)&csin, &sinsize);
+         int csock = accept(sock, (SOCKADDR *)&csin,(socklen_t*)&sinsize);
 
          if(csock == SOCKET_ERROR)
          {
@@ -150,8 +150,9 @@ static void app(void)
                else
                {
                   update_freshness(&clients[i]);
-                  printf("a client is talking \n" );
-                  thpool_add_work(thpool, (void*)parse_socket,(void*)i);
+                  printf("a client is talking : %s [fin]\n", buffer_msg);
+                  //thpool_add_work(thpool,(void*)parse_socket,(void*)i);
+                  parse_socket(i);
 
                }
                break;
@@ -377,9 +378,14 @@ int parse_socket(int index)
   char reply[BUF_SIZE];
   int to_parse;
   strcpy(buffer,buffer_msg);
-  if (state == 0)
+  printf("into parse : %s\n", buffer);
+  if (state == 0 )
   {
-    return -1;
+    sprintf(reply,"%s","no aquarium loaded yet, try again later\n");
+  }
+  else if (clients[index].state!=REJECTED)
+  {
+    sprintf(reply,"%s"," you have already a vue attached\n");
   }
   else
   {
@@ -400,14 +406,13 @@ int parse_socket(int index)
         }
         break;
         case 9:
-        sprintf(reply,"%s","unkown command try again");
+        sprintf(reply,"%s","unkown command try again\n");
         break;
-
-
     }
-    printf("%s \n", reply);
-    write_client(clients[index].sock, reply);
+
   }
+  printf("%s \n", reply);
+  write_client(clients[index].sock, reply);
 }
 
 /**
