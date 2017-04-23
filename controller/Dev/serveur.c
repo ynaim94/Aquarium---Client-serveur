@@ -30,6 +30,7 @@
 extern Client clients[MAX_CLIENTS];
 extern int state;
 char buffer_msg[BUF_SIZE];
+int actual = 0;
 static void app(void)
 {
    open_log("./log/log.txt");
@@ -44,7 +45,6 @@ static void app(void)
 
 
    /* the index for the array */
-   int actual = 0;
    int max = sock;
    int len =0;
    int i=0;
@@ -401,6 +401,15 @@ int parse_socket(int index)
           parser_hello(reply,index);
         }
         break;
+        case 4:
+        {
+          parser_log_out(reply,index);
+          write_client(clients[index].sock, reply);
+          shutdown(clients[index].sock,2);
+          remove_client(clients, index, &actual);
+        }
+        break;
+
         case 9:
         sprintf(reply,"%s","unkown command try again\n");
         break;
@@ -409,6 +418,7 @@ int parse_socket(int index)
   }
   printf("%s \n", reply);
   write_client(clients[index].sock, reply);
+  
 }
 
 /**

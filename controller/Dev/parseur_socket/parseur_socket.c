@@ -105,11 +105,17 @@ int parser_hello(char* reply,int index)
 */
 int parser_hello_id(const char* s, char* reply, int index)
 {
+
   char* req = malloc (sizeof(char)*(strlen(s)+1));
   strcpy(req,s);
   char* tok;
   int last_free=nb_views,i=0;
   int id;
+  if (clients[index].state!=REJECTED)
+  {
+    sprintf(reply,"%s","you have already a vue attached\n");
+    return -1;
+  }
   tok=strtok(req," ");
   tok=strtok(NULL," ");
   tok=strtok(NULL," ");
