@@ -411,7 +411,7 @@ int parse_socket(int index)
           parser_log_out(reply,index);
           write_client(clients[index].sock, reply);
           shutdown(clients[index].sock,2);
-          //remove_client(clients, index, &actual);
+          remove_client(clients, index, &actual);
         }
         break;
 
