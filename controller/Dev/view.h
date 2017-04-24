@@ -6,7 +6,6 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#define n 3
 #define MAX_VIEW 128
 #define FREE 0
 #define ATTACHED 1

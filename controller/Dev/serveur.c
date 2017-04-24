@@ -19,6 +19,7 @@
 #include "pool/thpool.h"
 #include "prompt/prompt.h"
 #include "parseur_socket/parseur_socket.h"
+#include "view.h"
 
 /**
  * @function  app
@@ -410,8 +411,10 @@ int parse_socket(int index)
         {
           parser_log_out(reply,index);
           write_client(clients[index].sock, reply);
+          views[clients[index].state].state= FREE;
           shutdown(clients[index].sock,2);
           remove_client(clients, index, &actual);
+          return 0;
         }
         break;
 
@@ -423,6 +426,7 @@ int parse_socket(int index)
   }
   printf("%s \n", reply);
   write_client(clients[index].sock, reply);
+  return 0;
 
 }
 
