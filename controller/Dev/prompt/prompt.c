@@ -10,8 +10,8 @@
 #include "intern.h"
 #include "parser.h"
 #include "../view.h"
+#include "prompt.h"
 
-#define BUFFER_SIZE  256
 #define TAILLE_MAX 1000 // A redéfinir avec TAILLE_MAX de intern.c
 
 int get_view_id(char* str){
@@ -56,9 +56,9 @@ View* parse_view(char* str){
 
 }
 
-int display_prompt(){
+int display_prompt(int x){
   char buffer[BUFFER_SIZE];
-  int len_read;
+  //int len_read;
   int type;
   char *str_request;
   char *msg;
@@ -67,12 +67,8 @@ int display_prompt(){
   int i;
   char *positionEntree;
 
-  if  ((len_read = read(STDIN_FILENO, buffer, BUFFER_SIZE)) == -1){
-      perror("read");
-      return EXIT_FAILURE;
-    }
-    buffer[len_read-1] = '\0';
-    str_request = malloc (sizeof(char)* len_read);
+    strcpy(buffer,buffer_prompt);
+    str_request = malloc (sizeof(char)* x);
 
     type = parse (buffer);
 

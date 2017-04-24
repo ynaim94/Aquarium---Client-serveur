@@ -146,8 +146,6 @@ char* intern__load(const char* file_name, int* aquarium){
   }
 
   nb_views = 0;
-
-
   fd = open(file_name);
   if (fd == NULL){
     return "File does not exit";

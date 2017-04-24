@@ -48,6 +48,7 @@ static void app(void)
    int max = sock;
    int len =0;
    int i=0;
+   int len_read;
    char buffer[BUF_SIZE];
    /* an array for all clients */
 
@@ -81,7 +82,11 @@ static void app(void)
       /* something from standard input : i.e keyboard */
       if(FD_ISSET(STDIN_FILENO, &rdfs))
       {
-        thpool_add_work(thpool, (void*)display_prompt, NULL);
+        if  ((len_read = read(STDIN_FILENO, buffer_prompt, BUFFER_SIZE)) == -1){
+            perror("read");
+          }
+        buffer_prompt[len_read-1] = '\0';
+        thpool_add_work(thpool, (void*)display_prompt, (void*)len_read);
         /* stop process when type on keyboard */
       }
       else if(FD_ISSET(sock, &rdfs))
@@ -406,7 +411,7 @@ int parse_socket(int index)
           parser_log_out(reply,index);
           write_client(clients[index].sock, reply);
           shutdown(clients[index].sock,2);
-          remove_client(clients, index, &actual);
+          //remove_client(clients, index, &actual);
         }
         break;
 
@@ -418,7 +423,7 @@ int parse_socket(int index)
   }
   printf("%s \n", reply);
   write_client(clients[index].sock, reply);
-  
+
 }
 
 /**
