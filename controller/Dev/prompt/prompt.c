@@ -71,7 +71,7 @@ int display_prompt(int x){
     str_request = malloc (sizeof(char)* x);
 
     type = parse (buffer);
-
+    
     if ((type != 0) && (type != 5) && (state == 0))
       msg = "Aquarium Not loaded";
     else {

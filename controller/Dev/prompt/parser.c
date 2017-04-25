@@ -5,11 +5,11 @@
 
 
 char *str_regex[]= {
-  "load[ ]+[:alnum:]+", //load
+  "load[ ]+[0-9A-Za-z]+", //load
   "show[ ]+aquarium", //show
   "add[ ]+view[ ]+N[0-9]+[ ]+[0-9]+x[0-9]+\\+[0-9]+\\+[0-9]+", //add
   "del[ ]+view[ ]+N[0-9]+", //del
-  "save[:alnum:]*"  //save
+  "save[0-9A-Za-z]*"  //save
 };   
 
 int parse(const char *str_request){  
