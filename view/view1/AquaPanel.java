@@ -27,8 +27,8 @@ class AquaPanel extends JPanel implements ActionListener{
 	/*/!\ traiter tous les cas avec les positions additionnelles */
 	for(Fish newItem : newFishes){
 	    if (this.Fishes.contains(newItem)){
-		Fish item=this.Fishes.get(indexOf(newItem));
-		item.initPosition=ArrayUtils.addAll(item.initPosition, newItem.initPosition);
+		Fish item=this.Fishes.get(this.Fishes.indexOf(newItem));
+		item.initPosition.addAll(newItem.initPosition);
 	    }
 	    else {
 		this.Fishes.add(newItem);
