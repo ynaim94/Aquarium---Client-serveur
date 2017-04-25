@@ -388,6 +388,7 @@ int parse_socket(int index)
   char reply[BUF_SIZE];
   int to_parse;
   strcpy(buffer,buffer_msg);
+  printf("le contenu de buffer est :%s \n", buffer);
   if (state == 0 )
   {
     sprintf(reply,"%s","no greeting\n");

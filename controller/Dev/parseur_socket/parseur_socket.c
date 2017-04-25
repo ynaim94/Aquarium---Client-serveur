@@ -7,6 +7,7 @@
 #include "../view.h"
 #include "../fish.h"
 #include "../client.h"
+#include <regex.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,7 +18,7 @@
  */
 const char *str_hello_id="^(hello in as[ ]N[0-9]+){1}";//
 const char *str_hello="^(hello){1}";//
-const char *str_add_fish="^(addFish[ ]([[0-9A-Za-z]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[0-9A-Za-z]]+)){1}";
+const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}";
 const char *str_del_fish="^(delFish[ ][[:alnum:]]+){1}";//
 const char *str_log_out="^(log out){1}";//
 const char *str_start_fish="^(startFish[ ][[:alnum:]]+){1}";//
@@ -39,7 +40,8 @@ const char *str_ping="^(ping[ ]+[0-9]{4,5})";//
 extern int nb_views;
 extern View views[MAX_VIEW];
 View viewss[MAX_1];
-int nb_fishes=0;
+extern int nb_fishes;
+extern Fish fishes[MAX];
 Fish fishess[MAX_1];
 int parser(const char *s)
 {
@@ -192,9 +194,13 @@ int parser_add_fish(const char* s, char* reply, int index)
   strcpy(req,s);
   char **argv = NULL;
   char *p = NULL;
-  int i = 0,j=0, height=0,width=0,cpt=0;
+  int i = 0,j=0,k=0, height=0,width=0,cpt=0;
   double x=0, y=0;
   argv = malloc(sizeof(char *) * MAX_ARG);
+  for(k=0;k<MAX_ARG;k++)
+  {
+   argv[k]=NULL;
+  }
   p = strtok(req, " ,x");
   while(p != NULL)
    {
@@ -209,7 +215,7 @@ int parser_add_fish(const char* s, char* reply, int index)
       p = strtok(NULL, " ,x");
    }
   Fish fish_tmp;
-  while((j<nb_fishes)&&(strcmp(argv[1],fishess[j].name) != 0))
+  while((j<nb_fishes)&&(strcmp(argv[1],fishes[j].name) != 0))
    j++;
   if (j<nb_fishes)
     sprintf(reply,"%s","NOK\n");
@@ -243,6 +249,7 @@ int parser_add_fish(const char* s, char* reply, int index)
       free(argv[i]);
    }
    free(argv);
+   free(req);
    sprintf(reply,"%s","OK\n");
   }
   for(cpt=0;cpt<nb_fishes;cpt++)
@@ -342,9 +349,9 @@ int parser_get_fish(const char* s, char* reply, int index)
   viewss[0].y=100;
   viewss[0].height=200;
   viewss[0].width=200;
-  a = parser_add_fish("addFish PoissonNain at 20x30,10x40, RandomPathWay",buffer,0);
-  printf("%s",buffer);
-  a = parser_add_fish("addFish PoissonNain1 at 40x30,10x40, RandomPathWay",buffer,0);
+  a = parser("addFish PoissonNain at 20x30,10x40, RandomPathWay");
+  printf("%d\n",a);
+  parser_add_fish("addFish PoissonNain1 at 40x30,10x40, RandomPathWay",buffer,0);
   printf("%s",buffer);
   printf("%d \n",nb_fishes);
 }*/
