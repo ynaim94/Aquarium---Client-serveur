@@ -1,26 +1,12 @@
-avr. 11, 2017 4:59:32 PM aqua.ClientLog <init>
+avr. 25, 2017 6:19:57 PM aqua.ClientLog <init>
 CONFIG: Client logging ..
-avr. 11, 2017 4:59:34 PM aqua.ClientLog info
-INFOS: Client sent sifhseo
-avr. 11, 2017 4:59:34 PM aqua.ClientLog info
-INFOS: Client received NO RESPONSE YET
-
-
-avr. 11, 2017 4:59:46 PM aqua.ClientLog info
+avr. 25, 2017 6:20:01 PM aqua.ClientLog info
 INFOS: Client sent hello
-avr. 11, 2017 4:59:47 PM aqua.ClientLog info
+avr. 25, 2017 6:20:02 PM aqua.ClientLog info
 INFOS: Client received NO RESPONSE YET
 
 
-avr. 11, 2017 5:00:02 PM aqua.ClientLog info
+avr. 25, 2017 6:20:20 PM aqua.ClientLog info
 INFOS: Client sent hello
-avr. 11, 2017 5:00:02 PM aqua.ClientLog info
-INFOS: Client received NO RESPONSE YET
-
-
-avr. 11, 2017 5:00:05 PM aqua.ClientLog info
-INFOS: Client sent hello
-avr. 11, 2017 5:00:05 PM aqua.ClientLog info
-INFOS: Client received NO RESPONSE YET
-
-
+avr. 25, 2017 6:20:20 PM aqua.ClientLog info
+INFOS: Client received greeting N2

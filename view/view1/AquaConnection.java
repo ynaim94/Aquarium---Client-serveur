@@ -23,7 +23,7 @@ public class AquaConnection extends Thread{
 	return Fishes;
     }
     
-    public AquaConnection(InetAddress address, int port)
+    public AquaConnection(InetAddress address, int port) throws IOException
     {
 	address=address;
 	port=port;
@@ -32,29 +32,23 @@ public class AquaConnection extends Thread{
 	response ="NO RESPONSE YET\n\n";
 	/* create a scanner so we can read the command-line input*/
 	scanner = new Scanner(System.in);
+	socket=new Socket(address,port);
+    }
+
+    public void send(String cmd) throws IOException{
+	// DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+
+	// os.writeBytes(cmd + "\n");
+	PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
+	out.println(cmd);
+    }
+
+    public String receive() throws IOException{
+	BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+	return is.readLine();
     }
     
-    private void init()throws IOException{
-   socket=new Socket(address,port);
- }
-
-
-    public String receive()throws IOException{
-	//	System.out.println("SOCKET = " + socket);
-	BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-	PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
-	String str = "bonjour";
-	for (int i = 0; i < 10; i++) {
-	    	    out.println(str);
-	    str = in.readLine();
-	}
-	System.out.println("END");
-	out.println("END");
-	in.close();
-	out.close();
-	socket.close();
-	return str;    
-}
     public void  run(){
 	
 	

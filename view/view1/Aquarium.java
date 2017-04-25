@@ -8,10 +8,10 @@ import java.util.Scanner;
 public class Aquarium {
 
     private AquaPanel contentPane;
-    private AquaConnection aquaCon;
+    private static AquaConnection aquaCon;
     static int port;
     static InetAddress address;
-	static ClientLog logger;
+    static ClientLog logger;
     private void displayGUI(String ImagesPath)
     {
 	
@@ -31,62 +31,71 @@ public class Aquarium {
 	/* create a scanner so we can read the command-line input*/
 	Scanner	scanner = new Scanner(System.in);
 
-	    /* prompt for the command*/
-	    System.out.print(">"); 
-	    /*get the input as a String*/
-	    String cmd = scanner.next(); // We can also use scanner.nextInt() to return an int if needed
-	    /*TODO send cmd to server*/
-		logger.info("Client sent " + cmd);
-	    /*TODO recieve respnse from server*/
+	/* prompt for the command*/
+	System.out.print(">"); 
+	/*get the input as a String*/
+	String cmd = scanner.next(); // We can also use scanner.nextInt() to return an int if needed
+	/*TODO send cmd to server*/
+	logger.info("Client sent " + cmd);
+	/*TODO recieve respnse from server*/
 	cmd=cmd.intern();
-
+	try {
+	    aquaCon.send(cmd);
+	}
+	catch(IOException e) {
+	    System.out.println("IOEXEption \n");
+	}
+	
 	return cmd;
     }
-	static private void promptOut(String response)throws IOException
+    static private void promptOut(String response)throws IOException
     {	
 	System.out.print("<"+response); //+server's response
 	logger.info("Client received " + response);
-
+	
 
     }
 
     public static void main(String[] args) throws Exception
     {
-
 	ClientLog logger = new ClientLog();
-
+	int i=0;
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
 	port = conf.getTcpPort();
 	final String ImagesPath = conf.getVisualRepertory();
 	address = conf.getIpAddress();
 
+	aquaCon = new AquaConnection(address, port);
 	/*Prompt*/
 	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
 	String response ="NO RESPONSE YET\n\n",cmd="";
 	while(cmd==""){  
 	    cmd=promptIn();
-	    	if (cmd=="hello")//&&response =greeting 
 
-	    /*Display the aquarium*/
-	    SwingUtilities.invokeLater(new Runnable(){    
-		    @Override
-		    public void run() {
-			new Aquarium().displayGUI(ImagesPath);
-			
-		    }
-		});
-	    
-		promptOut(response);
-		/*   try{
+	    if (cmd=="hello")//&&response =greeting 
 		
-	    }
-	    catch(IOException e){
-		System.out.println("Sorry.. IOError");	
-	    }	*/
-	    	System.out.println(String.format("your command is %s, your response is %s", cmd, response));
+		/*Display the aquarium*/
+		SwingUtilities.invokeLater(new Runnable(){    
+			@Override
+			public void run() {
+			    new Aquarium().displayGUI(ImagesPath);
+			
+			}
+		    });
+	    if(i==0) i++;
+	    else
+	    response=aquaCon.receive();
+	    promptOut(response);
+	    /*   try{
+		
+		 }
+		 catch(IOException e){
+		 System.out.println("Sorry.. IOError");	
+		 }	*/
+	    System.out.println(String.format("your command is %s, your response is %s", cmd, response));
 	
-		cmd="";
+	    cmd="";
 	}
     }
     
