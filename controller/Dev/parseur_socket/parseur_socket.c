@@ -71,7 +71,7 @@ int parser_hello(char* reply,int index)
   int i=0;
   if (clients[index].state!=REJECTED)
   {
-    sprintf(reply,"%s","you have already a vue attached\n");
+    sprintf(reply,"%s","no greeting\n");
     return -1;
   }
   //char* a = malloc(sizeof(char)*13);
@@ -113,7 +113,7 @@ int parser_hello_id(const char* s, char* reply, int index)
   int id;
   if (clients[index].state!=REJECTED)
   {
-    sprintf(reply,"%s","you have already a vue attached\n");
+    sprintf(reply,"%s","no greeting\n");
     return -1;
   }
   tok=strtok(req," ");
@@ -192,7 +192,7 @@ int parser_add_fish(const char* s, char* reply, int index)
   strcpy(req,s);
   char **argv = NULL;
   char *p = NULL;
-  int i = 0,j=0, height=0,width=0;
+  int i = 0,j=0, height=0,width=0,cpt=0;
   double x=0, y=0;
   argv = malloc(sizeof(char *) * MAX_ARG);
   p = strtok(req, " ,x");
@@ -245,6 +245,10 @@ int parser_add_fish(const char* s, char* reply, int index)
    free(argv);
    sprintf(reply,"%s","OK\n");
   }
+  /*for(cpt=0;cpt<nb_fishes;cpt++)
+  {
+    printf("le nom du poisson d'index %d est : %s ",cpt,fishes[cpt])
+  }*/
 }
 
 /**

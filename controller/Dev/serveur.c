@@ -86,6 +86,10 @@ static void app(void)
         if  ((len_read = read(STDIN_FILENO, buffer_prompt, BUFFER_SIZE)) == -1){
             perror("read");
           }
+        if (len_read ==0)
+        {
+          exit(0);
+        }
         buffer_prompt[len_read-1] = '\0';
         thpool_add_work(thpool, (void*)display_prompt, (void*)len_read);
         /* stop process when type on keyboard */
@@ -384,17 +388,13 @@ int parse_socket(int index)
   char reply[BUF_SIZE];
   int to_parse;
   strcpy(buffer,buffer_msg);
-  printf("into parse : %s\n", buffer);
   if (state == 0 )
   {
-    sprintf(reply,"%s","no aquarium loaded yet, try again later\n");
+    sprintf(reply,"%s","no greeting\n");
   }
   else
   {
-    //read_client(clients[index].sock,buffer);
-    //printf("%s\n",buffer);
     to_parse=parser(buffer);
-    printf("expression reconnu : %d \n",to_parse);
     switch(to_parse)
     {
         case 0:

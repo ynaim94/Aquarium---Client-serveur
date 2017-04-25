@@ -45,7 +45,7 @@ long int getPortnumber(){
   if (!configfile)
     return -1;
   rewind(configfile);
-  char caractereActuel ;
+  char caractereActuel='\0';
   fgets(chaine, TAILLE_MAX,configfile);
   while (caractereActuel != '=')
    caractereActuel = fgetc(configfile);
