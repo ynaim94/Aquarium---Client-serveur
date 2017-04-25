@@ -160,7 +160,7 @@ static void app(void)
                else
                {
                   update_freshness(&clients[i]);
-                  printf("a client is talking : %s [fin]\n", buffer_msg);
+                  //printf("a client is talking : %s [fin]\n", buffer_msg);
                   thpool_add_work(thpool,(void*)parse_socket,(void*)i);
                   //parse_socket(i);
 
@@ -355,7 +355,7 @@ int check_timeout(int* nb_client)
   }
 
   timeout = getTimeout();
-  printf("le timeout est : %d \n", timeout );
+  //rintf("le timeout est : %d \n", timeout );
 
   close_config();
 
@@ -388,7 +388,6 @@ int parse_socket(int index)
   char reply[BUF_SIZE];
   int to_parse;
   strcpy(buffer,buffer_msg);
-  printf("le contenu de buffer est :%s \n", buffer);
   if (state == 0 )
   {
     sprintf(reply,"%s","no greeting\n");
@@ -412,6 +411,11 @@ int parse_socket(int index)
         case 2:
         {
           parser_add_fish(buffer,reply, index);
+        }
+        break;
+        case 3:
+        {
+          parser_del_fish(buffer,reply);
         }
         break;
         case 4:

@@ -252,10 +252,10 @@ int parser_add_fish(const char* s, char* reply, int index)
    free(req);
    sprintf(reply,"%s","OK\n");
   }
-  for(cpt=0;cpt<nb_fishes;cpt++)
+  /*for(cpt=0;cpt<nb_fishes;cpt++)
   {
     printf("le nom du poisson d'index %d est : %s \n",cpt,fishes[cpt].name);
-  }
+  }*/
 }
 
 /**
@@ -274,7 +274,7 @@ int parser_del_fish(const char* s, char* reply)
   strcpy(req,s);
   tok=strtok(req," ");
   tok=strtok(NULL," ");
-  while((j<nb_fishes)&&(strcmp(tok,fishess[j].name) != 0))
+  while((j<nb_fishes)&&(strcmp(tok,fishes[j].name) != 0))
    j++;
   if (j==nb_fishes)
    sprintf(reply,"%s","NOK : Poisson inexistant\n");
@@ -282,7 +282,7 @@ int parser_del_fish(const char* s, char* reply)
   {
     for(i=j;j<nb_fishes-1;i++)
     {
-      fishess[i]=fishess[i+1];
+      fishess[i]=fishes[i+1];
     }
     nb_fishes--;
     sprintf(reply,"%s","OK \n");
