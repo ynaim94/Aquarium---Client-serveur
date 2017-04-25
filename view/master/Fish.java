@@ -2,18 +2,21 @@ package aqua;
 import java.util.Arrays;
 import java.lang.*;
 import java.util.Objects;
+import java.util.ArrayList;
 
 public class Fish implements Cloneable{
     String name;
-    int initPosition[];
+    ArrayList<Integer> initPosition;
     int mobilityTime;
     int dimensions[];
+    String imageName;
 
-    public Fish(String name, int initPosition[], int mobilityTime, int dimensions[]){
+    public Fish(String name, ArrayList<Integer> initPosition, int mobilityTime, int dimensions[], String imageName){
 	this.name=name;
-	this.initPosition=Arrays.copyOf(initPosition, 2);
+	this.initPosition=new ArrayList<>(initPosition);
 	this.dimensions=Arrays.copyOf(dimensions, 2);
 	this.mobilityTime=mobilityTime;
+	this.imageName=imageName;
     }
 
     @Override
