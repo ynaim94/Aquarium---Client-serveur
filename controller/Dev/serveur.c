@@ -417,7 +417,11 @@ int parse_socket(int index)
           return 0;
         }
         break;
-
+        case 8:
+        {
+          parser_ping(buffer,reply);
+        }
+        break;
         case 9:
         sprintf(reply,"%s","unkown command try again\n");
         break;
