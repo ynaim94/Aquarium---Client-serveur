@@ -17,7 +17,7 @@
  */
 const char *str_hello_id="^(hello in as[ ]N[0-9]+){1}";//
 const char *str_hello="^(hello){1}";//
-const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}";
+const char *str_add_fish="^(addFish[ ]([[0-9A-Za-z]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[0-9A-Za-z]]+)){1}";
 const char *str_del_fish="^(delFish[ ][[:alnum:]]+){1}";//
 const char *str_log_out="^(log out){1}";//
 const char *str_start_fish="^(startFish[ ][[:alnum:]]+){1}";//
@@ -223,20 +223,20 @@ int parser_add_fish(const char* s, char* reply, int index)
    height=atoi(argv[5]);
    width=atoi(argv[6]);
    if (x>100)
-    fish_tmp.actualPosition[0]=viewss[index].x;
+    fish_tmp.actualPosition[0]=views[index].x;
    else
-    fish_tmp.actualPosition[0]=viewss[index].x+(x*viewss[index].width);
+    fish_tmp.actualPosition[0]=views[index].x+(x*views[index].width);
    if (y>100)
-     fish_tmp.actualPosition[1]=viewss[index].y;
+     fish_tmp.actualPosition[1]=views[index].y;
    else
-   fish_tmp.actualPosition[1]=viewss[index].x+(y*viewss[index].height);
+   fish_tmp.actualPosition[1]=views[index].x+(y*views[index].height);
    fish_tmp.destination[0]=0;
    fish_tmp.destination[1]=0;
    fish_tmp.dimension[0]=height;
    fish_tmp.dimension[1]=width;
    fish_tmp.state= STOPED;
    fish_tmp.mobility=RandomPathWay;
-   fishess[nb_fishes]=fish_tmp;
+   fishes[nb_fishes]=fish_tmp;
    nb_fishes++;
    for(i = 0; argv[i] != NULL; i++)
    {
@@ -245,10 +245,10 @@ int parser_add_fish(const char* s, char* reply, int index)
    free(argv);
    sprintf(reply,"%s","OK\n");
   }
-  /*for(cpt=0;cpt<nb_fishes;cpt++)
+  for(cpt=0;cpt<nb_fishes;cpt++)
   {
-    printf("le nom du poisson d'index %d est : %s ",cpt,fishes[cpt])
-  }*/
+    printf("le nom du poisson d'index %d est : %s \n",cpt,fishes[cpt].name);
+  }
 }
 
 /**

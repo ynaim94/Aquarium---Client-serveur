@@ -395,6 +395,7 @@ int parse_socket(int index)
   else
   {
     to_parse=parser(buffer);
+    printf("expression reconnu : %d \n", to_parse);
     switch(to_parse)
     {
         case 0:
@@ -405,6 +406,11 @@ int parse_socket(int index)
         case 1:
         {
           parser_hello(reply,index);
+        }
+        break;
+        case 2:
+        {
+          parser_add_fish(buffer,reply, index);
         }
         break;
         case 4:
