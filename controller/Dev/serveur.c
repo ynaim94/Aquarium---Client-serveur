@@ -391,7 +391,7 @@ int parse_socket(int index)
   strcpy(buffer,buffer_msg);
   {
     to_parse=parser(buffer);
-    printf("expression reconnu : %d \n", to_parse);
+    //printf("expression reconnu : %d \n", to_parse);
     switch(to_parse)
     {
         case 0:
@@ -429,6 +429,11 @@ int parse_socket(int index)
           parser_start_fish(buffer,reply);
         }
         break;
+        case 7:
+        {
+          parser_get_fish(buffer,reply,clients[index].state);
+        }
+        break;
         case 8:
         {
           parser_ping(buffer,reply);
@@ -440,8 +445,9 @@ int parse_socket(int index)
     }
 
   }
-  printf("%s \n", reply);
+  //printf("%s\n", reply);
   write_client(clients[index].sock, reply);
+  //memset(reply, 0, sizeof (reply));
   return 0;
 
 }

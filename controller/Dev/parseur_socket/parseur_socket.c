@@ -251,8 +251,8 @@ int parser_add_fish(const char* s, char* reply, int index)
      fish_tmp.actualPosition[1]=views[index].y;
    else
    fish_tmp.actualPosition[1]=views[index].x+(y*views[index].height);
-   fish_tmp.destination[0]=0;
-   fish_tmp.destination[1]=0;
+   fish_tmp.destination[0]=views[index].x+(x*views[index].width);
+   fish_tmp.destination[1]=views[index].x+(y*views[index].height);
    fish_tmp.dimension[0]=height;
    fish_tmp.dimension[1]=width;
    fish_tmp.state= STOPED;
@@ -352,7 +352,7 @@ int parser_start_fish(const char* s, char* reply)
 */
 int parser_get_fish(const char* s, char* reply, int index)
 {
-  int i=0,x,y;
+  int i=0,x=0,y=0;
   if (state == 0 )
   {
     sprintf(reply,"%s","NOK\n");
@@ -361,13 +361,16 @@ int parser_get_fish(const char* s, char* reply, int index)
   sprintf(reply,"%s","list ");
   for(i=0;i<nb_fishes;i++)
   {
-    if((fishess[i].destination[0]>viewss[index].x)&&(fishess[i].destination[0]<viewss[index].x+viewss[index].width)&&(fishess[i].destination[1]>viewss[index].y)&&(fishess[i].destination[1]<viewss[index].y+viewss[index].height))
+    if((fishes[i].destination[0]>views[index].x)&&(fishes[i].destination[0]<views[index].x+views[index].width)&&(fishes[i].destination[1]>views[index].y)&&(fishes[i].destination[1]<views[index].y+views[index].height)&&(fishes[i].state==STARTED))
     {
-      x=(fishess[i].destination[0]-viewss[index].x)/viewss[index].width*100;
-      y=(fishess[i].destination[1]-viewss[index].x)/viewss[index].width*100;
-      sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s",reply," [",fishess[i].name," at ",x,"x",y,",",fishess[i].dimension[0],"x",fishess[i].dimension[1],",5] ");
+      x=(fishes[i].destination[0]-views[index].x)*100/views[index].width;//views[index].width*100;
+      //printf("%d\n",x);
+      y=(fishes[i].destination[1]-views[index].y)*100/views[index].height;//views[index].width*100;
+      //printf("%d\n",y);
+      sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s",reply," [",fishes[i].name," at ",x,"x",y,",",fishes[i].dimension[0],"x",fishes[i].dimension[1],",5]");
     }
   }
+  sprintf(reply,"%s%s",reply,"\n");
 }
 /*int main()
 {
@@ -383,7 +386,7 @@ int parser_get_fish(const char* s, char* reply, int index)
   viewss[0].width=200;
   a = parser("addFish PoissonNain at 20x30,10x40, RandomPathWay");
   printf("%d\n",a);
-  parser_add_fish("addFish PoissonNain1 at 40x30,10x40, RandomPathWay",buffer,0);
+  parser_add_fish("addFish PoissonRouge at 40x30,10x40, RandomPathWay",buffer,0);
   printf("%s",buffer);
   printf("%d \n",nb_fishes);
 }*/
