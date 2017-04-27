@@ -7,13 +7,16 @@
 #include "../view.h"
 #include "../fish.h"
 #include "../client.h"
+#include "../serveur.h"
 #include <regex.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+
 #define MAX_1 20
 #define MAX_ARG 10
+#define B_SIZE 1024
 /***************************
  *Regular expressions
  */
@@ -387,6 +390,18 @@ int parser_get_fish(const char* s, char* reply, int index)
   else
   sprintf(reply,"%s","no fishes found\n");*/
   sprintf(reply,"%s%s",reply,"\n");
+}
+int parser_get_fish_continuously(const char* s,int index)
+{
+  char buffer[B_SIZE];
+  clients[index].en_continue=TRUE;
+  while(clients[index].en_continue)
+  {
+    parser_get_fish(s,buffer,clients[index].state);
+    send(clients[index].sock, buffer, strlen(buffer),0);
+    memset(buffer, 0, sizeof (buffer));
+    sleep(5);
+  }
 }
 int new_position(int index)
 {

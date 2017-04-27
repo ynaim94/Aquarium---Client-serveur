@@ -129,6 +129,7 @@ static void app(void)
          char buffer2[BUF_SIZE];
          sprintf(c.ip,"%s",inet_ntoa(csin.sin_addr));
          c.state = REJECTED;
+         c.en_continue = FALSE;
          update_freshness(&c);
 
 
@@ -407,16 +408,19 @@ int parse_socket(int index)
         break;
         case 2:
         {
+          clients[index].en_continue=FALSE;
           parser_add_fish(buffer,reply, index);
         }
         break;
         case 3:
         {
+          clients[index].en_continue=FALSE;
           parser_del_fish(buffer,reply);
         }
         break;
         case 4:
         {
+          clients[index].en_continue=FALSE;
           parser_log_out(reply,index);
           write_client(clients[index].sock, reply);
           views[clients[index].state].state= FREE;
@@ -427,11 +431,20 @@ int parse_socket(int index)
         break;
         case 5:
         {
+          clients[index].en_continue=FALSE;
           parser_start_fish(buffer,reply);
+        }
+        break;
+        case 6:
+        {
+          clients[index].en_continue=FALSE;
+          parser_get_fish_continuously(buffer,index);
+          return 0;
         }
         break;
         case 7:
         {
+          clients[index].en_continue=FALSE;
           parser_get_fish(buffer,reply,clients[index].state);
         }
         break;

@@ -9,6 +9,8 @@
 #define MAX_CLIENTS 	100
 #define IP_SIZE 20
 #define REJECTED -1
+#define TRUE 1
+#define FALSE 0
 #include <sys/time.h>
 
 
@@ -27,6 +29,7 @@ typedef struct
    int sock;
    char name[BUFFER_SIZE];
    char ip[IP_SIZE];
+   int en_continue;
    int state;
    struct timeval last_update;
 }Client;
