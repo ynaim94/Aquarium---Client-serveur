@@ -23,6 +23,8 @@ int parser_del_fish(const char* s, char* reply);
 int parser_start_fish(const char* s, char* reply);
 int parser_log_out(char* reply, int index);
 int parser_ping(const char* s, char* reply);
-
-
+/*************************
+ *intern fonction
+ */
+int new_position(int i);
 #endif

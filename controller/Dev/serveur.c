@@ -34,6 +34,7 @@ char buffer_msg[BUF_SIZE];
 int actual = 0;
 static void app(void)
 {
+   srand(time(NULL));
    open_log("./log/log.txt");
 
    insert_log("");
@@ -447,7 +448,7 @@ int parse_socket(int index)
   }
   printf("%s\n", reply);
   write_client(clients[index].sock, reply);
-  //memset(reply, 0, sizeof (reply));
+  memset(reply, 0, sizeof (reply));
   return 0;
 
 }

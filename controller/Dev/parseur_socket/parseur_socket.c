@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #define MAX_1 20
 #define MAX_ARG 10
 /***************************
@@ -354,14 +355,23 @@ int parser_start_fish(const char* s, char* reply)
 */
 int parser_get_fish(const char* s, char* reply, int index)
 {
-  int i=0,x=0,y=0,cpt=0;
+  int i=0,x=0,y=0,cpt=0,time=0;
   if (state == 0 )
   {
     sprintf(reply,"%s","NOK\n");
     return -1;
   }
+  sprintf(reply,"%s","list");
   for(i=0;i<nb_fishes;i++)
   {
+    if((fishes[i].actualPosition[0]>views[index].x)&&(fishes[i].actualPosition[0]<views[index].x+views[index].width)&&(fishes[i].actualPosition[1]>views[index].y)&&(fishes[i].actualPosition[1]<views[index].y+views[index].height)&&(fishes[i].state==STARTED))
+    {
+      //appel à la fonction de calcul de position
+      new_position(i);
+      fishes[i].actualPosition[0]=fishes[i].destination[0];
+      fishes[i].actualPosition[1]=fishes[i].destination[1];
+
+    }
     if((fishes[i].destination[0]>views[index].x)&&(fishes[i].destination[0]<views[index].x+views[index].width)&&(fishes[i].destination[1]>views[index].y)&&(fishes[i].destination[1]<views[index].y+views[index].height)&&(fishes[i].state==STARTED))
     {
       cpt++;
@@ -369,14 +379,22 @@ int parser_get_fish(const char* s, char* reply, int index)
       //printf("%d\n",x);
       y=(fishes[i].destination[1]-views[index].y)*100/views[index].height;//views[index].width*100;
       //printf("%d\n",y);
-      sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s",reply," [",fishes[i].name," at ",x,"x",y,",",fishes[i].dimension[0],"x",fishes[i].dimension[1],",5]");
+      sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s%d%s",reply," [",fishes[i].name," at ",x,"x",y,",",fishes[i].dimension[0],"x",fishes[i].dimension[1],",",time,"]");
     }
   }
   /*if(cpt>0)
   sprintf(reply,"%s%s%s","list ",reply,"\n");
   else
   sprintf(reply,"%s","no fishes found\n");*/
-  sprintf(reply,"%s%s%s","list ",reply,"\n");
+  sprintf(reply,"%s%s",reply,"\n");
+}
+int new_position(int index)
+{
+    int i=0;
+    for(i=0;i<DIM;i++)
+    {
+      fishes[index].destination[i]=rand()%40 + fishes[index].actualPosition[i];
+    }
 }
 /*int main()
 {
