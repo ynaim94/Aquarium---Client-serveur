@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS= -g
 ALLFLAGS= -D THPOOL_DEBUG
 PFLAGS= -pthread
-all : serveur 
+all : serveur clean_o
 serveur: serveur.o config.o log.o thpool.o parseur_socket.o config/config.h client.h serveur.h log/log.h pool/thpool.h prompt.o intern.o parser.o parseur_socket/parseur_socket.h
 	$(CC) -o $@ $(CFLAGS) $(PFLAGS) $^
 serveur.o : serveur.c

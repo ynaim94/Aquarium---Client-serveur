@@ -37,7 +37,8 @@ static void app(void)
    open_log("./log/log.txt");
 
    insert_log("");
-
+   printf("********Welcome to the aquarium's controller********\n");
+   printf("-> Please load an aquarium\n\n");
    threadpool thpool = thpool_init(4);
 
    SOCKET sock = init_connection();
@@ -388,11 +389,6 @@ int parse_socket(int index)
   char reply[BUF_SIZE];
   int to_parse;
   strcpy(buffer,buffer_msg);
-  if (state == 0 )
-  {
-    sprintf(reply,"%s","no greeting\n");
-  }
-  else
   {
     to_parse=parser(buffer);
     printf("expression reconnu : %d \n", to_parse);
@@ -426,6 +422,11 @@ int parse_socket(int index)
           shutdown(clients[index].sock,2);
           remove_client(clients, index, &actual);
           return 0;
+        }
+        break;
+        case 5:
+        {
+          parser_start_fish(buffer,reply);
         }
         break;
         case 8:

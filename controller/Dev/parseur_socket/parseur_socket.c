@@ -71,20 +71,25 @@ int parser(const char *s)
 int parser_hello(char* reply,int index)
 {
   int i=0;
-  if (clients[index].state!=REJECTED)
+  if (state == 0 )
   {
     sprintf(reply,"%s","no greeting\n");
     return -1;
   }
+  if (clients[index].state!=REJECTED)
+  {
+    sprintf(reply,"%s","no greeting\n");
+
+  }
   //char* a = malloc(sizeof(char)*13);
   while ((i<nb_views) && (views[i].state == 1))
     i++;
-  printf("l'index choisie : %d \n", i);
+  //printf("l'index choisie : %d \n", i);
   if(i<nb_views)
   {
       clients[index].state = i;
       views[i].state=ATTACHED;
-      printf("le state du view choisie : %d \n",views[i].state);
+      //printf("le state du view choisie : %d \n",views[i].state);
       sprintf(reply,"%s%d%s","greeting N",views[i].id,"\n");
       return 0;
   }
@@ -113,6 +118,11 @@ int parser_hello_id(const char* s, char* reply, int index)
   char* tok;
   int last_free=nb_views,i=0;
   int id;
+  if (state == 0 )
+  {
+    sprintf(reply,"%s","no greeting\n");
+    return -1;
+  }
   if (clients[index].state!=REJECTED)
   {
     sprintf(reply,"%s","no greeting\n");
@@ -196,6 +206,11 @@ int parser_add_fish(const char* s, char* reply, int index)
   char *p = NULL;
   int i = 0,j=0,k=0, height=0,width=0,cpt=0;
   double x=0, y=0;
+  if (state == 0 )
+  {
+    sprintf(reply,"%s","NOK\n");
+    return -1;
+  }
   argv = malloc(sizeof(char *) * MAX_ARG);
   for(k=0;k<MAX_ARG;k++)
   {
@@ -254,7 +269,7 @@ int parser_add_fish(const char* s, char* reply, int index)
   }
   /*for(cpt=0;cpt<nb_fishes;cpt++)
   {
-    printf("le nom du poisson d'index %d est : %s \n",cpt,fishes[cpt].name);
+    printf("le nom du poisson d'index %d est : %s \nla position du poisson est : %d,%d\nson state est : %d\n",cpt,fishes[cpt].name,fishes[cpt].actualPosition[0],fishes[cpt].actualPosition[1],fishes[cpt].state);
   }*/
 }
 
@@ -268,8 +283,13 @@ int parser_add_fish(const char* s, char* reply, int index)
 */
 int parser_del_fish(const char* s, char* reply)
 {
-  char* tok;
+  char* tok=NULL;
   int j=0, i=0;
+  if (state == 0 )
+  {
+    sprintf(reply,"%s","NOK\n");
+    return -1;
+  }
   char* req = malloc (sizeof(char)*(strlen(s)+1));
   strcpy(req,s);
   tok=strtok(req," ");
@@ -286,6 +306,7 @@ int parser_del_fish(const char* s, char* reply)
     }
     nb_fishes--;
     sprintf(reply,"%s","OK \n");
+
   }
 
 }
@@ -299,20 +320,26 @@ int parser_del_fish(const char* s, char* reply)
 */
 int parser_start_fish(const char* s, char* reply)
 {
-  char* tok;
+  char* tok=NULL;
   int j=0, i=0;
+  if (state == 0 )
+  {
+    sprintf(reply,"%s","NOK\n");
+    return -1;
+  }
   char* req = malloc (sizeof(char)*(strlen(s)+1));
   strcpy(req,s);
   tok=strtok(req," ");
   tok=strtok(NULL," ");
-  while((j<nb_fishes)&&(strcmp(tok,fishess[j].name) != 0))
+  while((j<nb_fishes)&&(strcmp(tok,fishes[j].name) != 0))
    j++;
   if (j==nb_fishes)
    sprintf(reply,"%s","NOK : Poisson inexistant\n");
   else
   {
-    fishess[j].state=STARTED;
+    fishes[j].state=STARTED;
     sprintf(reply,"%s","OK\n");
+    //printf("le nom du poisson started est : %s \nson state est : %d",fishes[j].name,fishes[j].state);
   }
 }
 /**
@@ -326,6 +353,11 @@ int parser_start_fish(const char* s, char* reply)
 int parser_get_fish(const char* s, char* reply, int index)
 {
   int i=0,x,y;
+  if (state == 0 )
+  {
+    sprintf(reply,"%s","NOK\n");
+    return -1;
+  }
   sprintf(reply,"%s","list ");
   for(i=0;i<nb_fishes;i++)
   {
@@ -333,7 +365,7 @@ int parser_get_fish(const char* s, char* reply, int index)
     {
       x=(fishess[i].destination[0]-viewss[index].x)/viewss[index].width*100;
       y=(fishess[i].destination[1]-viewss[index].x)/viewss[index].width*100;
-      sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s",reply," [",fishess[i].name," at ",x,"x",y,",",fishess[i].dimension[0],"x",fishess[i].dimension[1],",5]");
+      sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s",reply," [",fishess[i].name," at ",x,"x",y,",",fishess[i].dimension[0],"x",fishess[i].dimension[1],",5] ");
     }
   }
 }
