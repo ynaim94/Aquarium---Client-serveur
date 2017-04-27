@@ -19,6 +19,7 @@ public class ClientLog {
 			e.printStackTrace();
 		}
 		fh.setFormatter(new SimpleFormatter());
+		logger.setUseParentHandlers(false);
 		logger.addHandler(fh);
 		logger.setLevel(Level.CONFIG);
 	    logger.config("Client logging ..");  

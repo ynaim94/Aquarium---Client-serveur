@@ -18,11 +18,9 @@ public class AquaConnection extends Thread{
 
     private ArrayList<Fish> Fishes;
     
-
     ArrayList<Fish> getFishes(){
 	return Fishes;
     }
-    
     public AquaConnection(InetAddress address, int port) throws IOException
     {
 	address=address;
@@ -34,7 +32,7 @@ public class AquaConnection extends Thread{
 	scanner = new Scanner(System.in);
 	socket=new Socket(address,port);
     }
-
+    
     public void send(String cmd) throws IOException{
 	// DataOutputStream os = new DataOutputStream(socket.getOutputStream());
 
@@ -48,7 +46,8 @@ public class AquaConnection extends Thread{
 
 	return is.readLine();
     }
-    
+
+
     public void  run(){
 	
 	
