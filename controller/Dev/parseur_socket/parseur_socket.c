@@ -79,7 +79,7 @@ int parser_hello(char* reply,int index)
   if (clients[index].state!=REJECTED)
   {
     sprintf(reply,"%s","no greeting\n");
-
+    return -1;
   }
   //char* a = malloc(sizeof(char)*13);
   while ((i<nb_views) && (views[i].state == 1))
@@ -91,6 +91,7 @@ int parser_hello(char* reply,int index)
       views[i].state=ATTACHED;
       //printf("le state du view choisie : %d \n",views[i].state);
       sprintf(reply,"%s%d%s","greeting N",views[i].id,"\n");
+      printf("%d \n",clients[index].state);
       return 0;
   }
   else
@@ -123,7 +124,7 @@ int parser_hello_id(const char* s, char* reply, int index)
     sprintf(reply,"%s","no greeting\n");
     return -1;
   }
-  if (clients[index].state!=REJECTED)
+  if (clients[index].state!= REJECTED)
   {
     sprintf(reply,"%s","no greeting\n");
     return -1;
@@ -157,6 +158,7 @@ int parser_hello_id(const char* s, char* reply, int index)
   {
     sprintf(reply,"%s","no greeting\n");
   }
+  printf("%d \n",clients[index].state);
 }
 /**
 * @function  parser_log_out
@@ -352,17 +354,17 @@ int parser_start_fish(const char* s, char* reply)
 */
 int parser_get_fish(const char* s, char* reply, int index)
 {
-  int i=0,x=0,y=0;
+  int i=0,x=0,y=0,cpt=0;
   if (state == 0 )
   {
     sprintf(reply,"%s","NOK\n");
     return -1;
   }
-  sprintf(reply,"%s","list ");
   for(i=0;i<nb_fishes;i++)
   {
     if((fishes[i].destination[0]>views[index].x)&&(fishes[i].destination[0]<views[index].x+views[index].width)&&(fishes[i].destination[1]>views[index].y)&&(fishes[i].destination[1]<views[index].y+views[index].height)&&(fishes[i].state==STARTED))
     {
+      cpt++;
       x=(fishes[i].destination[0]-views[index].x)*100/views[index].width;//views[index].width*100;
       //printf("%d\n",x);
       y=(fishes[i].destination[1]-views[index].y)*100/views[index].height;//views[index].width*100;
@@ -370,7 +372,11 @@ int parser_get_fish(const char* s, char* reply, int index)
       sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s",reply," [",fishes[i].name," at ",x,"x",y,",",fishes[i].dimension[0],"x",fishes[i].dimension[1],",5]");
     }
   }
-  sprintf(reply,"%s%s",reply,"\n");
+  /*if(cpt>0)
+  sprintf(reply,"%s%s%s","list ",reply,"\n");
+  else
+  sprintf(reply,"%s","no fishes found\n");*/
+  sprintf(reply,"%s%s%s","list ",reply,"\n");
 }
 /*int main()
 {
