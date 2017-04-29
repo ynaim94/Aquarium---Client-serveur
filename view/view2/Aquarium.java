@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import javax.swing.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Aquarium {
     private static Pattern [] pattern;
@@ -101,7 +102,7 @@ public class Aquarium {
 	    else{response ="OK"; //test
 		if(pattern[0].matcher(response).matches()){/*OK*/
 		    if(pattern[3].matcher(cmd).matches())  /*addFish*/ {
-			System.out.println("calling addFish methode");
+			System.out.println("calling addFish method");
 
 			Pattern p = Pattern.compile(" |(, )|(x)");
 			// splitting in sub-strings
@@ -136,10 +137,32 @@ public class Aquarium {
 			contentPane.Fishes.add(tempFish);
 
 		    }
+			
+			
 		    if(pattern[4].matcher(cmd).matches()) /*delFish*/ {
-			System.out.println("calling delFish methode"); ;
+			System.out.println("calling delFish method"); ;
+		
+			Pattern p = Pattern.compile(" |(, )|(x)");
+			// splitting in sub-strings
+			String command = cmd; 
+			String[] items = p.split(command); // ex pour: delFish PoissonNain => [delFish, PoissonNain]
 	 
+			/* for the test
+			   for(String myitem : items){
+			   System.out.println(myitem);
+			   }*/
+			
+			
+			System.out.println(contentPane.Fishes.size()); //WARNING Exception in thread "main" java.lang.NullPointerException
+			
+			for(Fish ifish : contentPane.Fishes){				
+				if (ifish.name.equals(items[1])) {
+					contentPane.Fishes.remove(ifish);
+					}
+				 }
 		    }
+			
+			
 		    if(pattern[5].matcher(cmd).matches()) /*startFish*/ {
 			System.out.println("calling startFish methode"); ;
 	 
