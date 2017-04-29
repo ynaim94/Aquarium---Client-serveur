@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Aquarium {
     private static Pattern [] pattern;
     private static Matcher matcher;
-    private AquaPanel contentPane;
+    private static AquaPanel contentPane;
     private AquaConnection aquaCon;
     private static int port;
     private static InetAddress address;
@@ -102,24 +102,38 @@ public class Aquarium {
 		if(pattern[0].matcher(response).matches()){/*OK*/
 		    if(pattern[3].matcher(cmd).matches())  /*addFish*/ {
 			System.out.println("calling addFish methode");
-			// contentPane.Fishes is an ArrayList
 
-			Pattern p = Pattern.compile(" |(, )");
+			Pattern p = Pattern.compile(" |(, )|(x)");
 			// splitting in sub-strings
 			String command = cmd; 
-			String[] items = p.split(command); // ex pour: addFish PoissonNain at 61x52, 4x3, RandomWayPoint => [addFish, PoissonNain, at, 61x52, 4x3, RandomWayPoint]
+			String[] items = p.split(command); // ex pour: addFish PoissonNain at 61x52, 4x3, RandomWayPoint => [addFish, PoissonNain, at, 61, 52, 4, 3, RandomWayPoint]
 	 
 			/* for the test
 			   for(String myitem : items){
 			   System.out.println(myitem);
 			   }*/
-	 
+	 			
+			
 			//filling
-			contentPane.Fishes.name;
-			ArrayList<Integer> initPosition;
-			int mobilityTime;
-			int dimensions[];
-			String imageName;
+			// contentPane.Fishes is an ArrayList<Fish>
+
+			String name = new String(items[1]);
+			
+			ArrayList<Integer> initPosition = new ArrayList<Integer>();
+			initPosition.add(Integer.parseInt(items[3]));
+			initPosition.add(Integer.parseInt(items[4]));
+			
+			int mobilityTime = 5; // par defaut
+
+			int dimensions[] = new int [2];
+			dimensions[0] =  Integer.parseInt(items[5]);
+			dimensions[1] =  Integer.parseInt(items[6]);
+			
+			String imageName = new String(items[1]); //for the moment we leave it like this
+
+			Fish tempFish= new Fish(name, initPosition, mobilityTime, dimensions, imageName);		
+			
+			contentPane.Fishes.add(tempFish);
 
 		    }
 		    if(pattern[4].matcher(cmd).matches()) /*delFish*/ {
@@ -131,7 +145,7 @@ public class Aquarium {
 	 
 		    }
 		}	
-
+			   
 		response ="bye"; //test
 		if((pattern[6].matcher(cmd).matches())&&(pattern[7].matcher(response).find())){/*log out & bye*/
 		    if(frame.isDisplayable())
