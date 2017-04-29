@@ -1,30 +1,14 @@
-Apr 19, 2017 12:33:55 AM aqua.ClientLog <init>
+Apr 29, 2017 8:41:36 PM aqua.ClientLog <init>
 CONFIG: Client logging ..
-Apr 19, 2017 12:33:57 AM aqua.ClientLog info
-INFO: Client sent hello
-Apr 19, 2017 12:33:58 AM aqua.ClientLog info
-INFO: Client received greeting N1
-Apr 19, 2017 12:34:05 AM aqua.ClientLog info
-INFO: Client sent getFishes
-Apr 19, 2017 12:34:05 AM aqua.ClientLog info
-INFO: Client received greeting N1
-Apr 19, 2017 12:34:17 AM aqua.ClientLog info
-INFO: Client sent getFishesContinuously
-Apr 19, 2017 12:34:17 AM aqua.ClientLog info
-INFO: Client received greeting N1
-Apr 19, 2017 12:34:53 AM aqua.ClientLog info
-INFO: Client sent addFish
-Apr 19, 2017 12:34:53 AM aqua.ClientLog info
-INFO: Client received bye
-Apr 19, 2017 12:34:58 AM aqua.ClientLog info
-INFO: Client sent addFish dk
-Apr 19, 2017 12:34:58 AM aqua.ClientLog info
-INFO: Client received bye
-Apr 19, 2017 12:35:04 AM aqua.ClientLog info
-INFO: Client sent log out 
-Apr 19, 2017 12:35:04 AM aqua.ClientLog info
-INFO: Client received bye
-Apr 19, 2017 12:35:08 AM aqua.ClientLog info
-INFO: Client sent log out
-Apr 19, 2017 12:35:08 AM aqua.ClientLog info
-INFO: Client received bye
+Apr 29, 2017 8:41:36 PM aqua.ClientLog info
+INFO: Client sent sh
+Apr 29, 2017 8:41:36 PM aqua.ClientLog info
+INFO: Client received 
+Apr 29, 2017 8:41:41 PM aqua.ClientLog info
+INFO: Client sent hello in as k$
+Apr 29, 2017 8:41:41 PM aqua.ClientLog info
+INFO: Client received greeting N8
+Apr 29, 2017 8:41:53 PM aqua.ClientLog info
+INFO: Client sent addFish fish6
+Apr 29, 2017 8:41:53 PM aqua.ClientLog info
+INFO: Client received unkown command try again

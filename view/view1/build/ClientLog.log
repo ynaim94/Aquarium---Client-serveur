@@ -1,12 +1,18 @@
-avr. 25, 2017 6:19:57 PM aqua.ClientLog <init>
+Apr 28, 2017 8:58:02 PM aqua.ClientLog <init>
 CONFIG: Client logging ..
-avr. 25, 2017 6:20:01 PM aqua.ClientLog info
-INFOS: Client sent hello
-avr. 25, 2017 6:20:02 PM aqua.ClientLog info
-INFOS: Client received NO RESPONSE YET
-
-
-avr. 25, 2017 6:20:20 PM aqua.ClientLog info
-INFOS: Client sent hello
-avr. 25, 2017 6:20:20 PM aqua.ClientLog info
-INFOS: Client received greeting N2
+Apr 28, 2017 8:58:10 PM aqua.ClientLog info
+INFO: Client sent ho
+Apr 28, 2017 8:58:10 PM aqua.ClientLog info
+INFO: Client received bye
+Apr 28, 2017 8:58:25 PM aqua.ClientLog info
+INFO: Client sent njh
+Apr 28, 2017 8:58:25 PM aqua.ClientLog info
+INFO: Client received unkown command try again
+Apr 28, 2017 8:58:38 PM aqua.ClientLog info
+INFO: Client sent hello in as N5
+Apr 28, 2017 8:58:40 PM aqua.ClientLog info
+INFO: Client received greeting N1
+Apr 28, 2017 8:59:19 PM aqua.ClientLog info
+INFO: Client sent log out
+Apr 28, 2017 8:59:19 PM aqua.ClientLog info
+INFO: Client received unkown command try again
