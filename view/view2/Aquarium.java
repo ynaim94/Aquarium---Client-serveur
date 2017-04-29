@@ -152,10 +152,8 @@ public class Aquarium {
 			   System.out.println(myitem);
 			   }*/
 			
-			
-			System.out.println(contentPane.Fishes.size()); //WARNING Exception in thread "main" java.lang.NullPointerException
-			
-			for(Fish ifish : contentPane.Fishes){				
+
+			for(Fish ifish : contentPane.Fishes){	 //WARNING Exception in thread "main" java.lang.NullPointerException
 				if (ifish.name.equals(items[1])) {
 					contentPane.Fishes.remove(ifish);
 					}
