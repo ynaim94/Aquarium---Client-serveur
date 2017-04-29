@@ -19,6 +19,7 @@ public class Aquarium {
     private static boolean connected=false;
     /* create a scanner so we can read the command-line input*/
     static Scanner	scanner = new Scanner(System.in);
+
     private void displayGUI(String ImagesPath)
     {
         frame = new JFrame("Aquarium");
@@ -153,11 +154,15 @@ public class Aquarium {
 			   }*/
 			
 
+
+
+			if (contentPane == null)
+			    System.out.println("Vide!");
 			for(Fish ifish : contentPane.Fishes){	 //WARNING Exception in thread "main" java.lang.NullPointerException
-				if (ifish.name.equals(items[1])) {
-					contentPane.Fishes.remove(ifish);
-					}
-				 }
+			    if (ifish.name.equals(items[1])) {
+				    contentPane.Fishes.remove(ifish);
+				}
+			}
 		    }
 			
 			
