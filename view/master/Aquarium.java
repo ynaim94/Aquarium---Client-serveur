@@ -3,7 +3,7 @@ import java.util.regex.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
-import java.util.Scanner;
+import java.util.Scanner;ma
 import java.util.ArrayList;
 
 public class Aquarium {
@@ -75,7 +75,7 @@ public class Aquarium {
 	final String ImagesPath = conf.getVisualRepertory();
 	address = conf.getIpAddress();
 	try{
-	aquaCon = new AquaConnection(address, port);
+	aquaCon = new AquaConnection();
 	/*cmd patterns*/
 	pattern=new Pattern[10];  
 	pattern[0]=Pattern.compile("OK");//,Pattern.CASE_INSENSITIVE);
@@ -91,15 +91,19 @@ public class Aquarium {
 	/*Prompt*/
 	//	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
 	String response ="",cmd="";
+
 	while(cmd==""){  
+	    if (connected==false){
+		aquaCon.openConnection(address,port);
+		connected=true;
+	    }
 	    cmd=promptIn();
 	    response=aquaCon.receive();
 	    promptOut(response);
 	    //	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 	    /*Handling response*/
-	    if(pattern[2].matcher(response).matches())/* greeting*/
-		{
-		    if (connected==false){
+		if(pattern[2].matcher(response).matches())/* greeting*/
+		    {	
 			/*Display the aquarium*/
 			SwingUtilities.invokeLater(new Runnable(){    
 				@Override
@@ -107,33 +111,29 @@ public class Aquarium {
 				    new Aquarium().displayGUI(ImagesPath);
 				}
 			    });
-			connected=true;
 		    }
+		else if(pattern[8].matcher(cmd).matches()){/*getFishes*/
+		    System.out.println("calling setFish methode (to update the arrayList Fishes)");
 		}
-	    else if(pattern[8].matcher(cmd).matches()){/*getFishes*/
-		System.out.println("calling setFish methode (to update the arrayList Fishes)");
+		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
+		    System.out.println("listening continuously+ promptout() with each response");
 	    }
-	    else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
-		System.out.println("listening continuously+ promptout() with each response");
-	    }
-	    else{
-		if(pattern[0].matcher(response).matches()){/*OK*/
-		    if(pattern[3].matcher(cmd).matches()){  /*addFish*/
+		else{
+		    if(pattern[0].matcher(response).matches()){/*OK*/
+			if(pattern[3].matcher(cmd).matches()){  /*addFish*/
 			    addFish(cmd);
 			} 
-		    if(pattern[4].matcher(cmd).matches()) /*delFish*/
-			System.out.println("calling delFish methode"); ;
-		    if(pattern[5].matcher(cmd).matches()) /*startFish*/
-			System.out.println("calling startFish methode"); ;
-		}	
-		
-		//	response ="bye"; //test
-		if((pattern[6].matcher(cmd).matches())&&(pattern[7].matcher(response).find())){/*log out & bye*/
-		    if(frame.isDisplayable())
-			frame.setVisible(false);
-		    connected=false;
-		    //aquaCon.closeConnection();??   
-		}	
+			if(pattern[4].matcher(cmd).matches()) /*delFish*/
+			    System.out.println("calling delFish methode"); ;
+			if(pattern[5].matcher(cmd).matches()) /*startFish*/
+			    System.out.println("calling startFish methode"); ;
+		    }
+		    if((pattern[6].matcher(cmd).find())&&(pattern[7].matcher(response).find())){/*log out & bye*/
+			if(frame.isDisplayable())
+			    frame.setVisible(false);
+			aquaCon.closeConnection();
+			connected=false;	
+		    }	
 	    }
 	    cmd="";
 	}
