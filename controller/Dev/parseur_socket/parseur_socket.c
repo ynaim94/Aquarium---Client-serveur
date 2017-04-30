@@ -358,7 +358,7 @@ int parser_start_fish(const char* s, char* reply)
 */
 int parser_get_fish(const char* s, char* reply, int index)
 {
-  int i=0,x=0,y=0,cpt=0,time=0;
+  int i=0,x=0,y=0,cpt=0,time=5;
   if (state == 0 )
   {
     sprintf(reply,"%s","NOK\n");
@@ -385,11 +385,13 @@ int parser_get_fish(const char* s, char* reply, int index)
       sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s%d%s",reply," [",fishes[i].name," at ",x,"x",y,",",fishes[i].dimension[0],"x",fishes[i].dimension[1],",",time,"]");
     }
   }
-  /*if(cpt>0)
-  sprintf(reply,"%s%s%s","list ",reply,"\n");
+  if(cpt==0)
+  {
+    memset(reply, 0, sizeof (reply));
+    sprintf(reply,"%s","no fishes found\n");
+  }
   else
-  sprintf(reply,"%s","no fishes found\n");*/
-  sprintf(reply,"%s%s",reply,"\n");
+    sprintf(reply,"%s%s",reply,"\n");
 }
 int parser_get_fish_continuously(const char* s,int index)
 {
