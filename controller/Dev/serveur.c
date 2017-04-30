@@ -111,12 +111,6 @@ static void app(void)
          else
             printf("new client accepté\n");
 
-         /* after connecting the client sends its name */
-         if(read_client(csock, buffer) == -1)
-         {
-            /* disconnected */
-            continue;
-         }
 
          /* what is the new maximum fd ? */
          max = csock > max ? csock : max;
@@ -124,9 +118,6 @@ static void app(void)
          FD_SET(csock, &rdfs);
 
          Client c = { csock };
-         strncpy(c.name, buffer, BUF_SIZE - 1);
-         printf("Client name : %s\n", c.name);
-         char buffer2[BUF_SIZE];
          sprintf(c.ip,"%s",inet_ntoa(csin.sin_addr));
          c.state = REJECTED;
          c.en_continue = FALSE;
@@ -134,7 +125,6 @@ static void app(void)
 
 
          clients[actual] = c;
-         printf("Client name : %s\n",clients[actual].name);
          printf("adresse ip : %s\n",clients[actual].ip);
          printf("time : %d \n", clients[actual].last_update.tv_sec);
          actual++;
@@ -155,8 +145,9 @@ static void app(void)
                {
                   char buffer1[BUF_SIZE];
                   closesocket(clients[i].sock);
+                  views[clients[i].state].state= FREE;
                   remove_client(clients, i, &actual);
-                  strcpy(buffer,client.name);
+                  strcpy(buffer,client.ip);
                   sprintf(buffer1, "%s%s",buffer," is disconnected !");
                   printf("%s\n", buffer1 );
                }
@@ -375,7 +366,7 @@ int check_timeout(int* nb_client)
         char buffer1[BUF_SIZE];
         shutdown(clients[i].sock,2);
         remove_client(clients, i, nb_client);
-        strcpy(buffer1,client.name);
+        strcpy(buffer1,client.ip);
         sprintf(buffer1, "%s%s",buffer1," is ejected due to timeout !");
         printf("%s\n", buffer1 );
       }

@@ -27,7 +27,6 @@
 typedef struct
 {
    int sock;
-   char name[BUFFER_SIZE];
    char ip[IP_SIZE];
    int en_continue;
    int state;
