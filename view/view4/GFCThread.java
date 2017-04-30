@@ -1,7 +1,7 @@
 package aqua;
 import java.io.*;
 
-public class GFCThread{
+public class GFCThread extends Thread{
 
     private AquaConnection aquaCon;
     private Aquarium aquarium;
@@ -13,11 +13,10 @@ public class GFCThread{
     public void run(){
 	try{
 	    aquaCon.send("getFishesContinuously");
-	    
 	    while(true){
 		String response = aquaCon.receive();
 		aquarium.getFishes(response);
-		System.out.println("> "+response);
+		//System.out.println(">> "+response);
 	    }
 	}
 	catch (IOException e){

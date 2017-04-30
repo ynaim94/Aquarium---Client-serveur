@@ -26,6 +26,8 @@ class AquaPanel extends JPanel implements ActionListener{
     void setFishes(ArrayList<Fish> newFishes){
 	/* initialisation ? */
 	/*/!\ traiter tous les cas avec les positions additionnelles */
+	System.out.println("Ajout de fish");
+	fishesToString(this.Fishes);
 	for(Fish newItem : newFishes){
 	    if (this.Fishes.contains(newItem)){
 		Fish item=this.Fishes.get(this.Fishes.indexOf(newItem));
@@ -36,6 +38,8 @@ class AquaPanel extends JPanel implements ActionListener{
 	    }
 	}
     }
+
+    
     
     public void setAddFish(String[] items){
 	ArrayList<Integer> initPosition = new ArrayList<Integer>();
@@ -43,7 +47,7 @@ class AquaPanel extends JPanel implements ActionListener{
 	int dimensions[] = new int[2];
 	int mobilityTime = 5; // par defaut
 	Fish tmpFish ;
-	    
+	System.out.println("Entre");
 	initPosition.add(Integer.parseInt(items[3]));
 	initPosition.add(Integer.parseInt(items[4]));
 	dimensions[0] = Integer.parseInt(items[5]);
@@ -80,7 +84,7 @@ class AquaPanel extends JPanel implements ActionListener{
 	setFishes(newFishes);
     }
 
-
+    
 
     Timer timer = new Timer(60, (ActionListener) this);
     public AquaPanel(String name) {
@@ -131,5 +135,18 @@ class AquaPanel extends JPanel implements ActionListener{
 	y += 10;
 	repaint();
     }
+
+
+    
+    public String fishesToString(ArrayList<Fish> Fishes){
+	String res = "";
+	for (Fish fish: Fishes){
+	    res = res + "Fish" + fish.name +" at " +
+		fish.initPosition.get(0) + "x" + fish.initPosition.get(1)+ "," +
+		fish.dimensions[0] +"x"+ fish.dimensions[1] + "\n" ;
+	}
+	return res;
+    }
+
 }
 

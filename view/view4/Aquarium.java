@@ -44,7 +44,7 @@ public class Aquarium {
     
     private static void getFishesContinuously(){
 	GFCThread p = new GFCThread(aquaCon);
-	p.run();
+	p.start();
     }
     
     private void displayGUI(String ImagesPath)
@@ -86,22 +86,23 @@ public class Aquarium {
 
     public static void main(String[] args) throws Exception
     {
-	int i=0;
+	//	fishes=new ArrayList<Fish>();
+	//int i=0;
 	logger = new ClientLog();
 	// 	ClientLog logger = new ClientLog();
-
+	
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
 	port = conf.getTcpPort();
 	final String ImagesPath = conf.getVisualRepertory();
 	address = conf.getIpAddress();
+	try{
 	aquaCon = new AquaConnection(address, port);
 	/*cmd patterns*/
-	pattern=new Pattern[10];  
-
-	pattern[0]=Pattern.compile("OK");//,Pattern.CASE_INSENSITIVE);
-	pattern[1]= Pattern.compile("hello");
-	pattern[2]= Pattern.compile("^greeting \\w+");
+	pattern=new Pattern[11];  
+	pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
+	//	pattern[1]= Pattern.compile("hello");
+	pattern[2]= Pattern.compile("greeting \\w+");
 	pattern[3]= Pattern.compile("addFish \\w+");
 	pattern[4]= Pattern.compile("delFish \\w+");
 	pattern[5]= Pattern.compile("startFish \\w+");
@@ -109,77 +110,64 @@ public class Aquarium {
 	pattern[7]= Pattern.compile("^bye");
 	pattern[8]= Pattern.compile("^getFishes");
 	pattern[9]= Pattern.compile("^getFishesContinuously");
+	pattern[10]= Pattern.compile("^status");
 	/*Prompt*/
-	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
+	//	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
 	String response ="",cmd="";
 	while(cmd==""){  
 	    cmd=promptIn();
+	    response=aquaCon.receive();
+	    promptOut(response);
+	    //	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 	    /*Handling response*/
-	    response ="greeting N1";//test
-	    if((pattern[2].matcher(response).matches())&&(pattern[1].matcher(cmd).find()))/*Hello & greeting*/{
-		if (connected==false){
-		    /*Display the aquarium*/
-		    SwingUtilities.invokeLater(new Runnable(){    
-			    @Override
-			    public void run() {
-				new Aquarium().displayGUI(ImagesPath);
-			    }
-			});
-		    connected=true;
+	    if(pattern[2].matcher(response).matches())/* greeting*/
+		{
+		    if (connected==false){
+			/*Display the aquarium*/
+			SwingUtilities.invokeLater(new Runnable(){    
+				@Override
+				public void run() {
+				    new Aquarium().displayGUI(ImagesPath);
+				}
+			    });
+			connected=true;
+		    }
 		}
+	    else if (pattern[10].matcher(cmd).matches()){
+		System.out.println(contentPane.fishesToString(contentPane.Fishes));
 	    }
 	    else if(pattern[8].matcher(cmd).matches()){/*getFishes*/
-		//System.out.println("calling setFish methode (to update the arrayList Fishes)");
-		getFishes(response);
+		System.out.println("calling setFish methode (to update the arrayList Fishes)");
 	    }
 	    else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		System.out.println("listening continuously+ promptout() with each response");
-		getFishesContinuously();
 	    }
-	    else{response ="OK"; //test
+	    else{
 		if(pattern[0].matcher(response).matches()){/*OK*/
-		    if(pattern[3].matcher(cmd).matches()){  /*addFish*/ 
-			addFish(cmd);
-		    }
+		    if(pattern[3].matcher(cmd).matches()){  /*addFish*/
+			    addFish(cmd);
+			} 
 		    if(pattern[4].matcher(cmd).matches()) /*delFish*/
 			System.out.println("calling delFish methode"); ;
 		    if(pattern[5].matcher(cmd).matches()) /*startFish*/
 			System.out.println("calling startFish methode"); ;
 		}	
-
-		response ="bye"; //test
+		
+		//	response ="bye"; //test
 		if((pattern[6].matcher(cmd).matches())&&(pattern[7].matcher(response).find())){/*log out & bye*/
 		    if(frame.isDisplayable())
 			frame.setVisible(false);
 		    connected=false;
-
-		}
-		
+		    //aquaCon.closeConnection();??   
+		}	
 	    }
-	    if(i==0) i++;
-	    else
-		response=aquaCon.receive();
-	    promptOut(response);
-	    System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
-	    /*  TO be Used in treating response
-	    // compilation de la regex
-	    Pattern p = Pattern.compile(":");
-	    // séparation en sous-chaînes
-	    String[] items = p.split("un:deux:trois");
-	    */
-		
-	    //		System.out.println(pattern[0].matcher(cmd).find());
-	    /*   try{
-		
-		 }
-		 catch(IOException e){
-		 System.out.println("Sorry.. IOError");	
-		 }	*/
-
-
 	    cmd="";
 	}
+		}catch(IOException e){
+	    System.out.println("No Server!!!");}
     }
     
     
 }
+
+//addFish boisson at 9x8,7x5, RandomPathWay
