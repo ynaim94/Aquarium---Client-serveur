@@ -1,14 +1,15 @@
-refpackage aqua;
+package aqua;
 import java.util.regex.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Aquarium {
     private static Pattern [] pattern;
     private static Matcher matcher;
-    private AquaPanel contentPane;
+    private static AquaPanel contentPane;
     private static AquaConnection aquaCon;
     private static int port;
     private static InetAddress address;
@@ -17,7 +18,35 @@ public class Aquarium {
     /*To be removed after establishing a connection with the server*/
     private static boolean connected=false;
     /* create a scanner so we can read the command-line input*/
-    static Scanner	scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
+    private static Parser parser;
+    
+    private static void addFish(String cmd){
+	String[] items =  parser.parseFishPosition(cmd);
+	contentPane.setAddFish(items);
+	
+    }
+    
+    public static void getFishes(String cmd){
+	String[][] items = parser.parseListFishPosition(cmd);
+	for (String[] s: items){
+	    for(Fish fish :contentPane.Fishes){
+		if (s[0].equals(fish.name)){
+		    fish.initPosition.set(0,Integer.parseInt(s[2]));
+		    fish.initPosition.set(1,Integer.parseInt(s[3]));
+		    fish.dimensions[0] = Integer.parseInt(s[4]);
+		    fish.dimensions[1] = Integer.parseInt(s[5]);
+		    fish.mobilityTime = Integer.parseInt(s[6]);
+		}
+	    }
+	}
+    }
+    
+    private static void getFishesContinuously(){
+	GFCThread p = new GFCThread(aquaCon);
+	p.run();
+    }
+    
     private void displayGUI(String ImagesPath)
     {
         frame = new JFrame("Aquarium");
@@ -46,17 +75,14 @@ public class Aquarium {
 	}
 	return cmd;
     }
+    
     static private void promptOut(String response)throws IOException
     {	
 	System.out.print("<"+response); //+server's response
 	logger.info("Client received " + response);
-
-
     }
 
-    static private void getFishesContinuously() {
-	
-    }
+    
 
     public static void main(String[] args) throws Exception
     {
@@ -103,15 +129,18 @@ public class Aquarium {
 		}
 	    }
 	    else if(pattern[8].matcher(cmd).matches()){/*getFishes*/
-		System.out.println("calling setFish methode (to update the arrayList Fishes)");
+		//System.out.println("calling setFish methode (to update the arrayList Fishes)");
+		getFishes(response);
 	    }
 	    else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		System.out.println("listening continuously+ promptout() with each response");
+		getFishesContinuously();
 	    }
 	    else{response ="OK"; //test
 		if(pattern[0].matcher(response).matches()){/*OK*/
-		    if(pattern[3].matcher(cmd).matches())  /*addFish*/ 
-			System.out.println("calling addFish methode");
+		    if(pattern[3].matcher(cmd).matches()){  /*addFish*/ 
+			addFish(cmd);
+		    }
 		    if(pattern[4].matcher(cmd).matches()) /*delFish*/
 			System.out.println("calling delFish methode"); ;
 		    if(pattern[5].matcher(cmd).matches()) /*startFish*/

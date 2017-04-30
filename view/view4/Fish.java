@@ -40,5 +40,6 @@ public class Fish implements Cloneable{
     public int hashCode(){
 	return Objects.hash(name);
     }
+
 };
     
