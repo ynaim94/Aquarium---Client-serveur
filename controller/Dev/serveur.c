@@ -30,6 +30,7 @@
  */
 extern Client clients[MAX_CLIENTS];
 extern int state;
+extern int update;
 char buffer_msg[BUF_SIZE];
 int actual = 0;
 static void app(void)
@@ -222,6 +223,7 @@ static int init_connection()
    }
 
    portno= getPortnumber();
+   update= getUpdateInterval();
 
    if (portno<0)
    {
@@ -450,7 +452,7 @@ int parse_socket(int index)
     }
 
   }
-  printf("%s\n", reply);
+  //printf("%s\n", reply);
   write_client(clients[index].sock, reply);
   memset(reply, 0, sizeof (reply));
   return 0;

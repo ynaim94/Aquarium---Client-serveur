@@ -33,6 +33,13 @@ const char *str_ping="^(ping[ ]+[0-9]{4,5})";//
 /***************************
  *Functions implementations
  */
+
+
+extern int nb_views;
+extern View views[MAX_VIEW];
+extern int nb_fishes;
+extern Fish fishes[MAX];
+extern update;
 /**
 * @function  parser
 * @brief     analyse and recognize the command receveid
@@ -40,13 +47,6 @@ const char *str_ping="^(ping[ ]+[0-9]{4,5})";//
 * @param     s : input string to recognize
 * @return    an integer refering to the command recognized or an erreur code
 */
-
-extern int nb_views;
-extern View views[MAX_VIEW];
-View viewss[MAX_1];
-extern int nb_fishes;
-extern Fish fishes[MAX];
-Fish fishess[MAX_1];
 int parser(const char *s)
 {
   int len = 9,i = 0;
@@ -95,7 +95,7 @@ int parser_hello(char* reply,int index)
       views[i].state=ATTACHED;
       //printf("le state du view choisie : %d \n",views[i].state);
       sprintf(reply,"%s%d%s","greeting N",views[i].id,"\n");
-      printf("%d \n",clients[index].state);
+      //printf("%d \n",clients[index].state);
       return 0;
   }
   else
@@ -173,7 +173,7 @@ int parser_hello_id(const char* s, char* reply, int index)
 */
 int parser_log_out(char* reply, int index)
 {
-  viewss[index].state=FREE;
+  views[index].state=FREE;
   sprintf(reply,"%s","bye\n");
 }
 /**
@@ -308,7 +308,7 @@ int parser_del_fish(const char* s, char* reply)
   {
     for(i=j;j<nb_fishes-1;i++)
     {
-      fishess[i]=fishes[i+1];
+      fishes[i]=fishes[i+1];
     }
     nb_fishes--;
     sprintf(reply,"%s","OK : Fish deleted from fish tank\n");
@@ -406,7 +406,7 @@ int parser_get_fish_continuously(const char* s,int index)
     parser_get_fish(s,buffer,clients[index].state);
     send(clients[index].sock, buffer, strlen(buffer),0);
     memset(buffer, 0, sizeof (buffer));
-    sleep(5);
+    sleep(update);
   }
 }
 int new_position()

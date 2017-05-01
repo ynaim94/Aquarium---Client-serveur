@@ -36,5 +36,6 @@ View views[MAX_VIEW];
 int aquarium[2];
 int nb_views;
 int state;
+int update;
 
 #endif //VIEW_H
