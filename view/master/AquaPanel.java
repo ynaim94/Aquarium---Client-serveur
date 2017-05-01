@@ -22,9 +22,11 @@ class AquaPanel extends JPanel implements ActionListener{
     ArrayList<Fish> Fishes;
   
 
+        
     void setFishes(ArrayList<Fish> newFishes){
 	/* initialisation ? */
 	/*/!\ traiter tous les cas avec les positions additionnelles */
+	fishesToString(this.Fishes);
 	for(Fish newItem : newFishes){
 	    if (this.Fishes.contains(newItem)){
 		Fish item=this.Fishes.get(this.Fishes.indexOf(newItem));
@@ -35,6 +37,68 @@ class AquaPanel extends JPanel implements ActionListener{
 	    }
 	}
     }
+    
+    public void setStartFish(String cmd){
+	String tokens[] = cmd.split("[ ]+");
+	for(Fish fish : Fishes){
+	    if (fish.name.equals(tokens[1])){
+		fish.start();
+	    }
+	}
+    }
+
+    
+    public void setAddFish(String[] items){
+	ArrayList<Integer> initPosition = new ArrayList<Integer>();
+	String name = new String(items[1]);
+	int dimensions[] = new int[2];
+	int mobilityTime = 5; // par defaut
+	int started;
+	Fish tmpFish ;
+	initPosition.add(Integer.parseInt(items[3]));
+	initPosition.add(Integer.parseInt(items[4]));
+	dimensions[0] = Integer.parseInt(items[5]);
+	dimensions[1] = Integer.parseInt(items[6]);
+	started = 0;
+	tmpFish= new Fish(name, initPosition, mobilityTime, dimensions, started);
+	ArrayList<Fish> newFishes = new ArrayList<Fish>();
+	newFishes.add(tmpFish);
+	setFishes(newFishes);
+    }
+
+    public void setGetFishes(String[][] items){
+	ArrayList<Fish> newFishes = new ArrayList<Fish>();
+	int added = 0;
+	for (String[] s: items){
+	    ArrayList<Integer> initPosition = new ArrayList<Integer>();
+	    String name = new String(s[0]);
+	    int dimensions[] = new int[2];
+	    int mobilityTime; // par defaut
+	    Fish tmpFish ;
+	    int started = 1;
+	    initPosition.add(Integer.parseInt(s[2]));
+	    initPosition.add(Integer.parseInt(s[3]));
+	    dimensions[0] = Integer.parseInt(s[4]);
+	    dimensions[1] = Integer.parseInt(s[5]);
+	    mobilityTime = Integer.parseInt(s[6]);
+	    tmpFish= new Fish(name, initPosition, mobilityTime, dimensions,started);
+	    newFishes.add(tmpFish);
+	}
+
+	for(Fish fish : Fishes){
+	    if (!(newFishes.contains(fish))){
+		if (fish.started == 0){
+		    newFishes.add (fish);
+		}
+	    }
+	}
+	this.Fishes = newFishes;
+
+    }
+
+
+
+    
     Timer timer = new Timer(60, (ActionListener) this);
     public AquaPanel(String name) {
 	
@@ -45,24 +109,24 @@ class AquaPanel extends JPanel implements ActionListener{
 	Fishes=new ArrayList<Fish>();
         for(int i=0; i<8;i++){
             String name1=name+String.format("/fish%d.png", i);
-        try {
+	    try {
 
-            images[i] = ImageIO.read(getClass().getResource(name1));
+		images[i] = ImageIO.read(getClass().getResource(name1));
 
-        } catch(IOException ioe) {
+	    } catch(IOException ioe) {
 
-            System.out.println("Unable to fetch image.");
-            ioe.printStackTrace();
+		System.out.println("Unable to fetch image.");
+		ioe.printStackTrace();
 
-        }
-       } 
+	    }
+	} 
     }
 
   
     
     @Override
-   public Dimension getPreferredSize() {
-         return (new Dimension(images[0].getWidth(), images[0].getHeight()));
+    public Dimension getPreferredSize() {
+	return (new Dimension(images[0].getWidth(), images[0].getHeight()));
     }
 
     @Override
@@ -71,18 +135,30 @@ class AquaPanel extends JPanel implements ActionListener{
         g.drawImage(images[0], 0, 0, this);
        
         for(int i=1;i<8;i++){   
-        x=(int)(Math.random()*700);
-        y=(int)(Math.random()*500);
-        g.drawImage(images[i], x ,y, this);
+	    x=(int)(Math.random()*700);
+	    y=(int)(Math.random()*500);
+	    g.drawImage(images[i], x ,y, this);
        
-      }
+	}
     }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-              x += 10;
-              y += 10;
-              repaint();
-        }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	x += 10;
+	y += 10;
+	repaint();
     }
+    
+    
+    public String fishesToString(ArrayList<Fish> Fishes){
+	String res = "\n";
+	for (Fish fish: Fishes){
+	    res = res + "Fish " + fish.name +" at " +
+		fish.initPosition.get(0) + "x" + fish.initPosition.get(1)+ "," +
+		fish.dimensions[0] +"x"+ fish.dimensions[1] +" :  "+ ((fish.started == 1) ? "started" : "not started") +  "\n" ;
+	}
+	return res;
+    }
+    
+}
 
