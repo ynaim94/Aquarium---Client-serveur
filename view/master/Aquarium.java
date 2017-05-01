@@ -3,7 +3,7 @@ import java.util.regex.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
-import java.util.Scanner;ma
+import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Aquarium {
@@ -56,7 +56,7 @@ public class Aquarium {
     }
     static private void promptOut(String response)throws IOException
     {	
-	System.out.print("<"+response+"\n"); //+server's response
+	System.out.print("<"+response+"!\n"); //+server's response
 	logger.info("Client received " + response);
 	
 	
@@ -65,10 +65,7 @@ public class Aquarium {
     public static void main(String[] args) throws Exception
     {
 	fishes=new ArrayList<Fish>();
-	//int i=0;
 	logger = new ClientLog();
-	// 	ClientLog logger = new ClientLog();
-	
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
 	port = conf.getTcpPort();
@@ -78,12 +75,12 @@ public class Aquarium {
 	aquaCon = new AquaConnection();
 	/*cmd patterns*/
 	pattern=new Pattern[10];  
-	pattern[0]=Pattern.compile("OK");//,Pattern.CASE_INSENSITIVE);
+	pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
 	//	pattern[1]= Pattern.compile("hello");
 	pattern[2]= Pattern.compile("greeting \\w+");
-	pattern[3]= Pattern.compile("addFish \\w+");
-	pattern[4]= Pattern.compile("delFish \\w+");
-	pattern[5]= Pattern.compile("startFish \\w+");
+	pattern[3]= Pattern.compile("^addFish ");//^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}
+	pattern[4]= Pattern.compile("^delFish ");
+	pattern[5]= Pattern.compile("^startFish \\w+");
 	pattern[6]= Pattern.compile("^log out");
 	pattern[7]= Pattern.compile("^bye");
 	pattern[8]= Pattern.compile("^getFishes");
@@ -120,10 +117,12 @@ public class Aquarium {
 	    }
 		else{
 		    if(pattern[0].matcher(response).matches()){/*OK*/
-			if(pattern[3].matcher(cmd).matches()){  /*addFish*/
+		 /*test: addFish SmilingFish at 61x52,4x3, RandomPathWay*/
+			if(pattern[3].matcher(cmd).find()){  /*addFish*/
+			   
 			    addFish(cmd);
 			} 
-			if(pattern[4].matcher(cmd).matches()) /*delFish*/
+			if(pattern[4].matcher(cmd).find()) /*delFish*/
 			    System.out.println("calling delFish methode"); ;
 			if(pattern[5].matcher(cmd).matches()) /*startFish*/
 			    System.out.println("calling startFish methode"); ;
