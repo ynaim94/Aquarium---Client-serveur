@@ -9,45 +9,39 @@ public class AquaConnection extends Thread{
     /*cmd : store the command written in the prompt*/
     /*response : to store the response  */
     String cmd,response;
-    static InetAddress address;
-    static int port;
+    //static InetAddress address;
+    //static int port;
 
-    // try { 
     static private Socket socket;
-    // } catch(IOException e){	System.out.println("Sorry..Error while creating Socket");}
 
-    private ArrayList<Fish> Fishes;
+    private ArrayList<Fish> fishes;
     
     ArrayList<Fish> getFishes(){
-	return Fishes;
+	return fishes;
     }
-    public AquaConnection(InetAddress address, int port) throws IOException
-    {
-	address=address;
-	port=port;
-
+    public AquaConnection(){
 	cmd="";
 	response ="NO RESPONSE YET\n\n";
 	/* create a scanner so we can read the command-line input*/
-	scanner = new Scanner(System.in);
-	socket=new Socket(address,port);
+	scanner = new Scanner(System.in);	
     }
     
     public void send(String cmd) throws IOException{
-	// DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-
-	// os.writeBytes(cmd + "\n");
 	PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
 	out.println(cmd);
     }
-
+    
     public String receive() throws IOException{
 	BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
 	return is.readLine();
     }
-
-
+    public void openConnection(InetAddress address, int port) throws IOException{
+	socket=new Socket(address,port);
+}
+    public void closeConnection()throws IOException{
+	socket.close();
+    }
+    
     public void  run(){
 	
 	

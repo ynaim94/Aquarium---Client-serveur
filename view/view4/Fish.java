@@ -9,14 +9,15 @@ public class Fish implements Cloneable{
     ArrayList<Integer> initPosition;
     int mobilityTime;
     int dimensions[];
-    String imageName;
-
-    public Fish(String name, ArrayList<Integer> initPosition, int mobilityTime, int dimensions[], String imageName){
+    int started;
+    int imageIndex;
+    
+    public Fish(String name, ArrayList<Integer> initPosition, int mobilityTime, int dimensions[],int started){
 	this.name=name;
 	this.initPosition=new ArrayList<>(initPosition);
 	this.dimensions=Arrays.copyOf(dimensions, 2);
 	this.mobilityTime=mobilityTime;
-	this.imageName=imageName;
+	this.started = started;
     }
 
     @Override
@@ -39,6 +40,10 @@ public class Fish implements Cloneable{
     @Override
     public int hashCode(){
 	return Objects.hash(name);
+    }
+
+    public void start(){
+	started = 1;
     }
 
 };

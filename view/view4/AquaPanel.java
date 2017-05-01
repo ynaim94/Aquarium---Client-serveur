@@ -26,7 +26,6 @@ class AquaPanel extends JPanel implements ActionListener{
     void setFishes(ArrayList<Fish> newFishes){
 	/* initialisation ? */
 	/*/!\ traiter tous les cas avec les positions additionnelles */
-	System.out.println("Ajout de fish");
 	fishesToString(this.Fishes);
 	for(Fish newItem : newFishes){
 	    if (this.Fishes.contains(newItem)){
@@ -38,51 +37,67 @@ class AquaPanel extends JPanel implements ActionListener{
 	    }
 	}
     }
-
     
+    public void setStartFish(String cmd){
+	String tokens[] = cmd.split("[ ]+");
+	for(Fish fish : Fishes){
+	    if (fish.name.equals(tokens[1])){
+		fish.start();
+	    }
+	}
+    }
+
     
     public void setAddFish(String[] items){
 	ArrayList<Integer> initPosition = new ArrayList<Integer>();
-	String imageName,name = new String(items[1]);
+	String name = new String(items[1]);
 	int dimensions[] = new int[2];
 	int mobilityTime = 5; // par defaut
+	int started;
 	Fish tmpFish ;
 	System.out.println("Entre");
 	initPosition.add(Integer.parseInt(items[3]));
 	initPosition.add(Integer.parseInt(items[4]));
 	dimensions[0] = Integer.parseInt(items[5]);
 	dimensions[1] = Integer.parseInt(items[6]);
-	imageName = name ; // TODO
-	tmpFish= new Fish(name, initPosition, mobilityTime, dimensions, imageName);
+	started = 0;
+	tmpFish= new Fish(name, initPosition, mobilityTime, dimensions, started);
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
 	newFishes.add(tmpFish);
 	setFishes(newFishes);
     }
 
-    private void setGetFishes(String[][] items){
+    public void setGetFishes(String[][] items){
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
+	int added = 0;
 	for (String[] s: items){
-	    for(Fish fish :Fishes){
-		if (s[0].equals(fish.name)){
-		    ArrayList<Integer> initPosition = new ArrayList<Integer>();
-		    String imageName,name = new String(s[0]);
-		    int dimensions[] = new int[2];
-		    int mobilityTime; // par defaut
-		    Fish tmpFish ;
-			    	    
-		    initPosition.add(Integer.parseInt(s[2]));
-		    initPosition.add(Integer.parseInt(s[3]));
-		    dimensions[0] = Integer.parseInt(s[4]);
-		    dimensions[1] = Integer.parseInt(s[5]);
-		    imageName = name ; // TODO
-		    mobilityTime = Integer.parseInt(s[6]);
-		    tmpFish= new Fish(name, initPosition, mobilityTime, dimensions, imageName);
-		    newFishes.add(tmpFish);
+	    System.out.println("s[0] = "+ s[0]);
+	    ArrayList<Integer> initPosition = new ArrayList<Integer>();
+	    String name = new String(s[0]);
+	    int dimensions[] = new int[2];
+	    int mobilityTime; // par defaut
+	    Fish tmpFish ;
+	    int started = 1;
+	    initPosition.add(Integer.parseInt(s[2]));
+	    initPosition.add(Integer.parseInt(s[3]));
+	    dimensions[0] = Integer.parseInt(s[4]);
+	    dimensions[1] = Integer.parseInt(s[5]);
+	    mobilityTime = Integer.parseInt(s[6]);
+	    tmpFish= new Fish(name, initPosition, mobilityTime, dimensions, started);
+	    newFishes.add(tmpFish);
+	}
+
+	for(Fish fish : Fishes){
+	    if (!(newFishes.contains(fish))){
+		if (fish.started == 0){
+		    newFishes.add (fish);
 		}
 	    }
 	}
-	setFishes(newFishes);
+	this.Fishes = newFishes;
+
     }
+
 
     
 
@@ -139,9 +154,9 @@ class AquaPanel extends JPanel implements ActionListener{
 
     
     public String fishesToString(ArrayList<Fish> Fishes){
-	String res = "";
+	String res = "\n";
 	for (Fish fish: Fishes){
-	    res = res + "Fish" + fish.name +" at " +
+	    res = res + "Fish " + fish.name +" at " +
 		fish.initPosition.get(0) + "x" + fish.initPosition.get(1)+ "," +
 		fish.dimensions[0] +"x"+ fish.dimensions[1] + "\n" ;
 	}
