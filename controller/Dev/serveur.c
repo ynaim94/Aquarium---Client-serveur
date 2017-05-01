@@ -38,11 +38,11 @@ static void app(void)
    srand(time(NULL));
    open_log("./log/log.txt");
 
-   insert_log("");
+   insert_log("Starting the controller");
    printf("********Welcome to the aquarium's controller********\n");
    printf("-> Please load an aquarium\n\n");
    threadpool thpool = thpool_init(4);
-
+   insert_log("Creating threads pool");
    SOCKET sock = init_connection();
    if (sock==-1)
     return;
