@@ -311,7 +311,7 @@ int parser_del_fish(const char* s, char* reply)
       fishess[i]=fishes[i+1];
     }
     nb_fishes--;
-    sprintf(reply,"%s","OK \n");
+    sprintf(reply,"%s","OK\n");
 
   }
 
