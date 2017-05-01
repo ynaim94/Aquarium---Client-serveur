@@ -384,7 +384,7 @@ int parse_socket(int index)
   strcpy(buffer,buffer_msg);
   {
     to_parse=parser(buffer);
-    printf("expression reconnu : %d \n", to_parse);
+    //printf("expression reconnu : %d \n", to_parse);
     switch(to_parse)
     {
         case 0:

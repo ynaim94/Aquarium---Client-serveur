@@ -239,7 +239,7 @@ int parser_add_fish(const char* s, char* reply, int index)
   while((j<nb_fishes)&&(strcmp(argv[1],fishes[j].name) != 0))
    j++;
   if (j<nb_fishes)
-    sprintf(reply,"%s","NOK : Fish already in the Fish tank\n");
+    sprintf(reply,"%s","NOK : Fish already added to the Fish tank\n");
   else if(strcmp(argv[7],"RandomWayPoint") != 0)
     sprintf(reply,"%s","NOK : Mobility modele not supported\n");
   else
@@ -271,7 +271,7 @@ int parser_add_fish(const char* s, char* reply, int index)
    }
    free(argv);
    free(req);
-   sprintf(reply,"%s","OK\n");
+   sprintf(reply,"%s","OK : Fish added to fish tank\n");
   }
   /*for(cpt=0;cpt<nb_fishes;cpt++)
   {
@@ -311,7 +311,7 @@ int parser_del_fish(const char* s, char* reply)
       fishess[i]=fishes[i+1];
     }
     nb_fishes--;
-    sprintf(reply,"%s","OK\n");
+    sprintf(reply,"%s","OK : Fish deleted from fish tank\n");
 
   }
 
@@ -344,7 +344,7 @@ int parser_start_fish(const char* s, char* reply)
   else
   {
     fishes[j].state=STARTED;
-    sprintf(reply,"%s","OK\n");
+    sprintf(reply,"%s","OK : Fish started\n");
     //printf("le nom du poisson started est : %s \nson state est : %d",fishes[j].name,fishes[j].state);
   }
 }
