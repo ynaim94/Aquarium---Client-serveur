@@ -77,12 +77,12 @@ int parser_hello(char* reply,int index)
   int i=0;
   if (state == 0 )
   {
-    sprintf(reply,"%s","no greeting\n");
+    sprintf(reply,"%s","no greeting : No aquarium loaded\n");
     return -1;
   }
   if (clients[index].state!=REJECTED)
   {
-    sprintf(reply,"%s","no greeting\n");
+    sprintf(reply,"%s","no greeting : Client already attached to a view\n");
     return -1;
   }
   //char* a = malloc(sizeof(char)*13);
@@ -100,7 +100,7 @@ int parser_hello(char* reply,int index)
   }
   else
   {
-     sprintf(reply,"%s","no greeting\n");
+     sprintf(reply,"%s","no greeting : No view available\n");
      return -1;
   }
 
@@ -125,12 +125,12 @@ int parser_hello_id(const char* s, char* reply, int index)
   int id;
   if (state == 0 )
   {
-    sprintf(reply,"%s","no greeting\n");
+    sprintf(reply,"%s","no greeting: No aquarium loaded\n");
     return -1;
   }
   if (clients[index].state!= REJECTED)
   {
-    sprintf(reply,"%s","no greeting\n");
+    sprintf(reply,"%s","no greeting : Client already attached to a view\n");
     return -1;
   }
   tok=strtok(req," ");
@@ -160,7 +160,7 @@ int parser_hello_id(const char* s, char* reply, int index)
   }
   else
   {
-    sprintf(reply,"%s","no greeting\n");
+    sprintf(reply,"%s","no greeting : No view available\n");
   }
   printf("%d \n",clients[index].state);
 }
@@ -214,7 +214,7 @@ int parser_add_fish(const char* s, char* reply, int index)
   double x=0, y=0;
   if (state == 0 )
   {
-    sprintf(reply,"%s","NOK\n");
+    sprintf(reply,"%s","NOK: No aquarium loaded\n");
     return -1;
   }
   argv = malloc(sizeof(char *) * MAX_ARG);
@@ -239,9 +239,9 @@ int parser_add_fish(const char* s, char* reply, int index)
   while((j<nb_fishes)&&(strcmp(argv[1],fishes[j].name) != 0))
    j++;
   if (j<nb_fishes)
-    sprintf(reply,"%s","NOK\n");
+    sprintf(reply,"%s","NOK : Fish already in the Fish tank\n");
   else if(strcmp(argv[7],"RandomWayPoint") != 0)
-    sprintf(reply,"%s","NOK : mobility modele not supported\n");
+    sprintf(reply,"%s","NOK : Mobility modele not supported\n");
   else
   {
    strcpy(fish_tmp.name,argv[1]);
@@ -293,7 +293,7 @@ int parser_del_fish(const char* s, char* reply)
   int j=0, i=0;
   if (state == 0 )
   {
-    sprintf(reply,"%s","NOK\n");
+    sprintf(reply,"%s","NOK: No aquarium loaded\n");
     return -1;
   }
   char* req = malloc (sizeof(char)*(strlen(s)+1));
@@ -330,7 +330,7 @@ int parser_start_fish(const char* s, char* reply)
   int j=0, i=0;
   if (state == 0 )
   {
-    sprintf(reply,"%s","NOK\n");
+    sprintf(reply,"%s","NOK : No aquarium loaded\n");
     return -1;
   }
   char* req = malloc (sizeof(char)*(strlen(s)+1));
@@ -361,7 +361,7 @@ int parser_get_fish(const char* s, char* reply, int index)
   int i=0,x=0,y=0,cpt=0,time=5;
   if (state == 0 )
   {
-    sprintf(reply,"%s","NOK\n");
+    sprintf(reply,"%s","NOK: No aquarium loaded\n");
     return -1;
   }
   new_position();
@@ -392,7 +392,7 @@ int parser_get_fish(const char* s, char* reply, int index)
   if(cpt==0)
   {
     memset(reply, 0, sizeof (reply));
-    sprintf(reply,"%s","no fishes found\n");
+    sprintf(reply,"%s","NOK: No fishes found\n");
   }
   else
     sprintf(reply,"%s%s",reply,"\n");
