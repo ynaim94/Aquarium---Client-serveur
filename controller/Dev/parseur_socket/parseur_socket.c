@@ -240,7 +240,7 @@ int parser_add_fish(const char* s, char* reply, int index)
    j++;
   if (j<nb_fishes)
     sprintf(reply,"%s","NOK\n");
-  else if(strcmp(argv[7],"RandomPathWay") != 0)
+  else if(strcmp(argv[7],"RandomWayPoint") != 0)
     sprintf(reply,"%s","NOK : mobility modele not supported\n");
   else
   {
@@ -364,24 +364,28 @@ int parser_get_fish(const char* s, char* reply, int index)
     sprintf(reply,"%s","NOK\n");
     return -1;
   }
+  new_position();
   sprintf(reply,"%s","list");
   for(i=0;i<nb_fishes;i++)
   {
-    if((fishes[i].actualPosition[0]>views[index].x)&&(fishes[i].actualPosition[0]<views[index].x+views[index].width)&&(fishes[i].actualPosition[1]>views[index].y)&&(fishes[i].actualPosition[1]<views[index].y+views[index].height)&&(fishes[i].state==STARTED))
-    {
-      //appel à la fonction de calcul de position
-      new_position(i);
-      fishes[i].actualPosition[0]=fishes[i].destination[0];
-      fishes[i].actualPosition[1]=fishes[i].destination[1];
 
-    }
     if((fishes[i].destination[0]>views[index].x)&&(fishes[i].destination[0]<views[index].x+views[index].width)&&(fishes[i].destination[1]>views[index].y)&&(fishes[i].destination[1]<views[index].y+views[index].height)&&(fishes[i].state==STARTED))
     {
+      if((fishes[i].actualPosition[0]<views[index].x)||(fishes[i].actualPosition[0]>views[index].x+views[index].width)||(fishes[i].actualPosition[1]<views[index].y)||(fishes[i].actualPosition[1]>views[index].y+views[index].height))
+      {
+        time=0;
+      }
+      else
+      {
+        time=5;
+      }
       cpt++;
       x=(fishes[i].destination[0]-views[index].x)*100/views[index].width;//views[index].width*100;
       //printf("%d\n",x);
       y=(fishes[i].destination[1]-views[index].y)*100/views[index].height;//views[index].width*100;
       //printf("%d\n",y);
+      fishes[i].actualPosition[0]=fishes[i].destination[0];
+      fishes[i].actualPosition[1]=fishes[i].destination[1];
       sprintf(reply,"%s%s%s%s%d%s%d%s%d%s%d%s%d%s",reply," [",fishes[i].name," at ",x,"x",y,",",fishes[i].dimension[0],"x",fishes[i].dimension[1],",",time,"]");
     }
   }
@@ -405,12 +409,18 @@ int parser_get_fish_continuously(const char* s,int index)
     sleep(5);
   }
 }
-int new_position(int index)
+int new_position()
 {
-    int i=0;
-    for(i=0;i<DIM;i++)
+    int i=0,j=0;
+    for(j=0;j<nb_fishes;j++)
     {
-      fishes[index].destination[i]=rand()%40 + fishes[index].actualPosition[i];
+      if (fishes[j].state==STARTED)
+      {
+        for(i=0;i<DIM;i++)
+        {
+          fishes[j].destination[i]=rand()%40 + fishes[j].actualPosition[i];
+        }
+      }
     }
 }
 /*int main()

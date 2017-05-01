@@ -32,5 +32,5 @@ int parser_ping(const char* s, char* reply);
 /*************************
  *intern fonction
  */
-int new_position(int i);
+int new_position();
 #endif
