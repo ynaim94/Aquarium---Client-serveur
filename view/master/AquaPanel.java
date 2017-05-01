@@ -17,9 +17,14 @@ import java.util.*;
 
 class AquaPanel extends JPanel implements ActionListener{
 
-    private int x=0, y=0;   
+    private int x=0,y=0,z=0,w=0;
+    private static int height,width,scaleX,scaleY;  
     private BufferedImage[]images = new BufferedImage[8];
-    ArrayList<Fish> Fishes;
+ /*an array with the names of the fish images*/
+    private String[]fishImages={"background","sneakingFish","smilingFish","bubbleFish","oldFish","happyFish","madFish","lostFish"};
+    ArrayList<Fish> Fishes=new ArrayList<Fish>();
+    /*timer to repaint fishes in their new positions each 100 ms*/
+    private Timer timer = new Timer(100, (ActionListener) this);
   
 
         
@@ -98,54 +103,75 @@ class AquaPanel extends JPanel implements ActionListener{
 
 
 
-    
-    Timer timer = new Timer(60, (ActionListener) this);
+
     public AquaPanel(String name) {
-	
         timer.start();
         setOpaque(true);
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
-        setBackground(Color.WHITE);
-	Fishes=new ArrayList<Fish>();
-        for(int i=0; i<8;i++){
-            String name1=name+String.format("/fish%d.png", i);
-	    try {
-
-		images[i] = ImageIO.read(getClass().getResource(name1));
-
-	    } catch(IOException ioe) {
-
+        setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));	
+	for(int j=0;j<8;j++){
+	    /*the full path to charge an image*/
+	    String fullPath=name+String.format("/%s.png",fishImages[j]);
+	    try{
+		images[j] = ImageIO.read(getClass().getResource(fullPath));		    
+	    }
+	    catch(IOException ioe) {
 		System.out.println("Unable to fetch image.");
 		ioe.printStackTrace();
-
 	    }
-	} 
+	}	       
     }
-
-  
+    
+    
     
     @Override
-    public Dimension getPreferredSize() {
-	return (new Dimension(images[0].getWidth(), images[0].getHeight()));
+    public Dimension getPreferredSize(){
+	width=images[0].getWidth()/100;
+	height= images[0].getHeight()/100;
+	return (new Dimension(width*100,height*100));
     }
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+	/*display the the background*/
         g.drawImage(images[0], 0, 0, this);
-       
-        for(int i=1;i<8;i++){   
-	    x=(int)(Math.random()*700);
-	    y=(int)(Math.random()*500);
-	    g.drawImage(images[i], x ,y, this);
-       
+	/*display the fishes*/
+	for(int i=0; i<Fishes.size();i++){
+	    /* match the fish name with the suitable image */
+	    for(int l=1;l<8;l++)
+		if (fishImages[l].equals(Fishes.get(i).name)){ /*TODO: accept names with _ */
+		    Fishes.get(i).imageIndex=l;
+		    break;
+		}
+		    else /*image par défaut*/
+			Fishes.get(i).imageIndex=2;
+	    
+	    /*Actual Position*/
+	    x=width*Fishes.get(i).initPosition.get(0);
+	    y=height*Fishes.get(i).initPosition.get(1);
+	    /*if the fish have an other position to move to*/
+	    if(Fishes.get(i).initPosition.size()>=4){
+		/* TODO: set intermediate positions & manage mobilityTime*/
+		/*destination*/
+		z=width*Fishes.get(i).initPosition.get(2);
+		w=height*Fishes.get(i).initPosition.get(3);
+		/*Remove the privious position*/
+		Fishes.get(i).initPosition.remove(0);
+		Fishes.get(i).initPosition.remove(1);
+	    }
+	    // System.out.println("Size= "+Fishes.get(i).initPosition.size());
+	    /*manage the proportional size*/
+	    scaleX=width*Fishes.get(i).dimensions[0];
+	    scaleY=height*Fishes.get(i).dimensions[1];
+	    g.drawImage(images[Fishes.get(i).imageIndex],x,y,scaleX,scaleY,this);
+	    
 	}
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-	x += 10;
-	y += 10;
+	x =z;
+	y =w;
 	repaint();
     }
     

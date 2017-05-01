@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Aquarium {
-    //    private static ArrayList<Fish> fishes;  ?
     private static Pattern [] pattern;
     private static Matcher matcher;
     private static AquaPanel contentPane;
@@ -16,10 +15,8 @@ public class Aquarium {
     private static InetAddress address;
     private static ClientLog logger;
     private static JFrame frame ;
-    /*To be removed after establishing a connection with the server*/
     private static boolean connected=false;
-    /* create a scanner so we can read the command-line input*/
-    static Scanner	scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
     /***Ajouté de view4****/
     private static Parser parser;
@@ -74,7 +71,7 @@ public class Aquarium {
     }
     static private void promptOut(String response)throws IOException
     {	
-	System.out.print("<"+response+"!\n"); //+server's response
+	System.out.print("<"+response+"\n"); //+server's response
 	logger.info("Client received " + response);
 	
 	
@@ -96,7 +93,7 @@ public class Aquarium {
 	pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
 	//	pattern[1]= Pattern.compile("hello");
 	pattern[2]= Pattern.compile("greeting \\w+");
-	pattern[3]= Pattern.compile("^addFish ");//^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}
+	pattern[3]= Pattern.compile("^addFish ");
 	pattern[4]= Pattern.compile("^delFish ");
 	pattern[5]= Pattern.compile("^startFish \\w+");
 	pattern[6]= Pattern.compile("^log out");
@@ -141,7 +138,7 @@ public class Aquarium {
 	    }
 		else{
 		    if(pattern[0].matcher(response).matches()){/*OK*/
-		 /*test: addFish SmilingFish at 61x52,4x3, RandomPathWay*/
+		 /*test: addFish smilingFish at 61x52,4x3, RandomWayPoint*/
 			if(pattern[3].matcher(cmd).find()){  /*addFish*/
 			    addFish(cmd);
 			} 
