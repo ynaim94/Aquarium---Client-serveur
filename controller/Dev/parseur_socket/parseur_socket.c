@@ -39,7 +39,7 @@ extern int nb_views;
 extern View views[MAX_VIEW];
 extern int nb_fishes;
 extern Fish fishes[MAX];
-extern update;
+extern int update;
 /**
 * @function  parser
 * @brief     analyse and recognize the command receveid
