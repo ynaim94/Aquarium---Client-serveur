@@ -15,10 +15,10 @@ public class Aquarium {
     private static InetAddress address;
     private static ClientLog logger;
     private static JFrame frame ;
-    /*To be removed after establishing a connection with the server*/
     private static boolean connected=false;
-    /* create a scanner so we can read the command-line input*/
     static Scanner scanner = new Scanner(System.in);
+
+    /***Ajouté de view4****/
     private static Parser parser;
     
 
@@ -37,19 +37,20 @@ public class Aquarium {
     }
     
     public static void getFishes(String response){
-	System.out.println("getFishes");
 	String[][] items = parser.parseListFishPosition(response);
-	System.out.println ("items[0][0] = " +items[0][0]);
 	contentPane.setGetFishes(items);
     }
-    
+
+    /*test de gfc*/
     private static void getFishesContinuously(){
 	GFCThread p = new GFCThread(aquaCon);
 	p.start();
     }
+
     
-    private void displayGUI(String ImagesPath)
-    {
+    /***Fin Ajout view 4****/
+
+    private void displayGUI(String ImagesPath){
         frame = new JFrame("Aquarium");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         contentPane = new AquaPanel(ImagesPath);        
@@ -60,9 +61,8 @@ public class Aquarium {
 	frame.setVisible(true);
 	frame.setResizable(false);
     }
-
-    static private String promptIn()throws IOException
-    {
+    
+    static private String promptIn()throws IOException{
 	System.out.print(">"); 
 	/*get the input as a String*/
 	String cmd = scanner.nextLine();
@@ -76,15 +76,15 @@ public class Aquarium {
 	}
 	return cmd;
     }
-    
     static private void promptOut(String response)throws IOException
     {	
-	System.out.print("<"+response); //+server's response
+	System.out.print("<"+response+"\n"); //+server's response
 	logger.info("Client received " + response);
+	
+	
     }
-
     
-
+    
     public static void main(String[] args) throws Exception
     {
 	logger = new ClientLog();
@@ -100,7 +100,7 @@ public class Aquarium {
 	pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
 	//	pattern[1]= Pattern.compile("hello");
 	pattern[2]= Pattern.compile("greeting \\w+");
-	pattern[3]= Pattern.compile("^addFish ");//^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}
+	pattern[3]= Pattern.compile("^addFish ");
 	pattern[4]= Pattern.compile("^delFish ");
 	pattern[5]= Pattern.compile("^startFish \\w+");
 	pattern[6]= Pattern.compile("^log out");
@@ -141,11 +141,12 @@ public class Aquarium {
 		}
 		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		    //		    System.out.println("listening continuously+ promptout() with each response");
-		    //		    getFishesContinuously();
+		    getFishesContinuously();
 	    }
-		else{
-		    if(pattern[0].matcher(response).matches()){/*OK*/
-		 /*test: addFish SmilingFish at 61x52,4x3, RandomPathWay*/
+		else{ if(pattern[0].matcher(response).find()){
+			// if(pattern[0].matcher(response).matches()){/*OK*/
+			//	System.out.println("This is Ok :D"); 
+		 /*test: addFish sneakingFish at 61x52,9x10, RandomWayPoint*/
 			if(pattern[3].matcher(cmd).find()){  /*addFish*/
 			    addFish(cmd);
 			} 

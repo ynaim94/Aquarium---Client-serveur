@@ -16,7 +16,7 @@ public class GFCThread extends Thread{
 	    while(true){
 		String response = aquaCon.receive();
 		aquarium.getFishes(response);
-		//System.out.println(">> "+response);
+		System.out.println(">> "+response);
 	    }
 	}
 	catch (IOException e){
