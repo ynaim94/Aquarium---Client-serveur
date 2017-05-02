@@ -136,9 +136,10 @@ public class Aquarium {
 		    //		    System.out.println("listening continuously+ promptout() with each response");
 		    //		    getFishesContinuously();
 	    }
-		else{
-		    if(pattern[0].matcher(response).matches()){/*OK*/
-		 /*test: addFish smilingFish at 61x52,4x3, RandomWayPoint*/
+		else{ if(pattern[0].matcher(response).find()){
+			// if(pattern[0].matcher(response).matches()){/*OK*/
+			//	System.out.println("This is Ok :D"); 
+		 /*test: addFish sneakingFish at 61x52,9x10, RandomWayPoint*/
 			if(pattern[3].matcher(cmd).find()){  /*addFish*/
 			    addFish(cmd);
 			} 
