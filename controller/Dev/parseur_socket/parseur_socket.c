@@ -256,13 +256,14 @@ int parser_add_fish(const char* s, char* reply, int index)
    if (y>100)
      fish_tmp.actualPosition[1]=views[index].y;
    else
-   fish_tmp.actualPosition[1]=views[index].x+(y*views[index].height);
+   fish_tmp.actualPosition[1]=views[index].y+(y*views[index].height);
    fish_tmp.destination[0]=views[index].x+(x*views[index].width);
-   fish_tmp.destination[1]=views[index].x+(y*views[index].height);
+   fish_tmp.destination[1]=views[index].y+(y*views[index].height);
    fish_tmp.dimension[0]=height;
    fish_tmp.dimension[1]=width;
    fish_tmp.state= STOPED;
    fish_tmp.mobility=RandomPathWay;
+   //printf("la position du poisson ajouté est %d,%d dans la vue %d,%d")
    fishes[nb_fishes]=fish_tmp;
    nb_fishes++;
    for(i = 0; argv[i] != NULL; i++)
@@ -306,7 +307,7 @@ int parser_del_fish(const char* s, char* reply)
    sprintf(reply,"%s","NOK : Poisson inexistant\n");
   else
   {
-    for(i=j;j<nb_fishes-1;i++)
+    for(i=j;i<nb_fishes-1;i++)
     {
       fishes[i]=fishes[i+1];
     }
@@ -396,6 +397,10 @@ int parser_get_fish(const char* s, char* reply, int index)
   }
   else
     sprintf(reply,"%s%s",reply,"\n");
+  for (i=0;i<nb_fishes;i++)
+  {
+    printf("le poisson %s se trouve à la position %d, %d \n",fishes[i].name,fishes[i].actualPosition[0],fishes[i].actualPosition[1]);
+  }
 }
 int parser_get_fish_continuously(const char* s,int index)
 {
