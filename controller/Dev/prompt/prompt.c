@@ -59,19 +59,18 @@ View* parse_view(char* str){
 int display_prompt(int x){
   char buffer[BUFFER_SIZE];
   //int len_read;
-  int type;
-  char *str_request;
+  int type=0;
   char *msg;
   char *token;
   char *pEnd;
-  int i;
+  int i=0;
   char *positionEntree;
 
     strcpy(buffer,buffer_prompt);
-    str_request = malloc (sizeof(char)* x);
+    //str_request = malloc (sizeof(char)* x);
 
     type = parse (buffer);
-    
+
     if ((type != 0) && (type != 5) && (state == 0))
       msg = "Aquarium Not loaded";
     else {
@@ -129,6 +128,7 @@ int display_prompt(int x){
     }
     if (msg != NULL)
       printf ("%s\n\n", msg);
+  free(msg);
 
 
 }

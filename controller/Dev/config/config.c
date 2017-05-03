@@ -70,7 +70,7 @@ unsigned int getTimeout(){
   if (!configfile)
     return -1;
   rewind(configfile);
-  char caractereActuel ;
+  char caractereActuel='\0';
   for (i=0; i<3; i++)
     fgets(chaine, TAILLE_MAX, configfile);
   while (caractereActuel != '=')
@@ -93,7 +93,7 @@ unsigned int getUpdateInterval(){
   if (!configfile)
     return -1;
   rewind(configfile);
-  char caractereActuel ;
+  char caractereActuel='\0';
   for (i=0; i<5; i++)
    fgets(chaine, TAILLE_MAX, configfile);
   while (caractereActuel != '=')

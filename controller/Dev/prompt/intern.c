@@ -142,13 +142,15 @@ char* intern__load(const char* file_name, int* aquarium){
   int i = 0;
   char *msg;
   if (state == 1){
-    return "Aquarium already loaded";
+    asprintf(&msg,"->Aquarium already loaded");
+    return msg;
   }
 
   nb_views = 0;
   fd = open(file_name);
   if (fd == NULL){
-    return "File does not exit";
+    asprintf(&msg,"->File does not exit");
+    return msg;
   }
 
   get_aquarium_dim(fd,aquarium);// TODO: Tester si success ou failure
@@ -176,7 +178,7 @@ char* intern__show(){
       asprintf(&s, "N%d %dx%d+%d+%d\n", views[i].id, views[i].x, views[i].y, views[i].width, views[i].height);
       strcat(msg,s);
   }
-
+  free(s);
   return msg;
 
 }
@@ -184,20 +186,25 @@ char* intern__show(){
 char* intern__add(View view){
 
   int i;
+  char* msg;
   for (i = 0; i < nb_views; i++){
     if (view.id == views[i].id){
-      return "-> view name already exist";
+      asprintf(&msg,"-> view name already exist");
+      return msg;
+
     }
   }
 
   //TODO: parametre plus petit que aquarium[0]*aquarium[1]
   if ((view.x <0) || (view.x > aquarium[0]) || (view.x + view.width > aquarium[0]) ||
       (view.y <0) || (view.y > aquarium[1]) || (view.y + view.height > aquarium[1]) ) {
-    return "-> view parameters don't fit in the aquarium";
+        asprintf(&msg,"-> view parameters don't fit in the aquarium");
+        return msg;
   }
   nb_views++;
   views[nb_views-1] = view;
-  return "-> view added";
+  asprintf(&msg,"-> view added");
+  return msg;
 }
 
 
@@ -213,7 +220,8 @@ char* intern__del(int id){
       return msg;
     }
   }
-  return "-> view does not exist";
+  asprintf(&msg,"-> view does not exist");
+  return msg;
 }
 
 char* intern__save(char* file_name){
