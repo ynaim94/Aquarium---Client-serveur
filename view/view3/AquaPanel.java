@@ -18,7 +18,9 @@ import java.util.*;
 class AquaPanel extends JPanel implements ActionListener{
 
     private int x=0,y=0,z=0,w=0;
-    private static int height,width,scaleX,scaleY;  
+    private static int height,width,scaleX,scaleY,firstX,firstY,destX,destY;  
+    private static double decX, decY, timeUnity;
+
     private BufferedImage[]images = new BufferedImage[8];
     /*an array with the names of the fish images*/
     private String[]fishImages={"background","sneakingFish","smilingFish","bubbleFish","oldFish","happyFish","madFish","lostFish"};
@@ -81,6 +83,13 @@ class AquaPanel extends JPanel implements ActionListener{
 	    int mobilityTime; // par defaut
 	    Fish tmpFish ;
 	    int started = 1;
+	    /*to keep the ancient positions*/
+	    for(Fish poiss : Fishes){
+		if (poiss.name.equals(name)){
+		    initPosition.addAll(poiss.initPosition);
+		    break;
+		}	    
+	    }
 	    initPosition.add(Integer.parseInt(s[2]));
 	    initPosition.add(Integer.parseInt(s[3]));
 	    dimensions[0] = Integer.parseInt(s[4]);
@@ -125,8 +134,8 @@ class AquaPanel extends JPanel implements ActionListener{
     
     @Override
     public Dimension getPreferredSize(){
-	width=images[0].getWidth()/100;
-	height= images[0].getHeight()/100;
+	width=images[0].getWidth()/100; //8
+	height= images[0].getHeight()/100;//6
 	return (new Dimension(width*100,height*100));
     }
     
@@ -143,31 +152,70 @@ class AquaPanel extends JPanel implements ActionListener{
 		    Fishes.get(i).imageIndex=l;
 		    break;
 		}
-		    else /*image par défaut*/
-			Fishes.get(i).imageIndex=2;
-	    
+		else /*image par défaut*/
+		    Fishes.get(i).imageIndex=2;
+	    System.out.println("My name is "+Fishes.get(i).name);
 	    /*Actual Position*/
-	    x=width*Fishes.get(i).initPosition.get(0);
-	    // System.out.println("x= "+x);
-	    y=height*Fishes.get(i).initPosition.get(1);
+	    firstX=width*Fishes.get(i).initPosition.get(0);
+	    firstY=height*Fishes.get(i).initPosition.get(1);
+	    timeUnity=Fishes.get(i).mobilityTime/100.0; //0.05
+	    x=firstX;
+	    y=firstY;
+	    System.out.println("firstX= "+x+" ; firstY="+firstY);
 	    /*if the fish have an other position to move to*/
 	    if(Fishes.get(i).initPosition.size()>=4){
 		/* TODO: set intermediate positions & manage mobilityTime*/
-
 		/*destination*/
-		z=width*Fishes.get(i).initPosition.get(2);
-		w=height*Fishes.get(i).initPosition.get(3);
-		float TimeUnity=Fishes.get(i).mobilityTime/100;
-		float decX=(z-x)/TimeUnity;
-		float decY=(w-y)/TimeUnity;
-		System.out.println(decX+" ; "+decY);
-		/*Remove the privious position*/
-		Fishes.get(i).initPosition.remove(0);
-		Fishes.get(i).initPosition.remove(1);
+		destX=width*Fishes.get(i).initPosition.get(2);
+		destY=height*Fishes.get(i).initPosition.get(3);
+		System.out.println("destX="+destX+" ; destY="+destY);
+		decX=(destX-firstX)*timeUnity;
+		decY=(destY-firstY)*timeUnity;
+		/*to avoid the non-movement when the step is <0*/
+		if ((decX<1)&&(decX>-1))
+		    if(decX<0) 
+			decX=-1;
+		    else
+			decX=1;
+		if ((decY<1)&&(decY>-1))
+		    if(decY<0)
+			decY=-1;
+		    else
+			decY=1;
+		System.out.println("decX="+decX+" ; decY="+decY);
+	
+		if(Math.abs(z-destX)<=Math.abs(decX)){
+		    z=destX;
+		    System.out.println("Le zeeed est arrivé");
+		}
+		else{
+	   
+		    z=(int)(z+decX);
+		    System.out.println(" Le Zeeed is  moving on->z="+z );
+		}
+		if(Math.abs(w-destY)<=Math.abs(decY)){
+		    w=destY;
+		    System.out.println("Le Waaay est arrivé");}
+		else{
+		    w=(int)(w+decY);
+		    System.out.println("Le Waaay is  moving on->w="+w );
+		}
+	       
+		if((Math.abs(z-destX)<=Math.abs(decX))&&(Math.abs(w-destY)<=Math.abs(decY))){
+		    System.out.println("(|z-destX|<|decX|)&&(|w-destY|<|decY|) ->z="+z+" ; w="+w);
+		    System.out.println(" z et w prenne sont  arrivés!!! :D ->z="+z+" ; w="+w);
+		    /*Remove the privious position*/
+		    Fishes.get(i).initPosition.remove(0);
+		    Fishes.get(i).initPosition.remove(1);
+		    System.out.println("firstPosition Removed");
+		}
+        
 	    }
 	    else{
+		System.out.println("We are fixed here");
 		z=x;
 		w=y;
+		System.out.println("We are fixed here z=x:"+z+" ;w=y:"+w);
 	    }
 
 	    // System.out.println("Size= "+Fishes.get(i).initPosition.size());
@@ -181,9 +229,10 @@ class AquaPanel extends JPanel implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
+	
 	x =z;
 	y =w;
-	repaint();
+ 	repaint();
     }
     
     
