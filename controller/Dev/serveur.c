@@ -10,6 +10,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <time.h>
 
 
 #include "serveur.h"
@@ -338,10 +339,12 @@ void update_freshness(Client* client)
 int check_timeout(int* nb_client)
 {
   struct timeval current_time;
-  int i=0;
-  int timeout;
-  int e;
-  int a;
+  int i=0,c=0;
+  int timeout=0;
+  int e=0;
+  int a=0;
+  time_t minimum=0;
+  struct timeval current;
 
   e=open_config("./config/controller.cfg");
   if(e==0)
@@ -373,7 +376,16 @@ int check_timeout(int* nb_client)
         printf("%s\n", buffer1 );
       }
     }
-    sleep(20);
+    minimum = clients[i].last_update.tv_sec;
+    for(i=0;i<*nb_client;i++)
+    {
+        if ( clients[i].last_update.tv_sec < minimum )
+        {
+           minimum = clients[i].last_update.tv_sec;
+        }
+    }
+    gettimeofday(&current,0);
+    sleep(current.tv_sec-minimum);
 
   }
 }
