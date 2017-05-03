@@ -33,4 +33,5 @@ int parser_ping(const char* s, char* reply);
  *intern fonction
  */
 int new_position();
+int random_plus_minus();
 #endif

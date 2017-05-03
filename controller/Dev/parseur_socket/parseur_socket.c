@@ -411,17 +411,27 @@ int parser_get_fish_continuously(const char* s,int index)
 }
 int new_position()
 {
-    int i=0,j=0;
+    int i=0,j=0,k=1;
     for(j=0;j<nb_fishes;j++)
     {
       if (fishes[j].state==STARTED)
       {
         for(i=0;i<DIM;i++)
         {
-          fishes[j].destination[i]=rand()%40 + fishes[j].actualPosition[i];
+          k=random_plus_minus();
+          fishes[j].destination[i]=(k*(rand()%40))+fishes[j].actualPosition[i];
         }
       }
     }
+}
+int random_plus_minus()
+{
+  int i;
+  i=rand();
+  if(i%2==0)
+    return 1;
+  else
+    return -1;
 }
 /*int main()
 {
