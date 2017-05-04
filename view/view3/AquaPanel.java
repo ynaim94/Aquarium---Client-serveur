@@ -19,7 +19,7 @@ class AquaPanel extends JPanel implements ActionListener{
 
     private int x=0,y=0,z=0,w=0;
     private static int height,width,scaleX,scaleY,firstX,firstY,destX,destY;  
-    private static double decX, decY, timeUnity;
+    private static double decX,decY,timeUnity,duration=0,fuiteX=0,fuiteY=0;
 
     private BufferedImage[]images = new BufferedImage[8];
     /*an array with the names of the fish images*/
@@ -159,8 +159,8 @@ class AquaPanel extends JPanel implements ActionListener{
 	    firstX=width*Fishes.get(i).initPosition.get(0);
 	    firstY=height*Fishes.get(i).initPosition.get(1);
 	    timeUnity=Fishes.get(i).mobilityTime/100.0; //0.05
-	    x=firstX;
-	    y=firstY;
+	    //  x=firstX;
+	    //y=firstY;
 	    System.out.println("firstX= "+x+" ; firstY="+firstY);
 	    /*if the fish have an other position to move to*/
 	    if(Fishes.get(i).initPosition.size()>=4){
@@ -172,66 +172,92 @@ class AquaPanel extends JPanel implements ActionListener{
 		decX=(destX-firstX)*timeUnity;
 		decY=(destY-firstY)*timeUnity;
 		/*to avoid the non-movement when the step is <0*/
+		/*TODO: add more tests for more a more precise display*/
 		if ((decX<1)&&(decX>-1))
-		    if(decX<0) 
-			decX=-1;
-		    else
+		    if(decX<0){
+			/*if(decX>-0.5)//	fuiteX=-1-decX;
+			decX=0;
+			else*/ decX=-1;
+		    }
+		    else{
+			/*if(decX<0.5)//	fuiteX=1-decX;
+			decX=0;
+			else*/
 			decX=1;
+		    }
 		if ((decY<1)&&(decY>-1))
-		    if(decY<0)
-			decY=-1;
-		    else
-			decY=1;
+		    if(decY<0){
+			/*	if(decY>-0.5)//	fuiteX=-1-decX;
+			decY=0;
+			else//	fuiteY=-1-decY;
+			*/ decY=-1;
+			}
+		    else{
+			/*if(decY<0.5)//	fuiteX=1-decX;
+			decY=0;
+			else;
+			*/decY=1;
+			//fuiteY=1-decY;
+			}
 		System.out.println("decX="+decX+" ; decY="+decY);
-	
+		
 		if(Math.abs(z-destX)<=Math.abs(decX)){
 		    z=destX;
-		    System.out.println("Le zeeed est arrivé");
+		    System.out.println("Le zeeed est arrivé -> duration="+duration);
 		}
 		else{
 	   
 		    z=(int)(z+decX);
+		    duration++;
+		    fuiteX+=fuiteX;
 		    System.out.println(" Le Zeeed is  moving on->z="+z );
 		}
 		if(Math.abs(w-destY)<=Math.abs(decY)){
 		    w=destY;
-		    System.out.println("Le Waaay est arrivé");}
+		    System.out.println("Le Waaay est arrivé -> duration="+duration);}
 		else{
 		    w=(int)(w+decY);
+		    duration++;
+		    fuiteY+=fuiteY;
 		    System.out.println("Le Waaay is  moving on->w="+w );
 		}
 	       
 		if((Math.abs(z-destX)<=Math.abs(decX))&&(Math.abs(w-destY)<=Math.abs(decY))){
 		    System.out.println("(|z-destX|<|decX|)&&(|w-destY|<|decY|) ->z="+z+" ; w="+w);
-		    System.out.println(" z et w prenne sont  arrivés!!! :D ->z="+z+" ; w="+w);
+		    System.out.println(" z et w prenne sont  arrivés!!! :D dans une durée de "+duration +" ;fuiteX="+fuiteX+" ;fuiteY="+fuiteY);
+		    duration=0;
+		    fuiteY=0;
+		    fuiteX=0;
 		    /*Remove the privious position*/
 		    Fishes.get(i).initPosition.remove(0);
 		    Fishes.get(i).initPosition.remove(1);
+		   
 		    System.out.println("firstPosition Removed");
+		     System.out.println("firstX="+firstX+" ;FirstY="+firstY);
 		}
         
 	    }
 	    else{
 		System.out.println("We are fixed here");
-		z=x;
-		w=y;
+		z=firstX;
+		w=firstY;
+     
 		System.out.println("We are fixed here z=x:"+z+" ;w=y:"+w);
 	    }
-
-	    // System.out.println("Size= "+Fishes.get(i).initPosition.size());
+	    
+	     System.out.println("Size= "+Fishes.get(i).initPosition.size());
 	    /*manage the proportional size*/
 	    scaleX=width*Fishes.get(i).dimensions[0];
 	    scaleY=height*Fishes.get(i).dimensions[1];
+	    x=z;
+	    y=w;
+	   
 	    g.drawImage(images[Fishes.get(i).imageIndex],x,y,scaleX,scaleY,this);
-	    
 	}
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-	
-	x =z;
-	y =w;
  	repaint();
     }
     
@@ -247,4 +273,3 @@ class AquaPanel extends JPanel implements ActionListener{
     }
     
 }
-

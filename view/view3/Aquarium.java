@@ -98,7 +98,7 @@ public class Aquarium {
 	pattern[5]= Pattern.compile("^startFish \\w+");
 	pattern[6]= Pattern.compile("^log out");
 	pattern[7]= Pattern.compile("^bye");
-	pattern[8]= Pattern.compile("^getFishes");
+	pattern[8]= Pattern.compile("^getFishes ");
 	pattern[9]= Pattern.compile("^getFishesContinuously");
 	pattern[10] = Pattern.compile("^status");
 	/*Prompt*/
