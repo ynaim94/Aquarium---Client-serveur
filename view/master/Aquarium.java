@@ -45,6 +45,12 @@ public class Aquarium {
 	String[][] items = parser.parseListFishPosition(response);
 	contentPane.setGetFishes(items);
     }
+
+    /*private static void getFishesContinuously(){
+	GFCThread p = new GFCThread(aquaCon);
+	p.start();
+	}*/
+
     
     /***Fin Ajout view 4****/
 
@@ -64,6 +70,7 @@ public class Aquarium {
 	System.out.print(">"); 
 	/*get the input as a String*/
 	String cmd = scanner.nextLine();
+	aquaCon.setCmd(cmd);
 	logger.info("Client sent " + cmd);
 	cmd=cmd.intern();
 	try {
@@ -113,28 +120,33 @@ public class Aquarium {
 	    while(cmd==""){  
 		if (connected==false){
 		    aquaCon.openConnection(address,port);
+		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
+		    rcvThread.start();
 		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-		
 		    exec.scheduleAtFixedRate(new Runnable() {
 			    @Override
 			    public void run() {
 				logger.info("ping "+ port);
 				try{
 				    aquaCon.send("ping " + port);
-				    String pong= aquaCon.receive();
-				    logger.info(pong);
 				}
 				catch(IOException e) {
 				    System.out.println("IOException \n");
 				}
 			    }
 			}, 0, 5, TimeUnit.SECONDS);
-		
+		    
 		    connected=true;
 		}
 		cmd=promptIn();
-		response=aquaCon.receive();
+		//System.out.println(cmd + "a");
+		
+		synchronized (aquaCon){
+		    aquaCon.wait();
+		}
+		response=aquaCon.getResponse();
 		promptOut(response);
+
 		//	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 		/*Handling response*/
 		if(pattern[2].matcher(response).matches())/* greeting*/
@@ -156,7 +168,7 @@ public class Aquarium {
 		}
 		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		    //		    System.out.println("listening continuously+ promptout() with each response");
-		    //		    getFishesContinuously();
+		    //rgetFishesContinuously();
 		}
 		else{ if(pattern[0].matcher(response).find()){
 			// if(pattern[0].matcher(response).matches()){/*OK*/
