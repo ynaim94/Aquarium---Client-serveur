@@ -117,8 +117,8 @@ public class Aquarium {
 	    pattern[5]= Pattern.compile("^startFish \\w+");
 	    pattern[6]= Pattern.compile("^log out");
 	    pattern[7]= Pattern.compile("^bye");
-	    pattern[8]= Pattern.compile("^getFishes");
-	    pattern[9]= Pattern.compile("^getFishesContinuously");
+	    pattern[8]= Pattern.compile("^getFishes\\s*");
+	    pattern[9]= Pattern.compile("^getFishesContinuously\\s*");
 	    pattern[10] = Pattern.compile("^status");
 	    /*Prompt*/
 	    //	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
@@ -127,7 +127,6 @@ public class Aquarium {
 	    while(cmd==""){  
 		if (connected==false){
 		    aquaCon.openConnection(address,port);
-		    //Lanchement du thread receive
 		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
 		    rcvThread.start();
 		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
@@ -176,7 +175,7 @@ public class Aquarium {
 		}
 		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		    //		    System.out.println("listening continuously+ promptout() with each response");
-		    //rgetFishesContinuously();
+		    //getFishesContinuously();
 		}
 		else{ if(pattern[0].matcher(response).find()){
 			// if(pattern[0].matcher(response).matches()){/*OK*/
