@@ -8,7 +8,7 @@ public class AquaConnection extends Thread{
     Scanner scanner;
     /*cmd : store the command written in the prompt*/
     /*response : to store the response  */
-    private String cmd,response;
+    private static String cmd,response;
     //static InetAddress address;
     //static int port;
 
@@ -56,7 +56,8 @@ public class AquaConnection extends Thread{
     }
 
     
-    public void setCmd(String response){
+    public void setCmd(String cmd){
+	//	System.out.println(cmd);
 	this.cmd = cmd;
     }
 

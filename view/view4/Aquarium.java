@@ -70,6 +70,7 @@ public class Aquarium {
 	System.out.print(">"); 
 	/*get the input as a String*/
 	String cmd = scanner.nextLine();
+	aquaCon.setCmd(cmd);
 	logger.info("Client sent " + cmd);
 	cmd=cmd.intern();
 	try {
@@ -94,8 +95,6 @@ public class Aquarium {
 	logger = new ClientLog();
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
-	ReceiveThread rcvThread = new ReceiveThread(aquaCon);
-	rcvThread.start();
 	port = conf.getTcpPort();
 	final String ImagesPath = conf.getVisualRepertory();
 	address = conf.getIpAddress();
@@ -121,8 +120,9 @@ public class Aquarium {
 	    while(cmd==""){  
 		if (connected==false){
 		    aquaCon.openConnection(address,port);
+		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
+		    rcvThread.start();
 		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-		
 		    exec.scheduleAtFixedRate(new Runnable() {
 			    @Override
 			    public void run() {
@@ -139,11 +139,9 @@ public class Aquarium {
 		    connected=true;
 		}
 		cmd=promptIn();
+		//System.out.println(cmd + "a");
+		
 		synchronized (aquaCon){
-		    if (aquaCon.flag == false){
-			aquaCon.setCmd(cmd);
-			aquaCon.notify();
-		    }
 		    aquaCon.flag = true;
 		    aquaCon.wait();
 		}
