@@ -11,7 +11,7 @@
 #include "parser.h"
 #include "../view.h"
 #include "prompt.h"
-
+#define _GNU_SOURCE
 #define TAILLE_MAX 1000 // A redéfinir avec TAILLE_MAX de intern.c
 
 int get_view_id(char* str){
@@ -72,7 +72,7 @@ int display_prompt(int x){
     type = parse (buffer);
 
     if ((type != 0) && (type != 5) && (state == 0))
-      msg = "Aquarium Not loaded";
+      asprintf(&msg,"->Aquarium Not loaded");
     else {
 
 
@@ -123,7 +123,7 @@ int display_prompt(int x){
 	break;
 
       default:
-	msg = "not recognized";
+      asprintf(&msg,"->not recognized");
       }
     }
     if (msg != NULL)
