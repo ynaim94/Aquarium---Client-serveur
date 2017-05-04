@@ -40,11 +40,24 @@ public class Aquarium {
 	contentPane.setAddFish(items);
 	
     }
-    
+
+    private static void delFish(String cmd){
+        String[] items =  parser.parseFishPosition(cmd);
+        if (contentPane == null) 
+	    System.out.println("Uninitialized!");
+        contentPane.setDelFish(items); 
+    }
+
     public static void getFishes(String response){
 	String[][] items = parser.parseListFishPosition(response);
 	contentPane.setGetFishes(items);
     }
+
+    /*private static void getFishesContinuously(){
+	GFCThread p = new GFCThread(aquaCon);
+	p.start();
+	}*/
+
     
     /***Fin Ajout view 4****/
 
@@ -64,6 +77,7 @@ public class Aquarium {
 	System.out.print(">"); 
 	/*get the input as a String*/
 	String cmd = scanner.nextLine();
+	aquaCon.setCmd(cmd);
 	logger.info("Client sent " + cmd);
 	cmd=cmd.intern();
 	try {
@@ -103,8 +117,8 @@ public class Aquarium {
 	    pattern[5]= Pattern.compile("^startFish \\w+");
 	    pattern[6]= Pattern.compile("^log out");
 	    pattern[7]= Pattern.compile("^bye");
-	    pattern[8]= Pattern.compile("^getFishes");
-	    pattern[9]= Pattern.compile("^getFishesContinuously");
+	    pattern[8]= Pattern.compile("^getFishes\\s*");
+	    pattern[9]= Pattern.compile("^getFishesContinuously\\s*");
 	    pattern[10] = Pattern.compile("^status");
 	    /*Prompt*/
 	    //	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
@@ -113,28 +127,33 @@ public class Aquarium {
 	    while(cmd==""){  
 		if (connected==false){
 		    aquaCon.openConnection(address,port);
+		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
+		    rcvThread.start();
 		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-		
 		    exec.scheduleAtFixedRate(new Runnable() {
 			    @Override
 			    public void run() {
 				logger.info("ping "+ port);
 				try{
 				    aquaCon.send("ping " + port);
-				    String pong= aquaCon.receive();
-				    logger.info(pong);
 				}
 				catch(IOException e) {
 				    System.out.println("IOException \n");
 				}
 			    }
 			}, 0, 5, TimeUnit.SECONDS);
-		
+		    
 		    connected=true;
 		}
 		cmd=promptIn();
-		response=aquaCon.receive();
+		//System.out.println(cmd + "a");
+		
+		synchronized (aquaCon){
+		    aquaCon.wait();
+		}
+		response=aquaCon.getResponse();
 		promptOut(response);
+
 		//	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 		/*Handling response*/
 		if(pattern[2].matcher(response).matches())/* greeting*/
@@ -156,7 +175,7 @@ public class Aquarium {
 		}
 		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		    //		    System.out.println("listening continuously+ promptout() with each response");
-		    //		    getFishesContinuously();
+		    //getFishesContinuously();
 		}
 		else{ if(pattern[0].matcher(response).find()){
 			// if(pattern[0].matcher(response).matches()){/*OK*/
@@ -166,7 +185,8 @@ public class Aquarium {
 			    addFish(cmd);
 			} 
 			if(pattern[4].matcher(cmd).find()) /*delFish*/
-			    System.out.println("calling delFish methode"); ;
+			    //System.out.println("calling delFish methode");
+			    delFish(cmd);
 			if(pattern[5].matcher(cmd).matches()) /*startFish*/{
 			    startFish(cmd);
 			}

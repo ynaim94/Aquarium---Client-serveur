@@ -8,18 +8,23 @@ public class AquaConnection extends Thread{
     Scanner scanner;
     /*cmd : store the command written in the prompt*/
     /*response : to store the response  */
-    String cmd,response;
+    private static String cmd,response;
     //static InetAddress address;
     //static int port;
 
     static private Socket socket;
+    
 
     private ArrayList<Fish> fishes;
+
+    boolean flag;
+    
     
     ArrayList<Fish> getFishes(){
 	return fishes;
     }
     public AquaConnection(){
+	flag = false;
 	cmd="";
 	response ="NO RESPONSE YET\n\n";
 	/* create a scanner so we can read the command-line input*/
@@ -41,9 +46,28 @@ public class AquaConnection extends Thread{
     public void closeConnection()throws IOException{
 	socket.close();
     }
+
+    public void setResponse(String response){
+	this.response = response;
+    }
+
+    public String getResponse(){
+	return this.response;
+    }
+
+    
+    public void setCmd(String cmd){
+	//	System.out.println(cmd);
+	this.cmd = cmd;
+    }
+
+    public String getCmd(){
+	return this.cmd;
+    }
+
     
     public void  run(){
-
+	
 	
 	
     }       
