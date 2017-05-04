@@ -397,10 +397,10 @@ int parser_get_fish(const char* s, char* reply, int index)
   }
   else
     sprintf(reply,"%s%s",reply,"\n");
-  for (i=0;i<nb_fishes;i++)
+  /*for (i=0;i<nb_fishes;i++)
   {
     printf("le poisson %s se trouve à la position %d, %d \n",fishes[i].name,fishes[i].actualPosition[0],fishes[i].actualPosition[1]);
-  }
+  }*/
 }
 int parser_get_fish_continuously(const char* s,int index)
 {
