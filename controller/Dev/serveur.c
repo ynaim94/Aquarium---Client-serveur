@@ -385,7 +385,7 @@ int check_timeout(int* nb_client)
         }
     }
     gettimeofday(&current,0);
-    sleep(current.tv_sec-minimum);
+    sleep(timeout-(current.tv_sec-minimum));
 
   }
 }
