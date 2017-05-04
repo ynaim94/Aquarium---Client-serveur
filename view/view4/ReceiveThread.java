@@ -26,27 +26,29 @@ public class ReceiveThread extends Thread{
 		
 		String response = aquaCon.receive();
 		String cmd = aquaCon.getCmd(); // Ne marche pas : Décalage
-		//System.out.println(cmd);
-		//System.out.println(response);
+		//		System.out.println(cmd);
+		//		System.out.println(response);
 		if (((response.charAt(0) == 'l') ||
 		     (response.equals ("NOK: No fishes found") ))&&
 		    ((cmd.equals("getFishes") == false))) {
 		    //		    System.out.println("if de gfc"+cmd);
+		    //System.out.println("gfc: "+ response);
 		    if (response.charAt(0) == 'l'){
 			aquarium.getFishes(response);
 		    }
 		    logger.info(response);
 		    if (cmd.equals("getFishesContinuously")){
-			System.out.println("here");
+			//			System.out.println("here");
 			aquaCon.setCmd("");
 			aquaCon.setResponse("getFishesContinuously Launched");
 			synchronized(aquaCon){
-			    System.out.println("Redonne la main");
+			    //  System.out.println("Redonne la main");
 			    aquaCon.notify();
 			}
 		    }
 		}
 		else if (response.charAt(0) == 'p'){
+		    //System.out.println("p: "+ response);
 		    logger.info(response);
 		}
 		else  {
@@ -54,7 +56,7 @@ public class ReceiveThread extends Thread{
 		    aquaCon.setResponse(response);
 		    aquaCon.setCmd("");
 		    synchronized(aquaCon){
-			System.out.println("Redonne la main2");
+			//	System.out.println("Redonne la main2");
 			aquaCon.notify();
 		    }
 		}

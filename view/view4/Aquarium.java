@@ -46,10 +46,10 @@ public class Aquarium {
 	contentPane.setGetFishes(items);
     }
 
-    private static void getFishesContinuously(){
+    /*private static void getFishesContinuously(){
 	GFCThread p = new GFCThread(aquaCon);
 	p.start();
-    }
+	}*/
 
     
     /***Fin Ajout view 4****/
@@ -142,11 +142,11 @@ public class Aquarium {
 		//System.out.println(cmd + "a");
 		
 		synchronized (aquaCon){
-		    aquaCon.flag = true;
 		    aquaCon.wait();
 		}
 		response=aquaCon.getResponse();
 		promptOut(response);
+
 		//	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 		/*Handling response*/
 		if(pattern[2].matcher(response).matches())/* greeting*/
@@ -168,7 +168,7 @@ public class Aquarium {
 		}
 		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		    //		    System.out.println("listening continuously+ promptout() with each response");
-		    getFishesContinuously();
+		    //rgetFishesContinuously();
 		}
 		else{ if(pattern[0].matcher(response).find()){
 			// if(pattern[0].matcher(response).matches()){/*OK*/

@@ -1,0 +1,48 @@
+May 04, 2017 12:40:31 PM aqua.ClientLog <init>
+CONFIG: Client logging ..
+May 04, 2017 12:40:31 PM aqua.ClientLog <init>
+CONFIG: Client logging ..
+May 04, 2017 12:40:31 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:40:31 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:40:35 PM aqua.ClientLog info
+INFO: Client sent hello as in N4
+May 04, 2017 12:40:35 PM aqua.ClientLog info
+INFO: Client received greeting N1
+May 04, 2017 12:40:36 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:40:36 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:40:41 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:40:41 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:40:46 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:40:46 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:40:51 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:40:51 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:40:56 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:40:56 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:41:01 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:41:01 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:41:06 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:41:06 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:41:11 PM aqua.ClientLog info
+INFO: ping 12345
+May 04, 2017 12:41:11 PM aqua.ClientLog info
+INFO: pong 12345
+May 04, 2017 12:41:13 PM aqua.ClientLog info
+INFO: Client sent Hello as in N1
+May 04, 2017 12:41:13 PM aqua.ClientLog info
+INFO: Client received unkown command try again
