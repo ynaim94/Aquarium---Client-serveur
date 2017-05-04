@@ -28,11 +28,9 @@ public class ReceiveThread extends Thread{
 		if (((response.charAt(0) == 'l') ||
 		     (response.equals ("NOK: No fishes found") ))&&
 		    ((pattern[0].matcher(cmd).matches() == false))) {
-		    //		    System.out.println("if de gfc"+cmd);
+		    //System.out.println("if de gfc"+cmd);
 		    //System.out.println("gfc: "+ response);
-		    if (response.charAt(0) == 'l'){
-			aquarium.getFishes(response);
-		    }
+		    aquarium.getFishes(response);
 		    logger.info(response);
 		    if (pattern[1].matcher(cmd).matches()){
 			//			System.out.println("here");
