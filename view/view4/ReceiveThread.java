@@ -1,5 +1,6 @@
 package aqua;
 import java.io.*;
+import java.util.regex.Pattern;
 
 public class ReceiveThread extends Thread{
     
@@ -12,14 +13,10 @@ public class ReceiveThread extends Thread{
     
     public synchronized void run(){
 	ClientLog logger = new ClientLog();
-	/*try{
-	  synchronized (aquaCon){
-	  aquaCon.wait();
-	  }
-	  }
-	  catch (InterruptedException e) {
-	  e.printStackTrace();
-	  }*/
+	Pattern[] pattern = new Pattern[2];
+	pattern[0]= Pattern.compile("^getFishes\\s*");
+	pattern[1]= Pattern.compile("^getFishesContinuously\\s*");
+
 	try{
 	    
 	    while(true){
@@ -30,14 +27,12 @@ public class ReceiveThread extends Thread{
 		//		System.out.println(response);
 		if (((response.charAt(0) == 'l') ||
 		     (response.equals ("NOK: No fishes found") ))&&
-		    ((cmd.equals("getFishes") == false))) {
-		    //		    System.out.println("if de gfc"+cmd);
+		    ((pattern[0].matcher(cmd).matches() == false))) {
+		    //System.out.println("if de gfc"+cmd);
 		    //System.out.println("gfc: "+ response);
-		    if (response.charAt(0) == 'l'){
-			aquarium.getFishes(response);
-		    }
+		    aquarium.getFishes(response);
 		    logger.info(response);
-		    if (cmd.equals("getFishesContinuously")){
+		    if (pattern[1].matcher(cmd).matches()){
 			//			System.out.println("here");
 			aquaCon.setCmd("");
 			aquaCon.setResponse("getFishesContinuously Launched");

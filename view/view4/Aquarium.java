@@ -40,7 +40,14 @@ public class Aquarium {
 	contentPane.setAddFish(items);
 	
     }
-    
+
+    private static void delFish(String cmd){
+        String[] items =  parser.parseFishPosition(cmd);
+        if (contentPane == null) 
+	    System.out.println("Uninitialized!");
+        contentPane.setDelFish(items); 
+    }
+
     public static void getFishes(String response){
 	String[][] items = parser.parseListFishPosition(response);
 	contentPane.setGetFishes(items);
@@ -110,8 +117,8 @@ public class Aquarium {
 	    pattern[5]= Pattern.compile("^startFish \\w+");
 	    pattern[6]= Pattern.compile("^log out");
 	    pattern[7]= Pattern.compile("^bye");
-	    pattern[8]= Pattern.compile("^getFishes");
-	    pattern[9]= Pattern.compile("^getFishesContinuously");
+	    pattern[8]= Pattern.compile("^getFishes\\s*");
+	    pattern[9]= Pattern.compile("^getFishesContinuously\\s*");
 	    pattern[10] = Pattern.compile("^status");
 	    /*Prompt*/
 	    //	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
@@ -168,7 +175,7 @@ public class Aquarium {
 		}
 		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		    //		    System.out.println("listening continuously+ promptout() with each response");
-		    //rgetFishesContinuously();
+		    //getFishesContinuously();
 		}
 		else{ if(pattern[0].matcher(response).find()){
 			// if(pattern[0].matcher(response).matches()){/*OK*/
@@ -178,7 +185,8 @@ public class Aquarium {
 			    addFish(cmd);
 			} 
 			if(pattern[4].matcher(cmd).find()) /*delFish*/
-			    System.out.println("calling delFish methode"); ;
+			    //System.out.println("calling delFish methode");
+			    delFish(cmd);
 			if(pattern[5].matcher(cmd).matches()) /*startFish*/{
 			    startFish(cmd);
 			}
