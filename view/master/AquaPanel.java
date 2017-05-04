@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import java.util.regex.Pattern;
 import java.util.*;
 
 
@@ -72,15 +71,6 @@ class AquaPanel extends JPanel implements ActionListener{
 	setFishes(newFishes);
     }
 
-    public void setDelFish(String[] items){
-	Iterator<Fish> it = Fishes.iterator();
-	while (it.hasNext()) {
-	    if (it.next().name.equals(items[1])) {
-		it.remove();
-	    }
-	}    
-    }    
-
     public void setGetFishes(String[][] items){
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
 	int added = 0;
@@ -111,15 +101,8 @@ class AquaPanel extends JPanel implements ActionListener{
 
     }
 
-    public String extractName (String s){
-	if(s.contains("_") == true) {
-	    Pattern p = Pattern.compile("_");
-	    String[] items = p.split(s);
-	    return items[0];
-	}
-	else 
-	    return s;	
-    }
+
+
 
     public AquaPanel(String name) {
         timer.start();
@@ -139,6 +122,7 @@ class AquaPanel extends JPanel implements ActionListener{
     }
     
     
+    
     @Override
     public Dimension getPreferredSize(){
 	width=images[0].getWidth()/100;
@@ -155,7 +139,7 @@ class AquaPanel extends JPanel implements ActionListener{
 	for(int i=0; i<Fishes.size();i++){
 	    /* match the fish name with the suitable image */
 	    for(int l=1;l<8;l++)
-		if (((fishImages[l].equals(Fishes.get(i).name))  ||		      (fishImages[l].equals(extractName(Fishes.get(i).name))))){ 
+		if (fishImages[l].equals(Fishes.get(i).name)){ /*TODO: accept names with _ */
 		    Fishes.get(i).imageIndex=l;
 		    break;
 		}
@@ -171,7 +155,7 @@ class AquaPanel extends JPanel implements ActionListener{
 		/*destination*/
 		z=width*Fishes.get(i).initPosition.get(2);
 		w=height*Fishes.get(i).initPosition.get(3);
-		/*Remove the previous position*/
+		/*Remove the privious position*/
 		Fishes.get(i).initPosition.remove(0);
 		Fishes.get(i).initPosition.remove(1);
 	    }
