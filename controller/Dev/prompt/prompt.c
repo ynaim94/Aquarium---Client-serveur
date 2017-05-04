@@ -11,6 +11,7 @@
 #include "parser.h"
 #include "../view.h"
 #include "prompt.h"
+#include "../log/log.h"
 #define _GNU_SOURCE
 #define TAILLE_MAX 1000 // A redéfinir avec TAILLE_MAX de intern.c
 
@@ -58,6 +59,7 @@ View* parse_view(char* str){
 
 int display_prompt(int x){
   char buffer[BUFFER_SIZE];
+  char logg[BUFFER_SIZE];
   //int len_read;
   int type=0;
   char *msg;
@@ -68,7 +70,9 @@ int display_prompt(int x){
 
     strcpy(buffer,buffer_prompt);
     //str_request = malloc (sizeof(char)* x);
-
+    sprintf(logg,"%s%s%s","request from prompt : ",buffer,"\n");
+    insert_log(logg);
+    memset(logg, 0, sizeof (logg));
     type = parse (buffer);
 
     if ((type != 0) && (type != 5) && (state == 0))
@@ -128,6 +132,11 @@ int display_prompt(int x){
     }
     if (msg != NULL)
       printf ("%s\n\n", msg);
+      supprime_retour(msg);
+      sprintf(logg,"%s%s%s","reponse to prompt : ",msg,"\n");
+      insert_log(logg);
+      memset(logg, 0, sizeof (logg));
+
   free(msg);
 
 

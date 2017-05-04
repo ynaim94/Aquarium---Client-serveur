@@ -39,14 +39,16 @@ static void app(void)
    srand(time(NULL));
    open_log("./log/log.txt");
 
-   insert_log("Starting the controller");
+   insert_log("Starting the controller...\n");
    printf("********Welcome to the aquarium's controller********\n");
    printf("-> Please load an aquarium\n\n");
    threadpool thpool = thpool_init(4);
-   insert_log("Creating threads pool");
+   insert_log("Creating threads pool...\n");
    SOCKET sock = init_connection();
    if (sock==-1)
     return;
+   else
+    insert_log("configuration succeeded\n");
 
 
    /* the index for the array */
@@ -55,6 +57,7 @@ static void app(void)
    int i=0;
    int len_read;
    char buffer[BUF_SIZE];
+   char logg[BUF_SIZE];
    /* an array for all clients */
 
 
@@ -92,6 +95,10 @@ static void app(void)
           }
         if (len_read ==0)
         {
+          insert_log("shuting down the controller...\n");
+          close_log();
+          clear_clients(clients, actual);
+          end_connection(sock);
           exit(0);
         }
         buffer_prompt[len_read-1] = '\0';
@@ -110,8 +117,6 @@ static void app(void)
             perror("accept()");
             continue;
          }
-         else
-            printf("new client accepté\n");
 
 
          /* what is the new maximum fd ? */
@@ -127,9 +132,11 @@ static void app(void)
 
 
          clients[actual] = c;
-         printf("adresse ip : %s\n",clients[actual].ip);
-         printf("time : %d \n", clients[actual].last_update.tv_sec);
+         //printf("adresse ip : %s\n",clients[actual].ip);
+         //printf("time : %d \n", clients[actual].last_update.tv_sec);
          actual++;
+         sprintf(logg,"%s%s%s","new client, connexion from ",c.ip,"\n");
+         insert_log(logg);
       }
       else
       {
@@ -142,6 +149,8 @@ static void app(void)
                Client client = clients[i];
 
                int c = read_client(clients[i].sock, buffer_msg);
+               sprintf(logg,"%s%s%s%s%s", "request from ",clients[i].ip," : ",buffer_msg,"\n");
+               insert_log(logg);
                /* client disconnected */
                if(c == 0)
                {
@@ -150,8 +159,9 @@ static void app(void)
                   views[clients[i].state].state= FREE;
                   remove_client(clients, i, &actual);
                   strcpy(buffer,client.ip);
-                  sprintf(buffer1, "%s%s",buffer," is disconnected !");
-                  printf("%s\n", buffer1 );
+                  sprintf(buffer1, "%s%s",buffer," is disconnected\n");
+                  printf("%s", buffer1 );
+                  insert_log(buffer1);
                }
                else
                {
@@ -219,7 +229,7 @@ static int init_connection()
    e=open_config("./config/controller.cfg");
    if(e==0)
    {
-     insert_log("configuration failed...aborting the controller");
+     insert_log("configuration failed...aborting the controller\n");
      return -1;
    }
 
@@ -234,7 +244,7 @@ static int init_connection()
 
    close_config();
 
-   insert_log("configuration success");
+
 
    SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
    SOCKADDR_IN sin = { 0 };
@@ -245,7 +255,6 @@ static int init_connection()
       exit(errno);
    }
 
-   insert_log("création de socket avec succès");
 
    sin.sin_addr.s_addr = htonl(INADDR_ANY);
    sin.sin_port = htons(portno);
@@ -298,7 +307,7 @@ static int read_client(SOCKET sock, char *buffer)
       n = 0;
    }
    else if (n>0)
-    buffer[n-1] = '\0';
+    buffer[n-2] = '\0';
    return n;
 }
 /**
@@ -349,7 +358,7 @@ int check_timeout(int* nb_client)
   e=open_config("./config/controller.cfg");
   if(e==0)
   {
-    insert_log("configuration failed...aborting the controller");
+    insert_log("configuration failed...aborting the controller\n");
     return -1;
   }
 
@@ -372,8 +381,9 @@ int check_timeout(int* nb_client)
         shutdown(clients[i].sock,2);
         remove_client(clients, i, nb_client);
         strcpy(buffer1,client.ip);
-        sprintf(buffer1, "%s%s",buffer1," is ejected due to timeout !");
-        printf("%s\n", buffer1 );
+        sprintf(buffer1, "%s%s",buffer1," is ejected due to timeout !\n");
+        printf("%s", buffer1 );
+        insert_log(buffer1);
       }
     }
     minimum = clients[i].last_update.tv_sec;
@@ -394,6 +404,7 @@ int parse_socket(int index)
 {
   char buffer[BUF_SIZE];
   char reply[BUF_SIZE];
+  char logg[BUF_SIZE];
   int to_parse;
   strcpy(buffer,buffer_msg);
   {
@@ -428,8 +439,14 @@ int parse_socket(int index)
           clients[index].en_continue=FALSE;
           parser_log_out(reply,index);
           write_client(clients[index].sock, reply);
+          sprintf(logg,"%s%s%s%s", "response to ",clients[index].ip," : ",reply);
+          insert_log(logg);
+          memset(logg, 0, sizeof (logg));
           views[clients[index].state].state= FREE;
           shutdown(clients[index].sock,2);
+          sprintf(logg,"%s%s%s", "client ",clients[index].ip," loged out\n");
+          insert_log(logg);
+          memset(logg, 0, sizeof (logg));
           remove_client(clients, index, &actual);
           return 0;
         }
@@ -466,6 +483,8 @@ int parse_socket(int index)
   }
   //printf("%s\n", reply);
   write_client(clients[index].sock, reply);
+  sprintf(logg,"%s%s%s%s", "response to ",clients[index].ip," : ",reply);
+  insert_log(logg);
   memset(reply, 0, sizeof (reply));
   return 0;
 

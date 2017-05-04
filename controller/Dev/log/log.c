@@ -36,7 +36,7 @@ void insert_log(const char* msg)
   time(&rawtime);
   timeinfo = localtime(&rawtime);
   strftime(buffer,BUFF_SIZE,"%x %X",timeinfo);
-  fprintf(logfile,"[%s]   %s\n",buffer,msg);
+  fprintf(logfile,"[%s]   %s",buffer,msg);
   fflush(logfile);
 
 }
@@ -52,4 +52,12 @@ void close_log()
   if(logfile)
     fclose(logfile);
   logfile = NULL;
+}
+void supprime_retour(char *texte)
+{
+int p=0 ,i=0;
+for(i=0;texte[i] != '\0';i++)
+  {if (texte[i] == '\n')  // on a trouve
+       texte[i]=' ';
+   }
 }
