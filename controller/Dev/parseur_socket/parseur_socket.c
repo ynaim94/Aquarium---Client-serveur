@@ -22,10 +22,10 @@
  */
 const char *str_hello_id="^(hello in as[ ]N[0-9]+$){1}";//
 const char *str_hello="^(hello$){1}";//
-const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)$){1}";
-const char *str_del_fish="^(delFish[ ][[:alnum:]]+$){1}";//
+const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)([_][0-9]{1,2})?[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)$){1}";
+const char *str_del_fish="^(delFish[ ][[:alnum:]]+([_][0-9]{1,2})?$){1}";//
 const char *str_log_out="^(log out$){1}";//
-const char *str_start_fish="^(startFish[ ][[:alnum:]]+$){1}";//
+const char *str_start_fish="^(startFish[ ][[:alnum:]]+([_][0-9]{1,2})?$){1}";//
 const char *str_get_fish="^(getFishes$){1}";//
 const char *str_get_fish_continously="^(getFishesContinuously$){1}";//
 const char *str_ping="^(ping[ ]+[0-9]{4,5}$)";//
