@@ -1,14 +1,18 @@
-mai 04, 2017 5:25:41 PM aqua.ClientLog <init>
+mai 04, 2017 8:02:44 PM aqua.ClientLog <init>
 CONFIG: Client logging ..
-mai 04, 2017 5:25:44 PM aqua.ClientLog info
-INFOS: Client sent hello in as
-mai 04, 2017 5:25:44 PM aqua.ClientLog info
+mai 04, 2017 8:02:46 PM aqua.ClientLog info
+INFOS: Client sent hello 
+mai 04, 2017 8:02:46 PM aqua.ClientLog info
 INFOS: Client received greeting N1
-mai 04, 2017 5:25:55 PM aqua.ClientLog info
+mai 04, 2017 8:03:23 PM aqua.ClientLog info
+INFOS: Client sent addFish bubbleFish at 10x10,10x12, RandomWayPoint 
+mai 04, 2017 8:03:23 PM aqua.ClientLog info
+INFOS: Client received OK : Fish added to fish tank
+mai 04, 2017 8:03:33 PM aqua.ClientLog info
+INFOS: Client sent startFish bubbleFish 
+mai 04, 2017 8:03:33 PM aqua.ClientLog info
+INFOS: Client received OK : Fish started
+mai 04, 2017 8:03:37 PM aqua.ClientLog info
 INFOS: Client sent getFishes 
-mai 04, 2017 5:25:55 PM aqua.ClientLog info
-INFOS: Client received list [sneakingFish at 57x9,11x10,5]
-mai 04, 2017 5:25:58 PM aqua.ClientLog info
-INFOS: Client sent getFishes 
-mai 04, 2017 5:25:58 PM aqua.ClientLog info
-INFOS: Client received list [sneakingFish at 57x12,11x10,5]
+mai 04, 2017 8:03:37 PM aqua.ClientLog info
+INFOS: Client received list [bubbleFish at 16x15,10x12,5]

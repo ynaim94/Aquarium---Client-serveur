@@ -27,6 +27,7 @@ class AquaPanel extends JPanel implements ActionListener{
     ArrayList<Fish> Fishes=new ArrayList<Fish>();
     /*timer to repaint fishes in their new positions each 100 ms*/
     private Timer timer = new Timer(100, (ActionListener) this);
+    
   
 
         
@@ -154,10 +155,10 @@ for(Fish poiss : Fishes)
 		else /*image par défaut*/
 		    Fishes.get(i).imageIndex=2;
 	    System.out.println("My name is "+Fishes.get(i).name);
-  System.out.print("My positions [ ");
-		    for(int poiss : Fishes.get(i).initPosition)
-			System.out.print(poiss+",");
-		    System.out.println(" ]");
+	    System.out.print("My positions [ ");
+	    for(int poiss : Fishes.get(i).initPosition)
+		System.out.print(poiss+",");
+	    System.out.println(" ]");
 	    /*Actual Position*/
 	    firstX=width*Fishes.get(i).initPosition.get(0);
 	    firstY=height*Fishes.get(i).initPosition.get(1);
@@ -171,6 +172,7 @@ for(Fish poiss : Fishes)
 		/*destination*/
 		destX=width*Fishes.get(i).initPosition.get(2);
 		destY=height*Fishes.get(i).initPosition.get(3);
+
 		System.out.println("destX="+destX+" ; destY="+destY);
 		decX=(destX-firstX)*timeUnity;
 		decY=(destY-firstY)*timeUnity;
@@ -204,25 +206,25 @@ for(Fish poiss : Fishes)
 			}
 		System.out.println("decX="+decX+" ; decY="+decY);
 		
-		if(Math.abs(z-destX)<=Math.abs(decX)){
-		    z=destX;
+		if(Math.abs(Fishes.get(i).actualPosition[0]-destX)<=Math.abs(decX)){
+		    Fishes.get(i).actualPosition[0]=destX;
 		    System.out.println("Le zeeed est arrivé -> duration="+duration);
 		}
 		else{
 	   
-		    z=(int)(z+decX);
+		     Fishes.get(i).actualPosition[0]=(int)( Fishes.get(i).actualPosition[0]+decX);
 		    duration++;
 		    fuiteX+=fuiteX;
-		    System.out.println(" Le Zeeed is  moving on->z="+z );
+		    System.out.println(" Le Zeeed is  moving on->z="+Fishes.get(i).actualPosition[0] );
 		}
-		if(Math.abs(w-destY)<=Math.abs(decY)){
-		    w=destY;
+		if(Math.abs(Fishes.get(i).actualPosition[1]-destY)<=Math.abs(decY)){
+		    Fishes.get(i).actualPosition[1]=destY;
 		    System.out.println("Le Waaay est arrivé -> duration="+duration);}
 		else{
-		    w=(int)(w+decY);
+		    Fishes.get(i).actualPosition[1]=(int)(w+decY);
 		    duration++;
 		    fuiteY+=fuiteY;
-		    System.out.println("Le Waaay is  moving on->w="+w );
+		    System.out.println("Le Waaay is  moving on->w="+Fishes.get(i).actualPosition[1] );
 		}
 	       
 		if((Math.abs(z-destX)<=Math.abs(decX))&&(Math.abs(w-destY)<=Math.abs(decY))){
@@ -254,8 +256,8 @@ for(Fish poiss : Fishes)
 	    }
 	    else{
 	       	System.out.println("We are fixed here z previous:"+z+" ;w previous:"+w);
-		z=firstX;
-		w=firstY;
+		Fishes.get(i).actualPosition[0]=firstX;
+		Fishes.get(i).actualPosition[1]=firstY;
      
 		System.out.println("We are fixed here  z=firstX:"+z+" ;w=firstY:"+w);
 	    }
@@ -264,8 +266,8 @@ for(Fish poiss : Fishes)
 	    /*manage the proportional size*/
 	    scaleX=width*Fishes.get(i).dimensions[0];
 	    scaleY=height*Fishes.get(i).dimensions[1];
-	    x=z;
-	    y=w;
+	    x=	Fishes.get(i).actualPosition[0];
+	    y=	Fishes.get(i).actualPosition[1];
 	   
 	    g.drawImage(images[Fishes.get(i).imageIndex],x,y,scaleX,scaleY,this);
 	}
