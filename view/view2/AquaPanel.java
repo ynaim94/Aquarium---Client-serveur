@@ -1,6 +1,6 @@
 package aqua;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -56,7 +56,6 @@ class AquaPanel extends JPanel implements ActionListener{
     public void setAddFish(String[] items){
 	ArrayList<Integer> initPosition = new ArrayList<Integer>();
 	String name = new String(items[1]);
-    String imageName = new String(items[1]); //for the moment we leave it like this, we have to modify the argument if the name contains a special caracter (eg PoissonNain_2 => PoissonNain)	
 	int dimensions[] = new int[2];
 	int mobilityTime = 5; // par defaut
 	int started;
@@ -72,14 +71,18 @@ class AquaPanel extends JPanel implements ActionListener{
 	setFishes(newFishes);
     }
 
-	public void setDelFish(String[] items){
-		for(Fish ifish : Fishes){   
-            if (ifish.name.equals(items[1])) {
-				Fishes.remove(ifish);
-				}
-			}		
-	}
+
+    public void setDelFish(String[] items){
+	Iterator<Fish> it = Fishes.iterator();
 	
+	while (it.hasNext()) {
+	    if (it.next().name.equals(items[1])) {
+		it.remove();
+	    }
+	}    
+    }          
+   
+
     public void setGetFishes(String[][] items){
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
 	int added = 0;

@@ -6,6 +6,11 @@ import javax.swing.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+
 public class Aquarium {
     private static Pattern [] pattern;
     private static Matcher matcher;
@@ -32,20 +37,28 @@ public class Aquarium {
 
     private static void addFish(String cmd){
 	String[] items =  parser.parseFishPosition(cmd);
-	contentPane.setAddFish(items);	
+	contentPane.setAddFish(items);
+	
+    }
+
+   
+    private static void delFish(String cmd){
+        String[] items =  parser.parseFishPosition(cmd);
+        if (contentPane == null) 
+	    System.out.println("Uninitialized!");
+        contentPane.setDelFish(items); 
     }
     
-	private static void delFish(String cmd){
-	String[] items =  parser.parseFishPosition(cmd);
-	if (contentPane == null) //this?
-		System.out.println("L'objet n'est pas initialisé!");
-	contentPane.setDelFish(items);	
-    }
-	
     public static void getFishes(String response){
 	String[][] items = parser.parseListFishPosition(response);
 	contentPane.setGetFishes(items);
     }
+
+    /*private static void getFishesContinuously(){
+	GFCThread p = new GFCThread(aquaCon);
+	p.start();
+	}*/
+
     
 
     private void displayGUI(String ImagesPath){
@@ -56,28 +69,31 @@ public class Aquarium {
         frame.pack();
         frame.setLocationByPlatform(true);
         //frame.setSize(1200,600);
-		frame.setVisible(true);
-		frame.setResizable(false);
+	frame.setVisible(true);
+	frame.setResizable(false);
     }
     
     static private String promptIn()throws IOException{
-		System.out.print(">"); 
-		/*get the input as a String*/
-		String cmd = scanner.nextLine();
-		logger.info("Client sent " + cmd);
-		cmd=cmd.intern();
-		try {
-			aquaCon.send(cmd);
-		}
-		catch(IOException e) {
-			System.out.println("IOEXEption \n");
-		}
-		return cmd;
-		}
-
-	static private void promptOut(String response)throws IOException{	
-		System.out.print("<"+response+"\n"); //+server's response
-		logger.info("Client received " + response);	
+	System.out.print(">"); 
+	/*get the input as a String*/
+	String cmd = scanner.nextLine();
+	aquaCon.setCmd(cmd);
+	logger.info("Client sent " + cmd);
+	cmd=cmd.intern();
+	try {
+	    aquaCon.send(cmd);
+	}
+	catch(IOException e) {
+	    System.out.println("IOEXEption \n");
+	}
+	return cmd;
+    }
+    static private void promptOut(String response)throws IOException
+    {	
+	System.out.print("<"+response+"\n"); //+server's response
+	logger.info("Client received " + response);
+	
+	
     }
     
     
@@ -90,34 +106,57 @@ public class Aquarium {
 	final String ImagesPath = conf.getVisualRepertory();
 	address = conf.getIpAddress();
 	try{
-	aquaCon = new AquaConnection();
-	/*cmd patterns*/
-	pattern=new Pattern[11];  
-	pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
-	//	pattern[1]= Pattern.compile("hello");
-	pattern[2]= Pattern.compile("greeting \\w+");
-	pattern[3]= Pattern.compile("^addFish ");
-	pattern[4]= Pattern.compile("^delFish ");
-	pattern[5]= Pattern.compile("^startFish \\w+");
-	pattern[6]= Pattern.compile("^log out");
-	pattern[7]= Pattern.compile("^bye");
-	pattern[8]= Pattern.compile("^getFishes");
-	pattern[9]= Pattern.compile("^getFishesContinuously");
-	pattern[10] = Pattern.compile("^status");
-	/*Prompt*/
-	//	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
-	String response ="",cmd="";
+	    aquaCon = new AquaConnection();
+	    /*cmd patterns*/
+	    pattern=new Pattern[11];  
+	    pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
+	    //	pattern[1]= Pattern.compile("hello");
+	    pattern[2]= Pattern.compile("greeting \\w+");
+	    pattern[3]= Pattern.compile("^addFish ");
+	    pattern[4]= Pattern.compile("^delFish ");
+	    pattern[5]= Pattern.compile("^startFish \\w+");
+	    pattern[6]= Pattern.compile("^log out");
+	    pattern[7]= Pattern.compile("^bye");
+	    pattern[8]= Pattern.compile("^getFishes");
+	    pattern[9]= Pattern.compile("^getFishesContinuously");
+	    pattern[10] = Pattern.compile("^status");
+	    /*Prompt*/
+	    //	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
+	    String response ="",cmd="";
 	
-	while(cmd==""){  
-	    if (connected==false){
-		aquaCon.openConnection(address,port);
-		connected=true;
-	    }
-	    cmd=promptIn();
-	    response=aquaCon.receive();
-	    promptOut(response);
-	    //	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
-	    /*Handling response*/
+	    while(cmd==""){  
+		if (connected==false){
+		    aquaCon.openConnection(address,port);
+		    //Lanchement du thread receive
+		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
+		    rcvThread.start();
+		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+		    exec.scheduleAtFixedRate(new Runnable() {
+			    @Override
+			    public void run() {
+				logger.info("ping "+ port);
+				try{
+				    aquaCon.send("ping " + port);
+				}
+				catch(IOException e) {
+				    System.out.println("IOException \n");
+				}
+			    }
+			}, 0, 5, TimeUnit.SECONDS);
+		    
+		    connected=true;
+		}
+		cmd=promptIn();
+		//System.out.println(cmd + "a");
+		
+		synchronized (aquaCon){
+		    aquaCon.wait();
+		}
+		response=aquaCon.getResponse();
+		promptOut(response);
+
+		//	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
+		/*Handling response*/
 		if(pattern[2].matcher(response).matches())/* greeting*/
 		    {	
 			/*Display the aquarium*/
@@ -137,18 +176,18 @@ public class Aquarium {
 		}
 		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		    //		    System.out.println("listening continuously+ promptout() with each response");
-		    //		    getFishesContinuously();
-	    }
+		    //rgetFishesContinuously();
+		}
 		else{ if(pattern[0].matcher(response).find()){
 			// if(pattern[0].matcher(response).matches()){/*OK*/
 			//	System.out.println("This is Ok :D"); 
-		 /*test: addFish sneakingFish at 61x52,9x10, RandomWayPoint*/
+			/*test: addFish sneakingFish at 61x52,9x10, RandomWayPoint*/
 			if(pattern[3].matcher(cmd).find()){  /*addFish*/
 			    addFish(cmd);
 			} 
-			if(pattern[4].matcher(cmd).find()){ /*delFish*/
-				delFish(cmd);
-			}
+			if(pattern[4].matcher(cmd).find()) /*delFish*/
+			    //System.out.println("calling delFish methode");
+			    delFish(cmd);
 			if(pattern[5].matcher(cmd).matches()) /*startFish*/{
 			    startFish(cmd);
 			}
@@ -159,10 +198,10 @@ public class Aquarium {
 			aquaCon.closeConnection();
 			connected=false;	
 		    }	
+		}
+		cmd="";
 	    }
-	    cmd="";
-	}
-		}catch(IOException e){
+	}catch(IOException e){
 	    System.out.println("No Server!!!");}
     }
     
