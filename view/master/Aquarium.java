@@ -120,6 +120,7 @@ public class Aquarium {
 	    while(cmd==""){  
 		if (connected==false){
 		    aquaCon.openConnection(address,port);
+		    //Lanchement du thread receive
 		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
 		    rcvThread.start();
 		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
