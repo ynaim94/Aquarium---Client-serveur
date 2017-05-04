@@ -1,42 +1,14 @@
-May 04, 2017 1:50:44 PM aqua.ClientLog <init>
+mai 04, 2017 5:25:41 PM aqua.ClientLog <init>
 CONFIG: Client logging ..
-May 04, 2017 1:50:47 PM aqua.ClientLog info
-INFO: Client sent hello in as
-May 04, 2017 1:50:47 PM aqua.ClientLog info
-INFO: Client received greeting N1
-May 04, 2017 1:50:58 PM aqua.ClientLog info
-INFO: Client sent getFishes 
-May 04, 2017 1:50:58 PM aqua.ClientLog info
-INFO: Client received list [bubbleFish at 30x20,10x10,5]
-May 04, 2017 1:51:03 PM aqua.ClientLog info
-INFO: Client sent getFishes 
-May 04, 2017 1:51:03 PM aqua.ClientLog info
-INFO: Client received list [bubbleFish at 24x20,10x10,5]
-May 04, 2017 1:51:12 PM aqua.ClientLog info
-INFO: Client sent getFishes 
-May 04, 2017 1:51:12 PM aqua.ClientLog info
-INFO: Client received list [bubbleFish at 29x20,10x10,5]
-May 04, 2017 1:51:20 PM aqua.ClientLog info
-INFO: Client sent getFishes 
-May 04, 2017 1:51:20 PM aqua.ClientLog info
-INFO: Client received list [bubbleFish at 36x24,10x10,5]
-May 04, 2017 1:51:27 PM aqua.ClientLog info
-INFO: Client sent getFishes 
-May 04, 2017 1:51:27 PM aqua.ClientLog info
-INFO: Client received list [bubbleFish at 32x29,10x10,5]
-May 04, 2017 1:51:34 PM aqua.ClientLog info
-INFO: Client sent getfishes 
-May 04, 2017 1:51:34 PM aqua.ClientLog info
-INFO: Client received unkown command try again
-May 04, 2017 1:51:42 PM aqua.ClientLog info
-INFO: Client sent getFishes
-May 04, 2017 1:51:42 PM aqua.ClientLog info
-INFO: Client received unkown command try again
-May 04, 2017 1:51:45 PM aqua.ClientLog info
-INFO: Client sent getFishes 
-May 04, 2017 1:51:45 PM aqua.ClientLog info
-INFO: Client received list [bubbleFish at 32x26,10x10,5]
-May 04, 2017 1:52:03 PM aqua.ClientLog info
-INFO: Client sent getFishes 
-May 04, 2017 1:52:03 PM aqua.ClientLog info
-INFO: Client received list [bubbleFish at 35x27,10x10,5]
+mai 04, 2017 5:25:44 PM aqua.ClientLog info
+INFOS: Client sent hello in as
+mai 04, 2017 5:25:44 PM aqua.ClientLog info
+INFOS: Client received greeting N1
+mai 04, 2017 5:25:55 PM aqua.ClientLog info
+INFOS: Client sent getFishes 
+mai 04, 2017 5:25:55 PM aqua.ClientLog info
+INFOS: Client received list [sneakingFish at 57x9,11x10,5]
+mai 04, 2017 5:25:58 PM aqua.ClientLog info
+INFOS: Client sent getFishes 
+mai 04, 2017 5:25:58 PM aqua.ClientLog info
+INFOS: Client received list [sneakingFish at 57x12,11x10,5]
