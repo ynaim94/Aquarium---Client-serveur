@@ -71,6 +71,15 @@ class AquaPanel extends JPanel implements ActionListener{
 	setFishes(newFishes);
     }
 
+    public void setDelFish(String[] items){
+	Iterator<Fish> it = Fishes.iterator();
+	while (it.hasNext()) {
+	    if (it.next().name.equals(items[1])) {
+		it.remove();
+	    }
+	}    
+    }    
+
     public void setGetFishes(String[][] items){
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
 	int added = 0;

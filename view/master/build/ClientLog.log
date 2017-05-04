@@ -1,48 +1,48 @@
-May 04, 2017 12:40:31 PM aqua.ClientLog <init>
+mai 04, 2017 3:03:13 PM aqua.ClientLog <init>
 CONFIG: Client logging ..
-May 04, 2017 12:40:31 PM aqua.ClientLog <init>
+mai 04, 2017 3:03:13 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 04, 2017 3:03:13 PM aqua.ClientLog <init>
 CONFIG: Client logging ..
-May 04, 2017 12:40:31 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:40:31 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:40:35 PM aqua.ClientLog info
-INFO: Client sent hello as in N4
-May 04, 2017 12:40:35 PM aqua.ClientLog info
-INFO: Client received greeting N1
-May 04, 2017 12:40:36 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:40:36 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:40:41 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:40:41 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:40:46 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:40:46 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:40:51 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:40:51 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:40:56 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:40:56 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:41:01 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:41:01 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:41:06 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:41:06 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:41:11 PM aqua.ClientLog info
-INFO: ping 12345
-May 04, 2017 12:41:11 PM aqua.ClientLog info
-INFO: pong 12345
-May 04, 2017 12:41:13 PM aqua.ClientLog info
-INFO: Client sent Hello as in N1
-May 04, 2017 12:41:13 PM aqua.ClientLog info
-INFO: Client received unkown command try again
+mai 04, 2017 3:03:13 PM aqua.ClientLog info
+INFOS: pong 1234
+mai 04, 2017 3:03:16 PM aqua.ClientLog info
+INFOS: Client sent hello 
+mai 04, 2017 3:03:16 PM aqua.ClientLog info
+INFOS: Client received greeting N1
+mai 04, 2017 3:03:18 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 04, 2017 3:03:18 PM aqua.ClientLog info
+INFOS: pong 1234
+mai 04, 2017 3:03:23 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 04, 2017 3:03:23 PM aqua.ClientLog info
+INFOS: pong 1234
+mai 04, 2017 3:03:26 PM aqua.ClientLog info
+INFOS: Client sent addFish test1 at 10x10,10x10, RandomWayPoint 
+mai 04, 2017 3:03:26 PM aqua.ClientLog info
+INFOS: Client received OK : Fish added to fish tank
+mai 04, 2017 3:03:28 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 04, 2017 3:03:28 PM aqua.ClientLog info
+INFOS: pong 1234
+mai 04, 2017 3:03:30 PM aqua.ClientLog info
+INFOS: Client sent delFish test1 
+mai 04, 2017 3:03:30 PM aqua.ClientLog info
+INFOS: Client received OK : Fish deleted from fish tank
+mai 04, 2017 3:03:33 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 04, 2017 3:03:33 PM aqua.ClientLog info
+INFOS: pong 1234
+mai 04, 2017 3:03:38 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 04, 2017 3:03:38 PM aqua.ClientLog info
+INFOS: pong 1234
+mai 04, 2017 3:03:43 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 04, 2017 3:03:43 PM aqua.ClientLog info
+INFOS: pong 1234
+mai 04, 2017 3:03:48 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 04, 2017 3:03:48 PM aqua.ClientLog info
+INFOS: pong 1234

@@ -40,7 +40,14 @@ public class Aquarium {
 	contentPane.setAddFish(items);
 	
     }
-    
+
+    private static void delFish(String cmd){
+        String[] items =  parser.parseFishPosition(cmd);
+        if (contentPane == null) 
+	    System.out.println("Uninitialized!");
+        contentPane.setDelFish(items); 
+    }
+
     public static void getFishes(String response){
 	String[][] items = parser.parseListFishPosition(response);
 	contentPane.setGetFishes(items);
@@ -179,7 +186,8 @@ public class Aquarium {
 			    addFish(cmd);
 			} 
 			if(pattern[4].matcher(cmd).find()) /*delFish*/
-			    System.out.println("calling delFish methode"); ;
+			    //System.out.println("calling delFish methode");
+			    delFish(cmd);
 			if(pattern[5].matcher(cmd).matches()) /*startFish*/{
 			    startFish(cmd);
 			}
