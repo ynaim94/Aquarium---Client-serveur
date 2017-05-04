@@ -20,15 +20,15 @@
 /***************************
  *Regular expressions
  */
-const char *str_hello_id="^(hello in as[ ]N[0-9]+){1}";//
-const char *str_hello="^(hello){1}";//
-const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)){1}";
-const char *str_del_fish="^(delFish[ ][[:alnum:]]+){1}";//
-const char *str_log_out="^(log out){1}";//
-const char *str_start_fish="^(startFish[ ][[:alnum:]]+){1}";//
-const char *str_get_fish="^(getFishes){1}";//
-const char *str_get_fish_continously="^(getFishesContinuously){1}";//
-const char *str_ping="^(ping[ ]+[0-9]{4,5})";//
+const char *str_hello_id="^(hello in as[ ]N[0-9]+$){1}";//
+const char *str_hello="^(hello$){1}";//
+const char *str_add_fish="^(addFish[ ]([[:alnum:]]+)[ ]at[ ][0-9]{1,2}x[0-9]{1,2},[0-9]{1,2}x[0-9]{1,2},[ ]([[:alnum:]]+)$){1}";
+const char *str_del_fish="^(delFish[ ][[:alnum:]]+$){1}";//
+const char *str_log_out="^(log out$){1}";//
+const char *str_start_fish="^(startFish[ ][[:alnum:]]+$){1}";//
+const char *str_get_fish="^(getFishes$){1}";//
+const char *str_get_fish_continously="^(getFishesContinuously$){1}";//
+const char *str_ping="^(ping[ ]+[0-9]{4,5}$)";//
 
 /***************************
  *Functions implementations
@@ -139,7 +139,6 @@ int parser_hello_id(const char* s, char* reply, int index)
   tok=strtok(NULL," ");
   tok++;
   id=atoi(tok);
-  printf("%d \n",id);//à commenter
   while ((i<nb_views) && (views[i].id != id))
   {
    if(views[i].state==FREE)
@@ -162,7 +161,6 @@ int parser_hello_id(const char* s, char* reply, int index)
   {
     sprintf(reply,"%s","no greeting : No view available\n");
   }
-  printf("%d \n",clients[index].state);
 }
 /**
 * @function  parser_log_out
@@ -173,7 +171,7 @@ int parser_hello_id(const char* s, char* reply, int index)
 */
 int parser_log_out(char* reply, int index)
 {
-  views[index].state=FREE;
+  //views[index].state=FREE;
   sprintf(reply,"%s","bye\n");
 }
 /**
