@@ -32,7 +32,9 @@ public class Aquarium {
     }
     
     private static void status(){
-	System.out.println(contentPane.fishesToString(contentPane.Fishes));
+    String rep = contentPane.fishesToString(contentPane.Fishes);
+	System.out.println(rep);
+	logger.info("Client received " + rep.substring(1));
     }
 
     private static void addFish(String cmd){
@@ -41,14 +43,13 @@ public class Aquarium {
 	
     }
 
-   
     private static void delFish(String cmd){
         String[] items =  parser.parseFishPosition(cmd);
         if (contentPane == null) 
 	    System.out.println("Uninitialized!");
         contentPane.setDelFish(items); 
     }
-    
+
     public static void getFishes(String response){
 	String[][] items = parser.parseListFishPosition(response);
 	contentPane.setGetFishes(items);
@@ -60,6 +61,7 @@ public class Aquarium {
 	}*/
 
     
+    /***Fin Ajout view 4****/
 
     private void displayGUI(String ImagesPath){
         frame = new JFrame("Aquarium");
@@ -80,6 +82,8 @@ public class Aquarium {
 	aquaCon.setCmd(cmd);
 	logger.info("Client sent " + cmd);
 	cmd=cmd.intern();
+	if (cmd.equals("status"))
+		return cmd;
 	try {
 	    aquaCon.send(cmd);
 	}
@@ -111,14 +115,14 @@ public class Aquarium {
 	    pattern=new Pattern[11];  
 	    pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
 	    //	pattern[1]= Pattern.compile("hello");
-	    pattern[2]= Pattern.compile("greeting \\w+");
+	    pattern[2]= Pattern.compile("^greeting \\w+");
 	    pattern[3]= Pattern.compile("^addFish ");
 	    pattern[4]= Pattern.compile("^delFish ");
 	    pattern[5]= Pattern.compile("^startFish \\w+");
 	    pattern[6]= Pattern.compile("^log out");
 	    pattern[7]= Pattern.compile("^bye");
-	    pattern[8]= Pattern.compile("^getFishes");
-	    pattern[9]= Pattern.compile("^getFishesContinuously");
+	    pattern[8]= Pattern.compile("^getFishes\\s*");
+	    pattern[9]= Pattern.compile("^getFishesContinuously\\s*");
 	    pattern[10] = Pattern.compile("^status");
 	    /*Prompt*/
 	    //	System.out.print(">>>>>>>Enter your command please <<<<<<<\n");
@@ -127,7 +131,6 @@ public class Aquarium {
 	    while(cmd==""){  
 		if (connected==false){
 		    aquaCon.openConnection(address,port);
-		    //Lanchement du thread receive
 		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
 		    rcvThread.start();
 		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
@@ -149,16 +152,22 @@ public class Aquarium {
 		cmd=promptIn();
 		//System.out.println(cmd + "a");
 		
-		synchronized (aquaCon){
-		    aquaCon.wait();
+		if (!(cmd.equals("status"))){
+			synchronized (aquaCon){
+			    aquaCon.wait();
+			}
+			response=aquaCon.getResponse();
+			promptOut(response);
 		}
-		response=aquaCon.getResponse();
-		promptOut(response);
+
+		else
+			response=cmd;
 
 		//	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 		/*Handling response*/
 		if(pattern[2].matcher(response).matches())/* greeting*/
 		    {	
+		    logger.info("Client logging ..");  
 			/*Display the aquarium*/
 			SwingUtilities.invokeLater(new Runnable(){    
 				@Override
@@ -176,7 +185,7 @@ public class Aquarium {
 		}
 		else if(pattern[9].matcher(cmd).matches()){/*getFishesContinuously*/
 		    //		    System.out.println("listening continuously+ promptout() with each response");
-		    //rgetFishesContinuously();
+		    //getFishesContinuously();
 		}
 		else{ if(pattern[0].matcher(response).find()){
 			// if(pattern[0].matcher(response).matches()){/*OK*/
