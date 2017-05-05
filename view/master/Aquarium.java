@@ -101,6 +101,8 @@ public class Aquarium {
     
     public static void main(String[] args) throws Exception
     {
+	ScheduledExecutorService exec = null;
+	ReceiveThread rcvThread = null;
 	logger = new ClientLog();
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
@@ -129,9 +131,9 @@ public class Aquarium {
 	    while(cmd==""){  
 		if (connected==false){
 		    aquaCon.openConnection(address,port);
-		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
+		    rcvThread = new ReceiveThread(aquaCon);
 		    rcvThread.start();
-		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+		    exec = Executors.newSingleThreadScheduledExecutor();
 		    exec.scheduleAtFixedRate(new Runnable() {
 			    @Override
 			    public void run() {
@@ -166,12 +168,7 @@ public class Aquarium {
 		if(pattern[2].matcher(response).matches())/* greeting*/
 		    {	
 			/*Display the aquarium*/
-			SwingUtilities.invokeLater(new Runnable(){    
-				@Override
-				public void run() {
-				    new Aquarium().displayGUI(ImagesPath);
-				}
-			    });
+			new Aquarium().displayGUI(ImagesPath);
 		    }
 		else if (pattern[10].matcher(cmd).matches()){/*status*/
 		    status();
@@ -198,19 +195,26 @@ public class Aquarium {
 			    startFish(cmd);
 			}
 		    }
-		    if((pattern[6].matcher(cmd).find())&&(pattern[7].matcher(response).find())){/*log out & bye*/
+		    if((pattern[6].matcher(cmd).find())&&
+		       (pattern[7].matcher(response).find())){/*log out & bye*/
 			if(frame.isDisplayable())
 			    frame.setVisible(false);
 			aquaCon.closeConnection();
 			connected=false;	
+			exec.shutdownNow();
 		    }	
 		}
-		cmd="";
+
+		if(connected != false){
+		    cmd="";
+		}
 	    }
+	    System.exit(0);
 	}catch(IOException e){
 	    System.out.println("No Server!!!");}
     }
     
+
     
 }
 
