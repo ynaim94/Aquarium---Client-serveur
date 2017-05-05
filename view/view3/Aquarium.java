@@ -92,13 +92,13 @@ public class Aquarium {
 	pattern=new Pattern[11];  
 	pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
 	//	pattern[1]= Pattern.compile("hello");
-	pattern[2]= Pattern.compile("greeting \\w+");
+	pattern[2]= Pattern.compile("^greeting \\w+");
 	pattern[3]= Pattern.compile("^addFish ");
 	pattern[4]= Pattern.compile("^delFish ");
 	pattern[5]= Pattern.compile("^startFish \\w+");
 	pattern[6]= Pattern.compile("^log out");
 	pattern[7]= Pattern.compile("^bye");
-	pattern[8]= Pattern.compile("^getFishes ");
+	pattern[8]= Pattern.compile("^getFishes");
 	pattern[9]= Pattern.compile("^getFishesContinuously");
 	pattern[10] = Pattern.compile("^status");
 	/*Prompt*/
