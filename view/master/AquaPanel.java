@@ -248,14 +248,20 @@ class AquaPanel extends JPanel implements ActionListener{
     
     
     public String fishesToString(ArrayList<Fish> Fishes){
-	String res = "\n";
+	String res = "";
 	for (Fish fish: Fishes){
-	    res = res + "Fish " + fish.name +" at " +
+	    res =  res + "Fish " + fish.name +" at " +
 		fish.initPosition.get(0) + "x" + fish.initPosition.get(1)+ "," +
 		fish.dimensions[0] +"x"+ fish.dimensions[1] +" :  "+ ((fish.started == 1) ? "started" : "not started") +  "\n" ;
 	}
-	return res;
-    }
+
+	String fin = "";
+	if (Fishes.size() == 1)
+		fin = "<OK: Connecté au controlleur: " + Fishes.size() + " poisson trouvé \n" + res;
+	else 
+		fin = "<OK: Connecté au controlleur: " + Fishes.size() + " poissons trouvés \n" + res;
+	return fin;
+}
     
 }
 

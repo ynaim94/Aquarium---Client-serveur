@@ -80,6 +80,8 @@ public class Aquarium {
 	aquaCon.setCmd(cmd);
 	logger.info("Client sent " + cmd);
 	cmd=cmd.intern();
+	if (cmd.equals("status"))
+		return cmd;
 	try {
 	    aquaCon.send(cmd);
 	}
@@ -148,11 +150,16 @@ public class Aquarium {
 		cmd=promptIn();
 		//System.out.println(cmd + "a");
 		
-		synchronized (aquaCon){
-		    aquaCon.wait();
+		if (!(cmd.equals("status"))){
+			synchronized (aquaCon){
+			    aquaCon.wait();
+			}
+			response=aquaCon.getResponse();
+			promptOut(response);
 		}
-		response=aquaCon.getResponse();
-		promptOut(response);
+
+		else
+			response=cmd;
 
 		//	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 		/*Handling response*/
