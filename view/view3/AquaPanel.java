@@ -75,6 +75,14 @@ class AquaPanel extends JPanel implements ActionListener{
 	newFishes.add(tmpFish);
 	setFishes(newFishes);
     }
+public void setDelFish(String[] items){
+	Iterator<Fish> it = Fishes.iterator();
+	while (it.hasNext()) {
+	    if (it.next().name.equals(items[1])) {
+		it.remove();
+	    }
+	}    
+    }    
 
   public void setGetFishes(String[][] items){
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
@@ -115,6 +123,15 @@ class AquaPanel extends JPanel implements ActionListener{
 	
   }
     
+    public String extractName (String s){
+	if(s.contains("_") == true) {
+	    Pattern p = Pattern.compile("_");
+	    String[] items = p.split(s);
+	    return items[0];
+	}
+	else 
+	    return s;	
+    }
     
     
 
@@ -153,7 +170,7 @@ class AquaPanel extends JPanel implements ActionListener{
 	for(int i=0; i<Fishes.size();i++){
 	    /* match the fish name with the suitable image */
 	    for(int l=1;l<8;l++)
-		if (fishImages[l].equals(Fishes.get(i).name)){ /*TODO: accept names with _ */
+        	if (((fishImages[l].equals(Fishes.get(i).name))  ||		      (fishImages[l].equals(extractName(Fishes.get(i).name))))){
 		    Fishes.get(i).imageIndex=l;
 		    break;
 		}
@@ -190,29 +207,29 @@ class AquaPanel extends JPanel implements ActionListener{
 	       
 		if ((decX<1)&&(decX>-1)&&(decX!=0))
 		    if(decX<0){
-			if(decX>-0.5)
+			/*	if(decX>-0.5)
 			decX=0;
 			else
-			    decX=-1;
+			*/  decX=-1;
 		    }
 		    else{
-			if(decX<0.5)
+			/*	if(decX<0.5)
 			decX=0;
 			else
-			decX=1;
+			*/decX=1;
 		    }
 		if ((decY<1)&&(decY>-1)&&(decX!=0))
 		    if(decY<0){
-			if(decY>-0.5)
+			/*if(decY>-0.5)
 			decY=0;
 			else
-			 decY=-1;
+			*/decY=-1;
 			}
 		    else{
-			if(decY<0.5)
+			/*if(decY<0.5)
 			decY=0;
 			else;
-			decY=1;
+			*/decY=1;
 			}
 		System.out.println("decX="+decX+" ; decY="+decY);
 		

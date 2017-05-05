@@ -111,7 +111,7 @@ public class Aquarium {
 	    pattern=new Pattern[11];  
 	    pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
 	    //	pattern[1]= Pattern.compile("hello");
-	    pattern[2]= Pattern.compile("greeting \\w+");
+	    pattern[2]= Pattern.compile("^greeting \\w+");
 	    pattern[3]= Pattern.compile("^addFish ");
 	    pattern[4]= Pattern.compile("^delFish ");
 	    pattern[5]= Pattern.compile("^startFish \\w+");
