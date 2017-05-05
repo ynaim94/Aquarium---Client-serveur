@@ -37,7 +37,7 @@ int actual = 0;
 static void app(void)
 {
    srand(time(NULL));
-   open_log("./log/log.txt");
+   open_log("./fichier_log.log");
 
    insert_log("Starting the controller...\n");
    printf("********Welcome to the aquarium's controller********\n");
@@ -62,7 +62,7 @@ static void app(void)
 
 
    fd_set rdfs;
-   //thpool_add_work(thpool, (void*)check_timeout,(void*)&actual);
+   thpool_add_work(thpool, (void*)check_timeout,(void*)&actual);
 
    while(1)
    {
@@ -226,7 +226,7 @@ static int init_connection()
    int portno;
    int e;
 
-   e=open_config("./config/controller.cfg");
+   e=open_config("./controller.cfg");
    if(e==0)
    {
      insert_log("configuration failed...aborting the controller\n");
@@ -355,7 +355,7 @@ int check_timeout(int* nb_client)
   time_t minimum=0;
   struct timeval current;
 
-  e=open_config("./config/controller.cfg");
+  e=open_config("./controller.cfg");
   if(e==0)
   {
     insert_log("configuration failed...aborting the controller\n");

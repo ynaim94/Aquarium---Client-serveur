@@ -10,8 +10,9 @@
 #include "intern.h"
 #include "parser.h"
 #include "../view.h"
-
-#define BUFFER_SIZE  256
+#include "prompt.h"
+#include "../log/log.h"
+#define _GNU_SOURCE
 #define TAILLE_MAX 1000 // A redéfinir avec TAILLE_MAX de intern.c
 
 int get_view_id(char* str){
@@ -56,28 +57,26 @@ View* parse_view(char* str){
 
 }
 
-int display_prompt(){
+int display_prompt(int x){
   char buffer[BUFFER_SIZE];
-  int len_read;
-  int type;
-  char *str_request;
+  char logg[BUFFER_SIZE];
+  //int len_read;
+  int type=0;
   char *msg;
   char *token;
   char *pEnd;
-  int i;
+  int i=0;
   char *positionEntree;
 
-  if  ((len_read = read(STDIN_FILENO, buffer, BUFFER_SIZE)) == -1){
-      perror("read");
-      return EXIT_FAILURE;
-    }
-    buffer[len_read-1] = '\0';
-    str_request = malloc (sizeof(char)* len_read);
-
+    strcpy(buffer,buffer_prompt);
+    //str_request = malloc (sizeof(char)* x);
+    sprintf(logg,"%s%s%s","request from prompt : ",buffer,"\n");
+    insert_log(logg);
+    memset(logg, 0, sizeof (logg));
     type = parse (buffer);
 
     if ((type != 0) && (type != 5) && (state == 0))
-      msg = "Aquarium Not loaded";
+      asprintf(&msg,"->Aquarium Not loaded");
     else {
 
 
@@ -128,11 +127,17 @@ int display_prompt(){
 	break;
 
       default:
-	msg = "not recognized";
+      asprintf(&msg,"->not recognized");
       }
     }
     if (msg != NULL)
       printf ("%s\n\n", msg);
+      supprime_retour(msg);
+      sprintf(logg,"%s%s%s","reponse to prompt : ",msg,"\n");
+      insert_log(logg);
+      memset(logg, 0, sizeof (logg));
+
+  free(msg);
 
 
 }
