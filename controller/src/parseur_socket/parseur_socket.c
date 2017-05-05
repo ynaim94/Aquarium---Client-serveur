@@ -423,7 +423,7 @@ int new_position()
         {
           k=random_plus_minus();
           k=-1;
-          fishes[j].destination[i]=20+(k*(rand()%40))+fishes[j].actualPosition[i];
+          fishes[j].destination[i]=(k*(rand()%40))+fishes[j].actualPosition[i];
         }
       }
     }

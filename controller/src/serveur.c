@@ -307,7 +307,7 @@ static int read_client(SOCKET sock, char *buffer)
       n = 0;
    }
    else if (n>0)
-    buffer[n-1] = '\0';
+    buffer[n-2] = '\0';
    return n;
 }
 /**
@@ -354,7 +354,8 @@ int check_timeout(int* nb_client)
   int a=0;
   time_t minimum=0;
   struct timeval current;
-
+  gettimeofday(&current,0);
+  minimum=current.tv_sec+10000;
   e=open_config("./controller.cfg");
   if(e==0)
   {
@@ -363,8 +364,6 @@ int check_timeout(int* nb_client)
   }
 
   timeout = getTimeout();
-  //rintf("le timeout est : %d \n", timeout );
-
   close_config();
 
   while(1)
@@ -374,7 +373,7 @@ int check_timeout(int* nb_client)
     for(i=0;i<*nb_client;i++)
     {
       a = current_time.tv_sec-(clients[i].last_update.tv_sec+timeout);
-      if(a>0)
+      if((a>0) && (clients[i].state != REJECTED))
       {
         Client client = clients[i];
         char buffer1[BUF_SIZE];
@@ -386,7 +385,6 @@ int check_timeout(int* nb_client)
         insert_log(buffer1);
       }
     }
-    minimum = clients[i].last_update.tv_sec;
     for(i=0;i<*nb_client;i++)
     {
         if ( clients[i].last_update.tv_sec < minimum )
@@ -395,8 +393,15 @@ int check_timeout(int* nb_client)
         }
     }
     gettimeofday(&current,0);
-    sleep(timeout-(current.tv_sec-minimum));
-
+    time_t tmp=timeout-(current.tv_sec-minimum);
+    if ((tmp>0) && (tmp<timeout+1))
+    {
+      sleep(tmp+1);
+    }
+    else
+    {
+    sleep(timeout);
+    }
   }
 }
 
