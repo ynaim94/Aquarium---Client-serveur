@@ -307,7 +307,7 @@ static int read_client(SOCKET sock, char *buffer)
       n = 0;
    }
    else if (n>0)
-    buffer[n-2] = '\0';
+    buffer[n-1] = '\0';
    return n;
 }
 /**
@@ -481,7 +481,7 @@ int parse_socket(int index)
         }
         break;
         case 9:
-        sprintf(reply,"%s","unkown command try again\n");
+        sprintf(reply,"%s","NOK : unkown command try again\n");
         break;
     }
 
