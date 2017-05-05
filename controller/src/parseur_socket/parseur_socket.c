@@ -422,7 +422,6 @@ int new_position()
         for(i=0;i<DIM;i++)
         {
           k=random_plus_minus();
-          k=-1;
           fishes[j].destination[i]=(k*(rand()%40))+fishes[j].actualPosition[i];
         }
       }
