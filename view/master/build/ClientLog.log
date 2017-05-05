@@ -1,242 +1,364 @@
-mai 05, 2017 9:39:42 PM aqua.ClientLog <init>
-CONFIG: Client logging ..
-mai 05, 2017 9:39:43 PM aqua.ClientLog info
+mai 05, 2017 10:17:04 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:39:43 PM aqua.ClientLog <init>
-CONFIG: Client logging ..
-mai 05, 2017 9:39:43 PM aqua.ClientLog info
+mai 05, 2017 10:17:04 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:39:44 PM aqua.ClientLog info
+mai 05, 2017 10:17:06 PM aqua.ClientLog info
 INFOS: Client sent hello
-mai 05, 2017 9:39:44 PM aqua.ClientLog info
+mai 05, 2017 10:17:06 PM aqua.ClientLog info
 INFOS: Client received greeting N1
-mai 05, 2017 9:39:48 PM aqua.ClientLog info
+mai 05, 2017 10:17:06 PM aqua.ClientLog info
+INFOS: Client logging ..
+mai 05, 2017 10:17:09 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:39:48 PM aqua.ClientLog info
+mai 05, 2017 10:17:09 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:39:53 PM aqua.ClientLog info
+mai 05, 2017 10:17:14 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:39:53 PM aqua.ClientLog info
+mai 05, 2017 10:17:14 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:39:58 PM aqua.ClientLog info
+mai 05, 2017 10:17:16 PM aqua.ClientLog info
+INFOS: Client sent delFish a
+mai 05, 2017 10:17:16 PM aqua.ClientLog info
+INFOS: Client received OK : Fish deleted from fish tank
+mai 05, 2017 10:17:19 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:39:58 PM aqua.ClientLog info
+mai 05, 2017 10:17:19 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:40:03 PM aqua.ClientLog info
+mai 05, 2017 10:17:24 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:40:03 PM aqua.ClientLog info
+mai 05, 2017 10:17:24 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:40:03 PM aqua.ClientLog info
-INFOS: Client sent addFish test10 at 12x12,12x12, RandomWayPoin
-mai 05, 2017 9:40:03 PM aqua.ClientLog info
-INFOS: Client received NOK : Mobility modele not supported
-mai 05, 2017 9:40:08 PM aqua.ClientLog info
+mai 05, 2017 10:17:29 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:40:08 PM aqua.ClientLog info
+mai 05, 2017 10:17:29 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:40:13 PM aqua.ClientLog info
-INFOS: ping 12345
-mai 05, 2017 9:40:13 PM aqua.ClientLog info
-INFOS: pong 12345
-mai 05, 2017 9:40:18 PM aqua.ClientLog info
-INFOS: ping 12345
-mai 05, 2017 9:40:18 PM aqua.ClientLog info
-INFOS: pong 12345
-mai 05, 2017 9:40:20 PM aqua.ClientLog info
-INFOS: Client sent addFish test10 at 12x12,12x12, RandomWayPoint
-mai 05, 2017 9:40:20 PM aqua.ClientLog info
+mai 05, 2017 10:17:30 PM aqua.ClientLog info
+INFOS: Client sent addFish a at 50x50,10x10, RandomWayPoint
+mai 05, 2017 10:17:30 PM aqua.ClientLog info
 INFOS: Client received OK : Fish added to fish tank
-mai 05, 2017 9:40:23 PM aqua.ClientLog info
+mai 05, 2017 10:17:34 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:40:23 PM aqua.ClientLog info
+mai 05, 2017 10:17:34 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:40:26 PM aqua.ClientLog info
-INFOS: Client sent startFish test10
-mai 05, 2017 9:40:26 PM aqua.ClientLog info
+mai 05, 2017 10:17:35 PM aqua.ClientLog info
+INFOS: Client sent startFish a
+mai 05, 2017 10:17:35 PM aqua.ClientLog info
 INFOS: Client received OK : Fish started
-mai 05, 2017 9:40:28 PM aqua.ClientLog info
+mai 05, 2017 10:17:37 PM aqua.ClientLog info
+INFOS: Client sent status
+mai 05, 2017 10:17:37 PM aqua.ClientLog info
+INFOS: Client received OK : Connecté au contrôleur, 1 poisson trouvé 
+Fish a at 50x50,10x10 :  started
+
+mai 05, 2017 10:17:39 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:40:28 PM aqua.ClientLog info
+mai 05, 2017 10:17:39 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:40:33 PM aqua.ClientLog info
+mai 05, 2017 10:17:41 PM aqua.ClientLog info
+INFOS: Client sent getFishes
+mai 05, 2017 10:17:41 PM aqua.ClientLog info
+INFOS: Client received list [a at 52x56,10x10,5]
+mai 05, 2017 10:17:44 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:40:33 PM aqua.ClientLog info
+mai 05, 2017 10:17:44 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:40:38 PM aqua.ClientLog info
-INFOS: ping 12345
-mai 05, 2017 9:40:38 PM aqua.ClientLog info
-INFOS: pong 12345
-mai 05, 2017 9:40:43 PM aqua.ClientLog info
-INFOS: ping 12345
-mai 05, 2017 9:40:43 PM aqua.ClientLog info
-INFOS: pong 12345
-mai 05, 2017 9:40:48 PM aqua.ClientLog info
-INFOS: ping 12345
-mai 05, 2017 9:40:48 PM aqua.ClientLog info
-INFOS: pong 12345
-mai 05, 2017 9:40:53 PM aqua.ClientLog info
-INFOS: ping 12345
-mai 05, 2017 9:40:53 PM aqua.ClientLog info
-INFOS: pong 12345
-mai 05, 2017 9:40:53 PM aqua.ClientLog info
+mai 05, 2017 10:17:48 PM aqua.ClientLog info
 INFOS: Client sent getFishesContinuously
-mai 05, 2017 9:40:53 PM aqua.ClientLog info
-INFOS: list [madFish at 37x41,12x12,5] [test10 at 4x13,12x12,5]
-mai 05, 2017 9:40:53 PM aqua.ClientLog info
+mai 05, 2017 10:17:48 PM aqua.ClientLog info
+INFOS: list [a at 44x53,10x10,5]
+mai 05, 2017 10:17:48 PM aqua.ClientLog info
 INFOS: Client received getFishesContinuously Launched
-mai 05, 2017 9:40:55 PM aqua.ClientLog info
-INFOS: list [madFish at 31x46,12x12,5] [test10 at 4x16,12x12,5]
-mai 05, 2017 9:40:57 PM aqua.ClientLog info
-INFOS: list [madFish at 31x53,12x12,5] [test10 at 7x14,12x12,5]
-mai 05, 2017 9:40:58 PM aqua.ClientLog info
+mai 05, 2017 10:17:49 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:40:58 PM aqua.ClientLog info
+mai 05, 2017 10:17:49 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:40:59 PM aqua.ClientLog info
-INFOS: list [madFish at 32x56,12x12,5] [test10 at 2x20,12x12,5]
-mai 05, 2017 9:41:01 PM aqua.ClientLog info
-INFOS: list [madFish at 35x60,12x12,5]
-mai 05, 2017 9:41:03 PM aqua.ClientLog info
+mai 05, 2017 10:17:50 PM aqua.ClientLog info
+INFOS: list [a at 50x55,10x10,5]
+mai 05, 2017 10:17:52 PM aqua.ClientLog info
+INFOS: list [a at 48x53,10x10,5]
+mai 05, 2017 10:17:54 PM aqua.ClientLog info
+INFOS: list [a at 43x48,10x10,5]
+mai 05, 2017 10:17:54 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:03 PM aqua.ClientLog info
+mai 05, 2017 10:17:54 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:03 PM aqua.ClientLog info
-INFOS: list [madFish at 41x67,12x12,5] [test10 at 3x22,12x12,5]
-mai 05, 2017 9:41:05 PM aqua.ClientLog info
-INFOS: list [madFish at 36x73,12x12,5] [test10 at 3x17,12x12,5]
-mai 05, 2017 9:41:07 PM aqua.ClientLog info
-INFOS: list [madFish at 39x73,12x12,5]
-mai 05, 2017 9:41:08 PM aqua.ClientLog info
+mai 05, 2017 10:17:56 PM aqua.ClientLog info
+INFOS: list [a at 38x43,10x10,5]
+mai 05, 2017 10:17:58 PM aqua.ClientLog info
+INFOS: list [a at 34x37,10x10,5]
+mai 05, 2017 10:17:59 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:08 PM aqua.ClientLog info
+mai 05, 2017 10:17:59 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:09 PM aqua.ClientLog info
-INFOS: list [madFish at 40x70,12x12,5] [test10 at 8x10,12x12,5]
-mai 05, 2017 9:41:11 PM aqua.ClientLog info
-INFOS: list [madFish at 40x64,12x12,5] [test10 at 1x4,12x12,5]
-mai 05, 2017 9:41:13 PM aqua.ClientLog info
+mai 05, 2017 10:18:00 PM aqua.ClientLog info
+INFOS: list [a at 37x41,10x10,5]
+mai 05, 2017 10:18:02 PM aqua.ClientLog info
+INFOS: list [a at 44x35,10x10,5]
+mai 05, 2017 10:18:04 PM aqua.ClientLog info
+INFOS: list [a at 37x41,10x10,5]
+mai 05, 2017 10:18:04 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:13 PM aqua.ClientLog info
+mai 05, 2017 10:18:04 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:13 PM aqua.ClientLog info
-INFOS: list [madFish at 32x71,12x12,5]
-mai 05, 2017 9:41:15 PM aqua.ClientLog info
-INFOS: list [madFish at 25x67,12x12,5]
-mai 05, 2017 9:41:17 PM aqua.ClientLog info
-INFOS: list [madFish at 22x69,12x12,5]
-mai 05, 2017 9:41:18 PM aqua.ClientLog info
+mai 05, 2017 10:18:06 PM aqua.ClientLog info
+INFOS: list [a at 36x33,10x10,5]
+mai 05, 2017 10:18:08 PM aqua.ClientLog info
+INFOS: list [a at 33x27,10x10,5]
+mai 05, 2017 10:18:09 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:18 PM aqua.ClientLog info
+mai 05, 2017 10:18:09 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:19 PM aqua.ClientLog info
-INFOS: list [madFish at 28x62,12x12,5]
-mai 05, 2017 9:41:21 PM aqua.ClientLog info
-INFOS: list [madFish at 27x58,12x12,5]
-mai 05, 2017 9:41:23 PM aqua.ClientLog info
+mai 05, 2017 10:18:10 PM aqua.ClientLog info
+INFOS: list [a at 38x28,10x10,5]
+mai 05, 2017 10:18:12 PM aqua.ClientLog info
+INFOS: list [a at 39x33,10x10,5]
+mai 05, 2017 10:18:14 PM aqua.ClientLog info
+INFOS: list [a at 41x35,10x10,5]
+mai 05, 2017 10:18:14 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:23 PM aqua.ClientLog info
+mai 05, 2017 10:18:14 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:23 PM aqua.ClientLog info
-INFOS: list [madFish at 29x62,12x12,5] [test10 at 1x8,12x12,5]
-mai 05, 2017 9:41:25 PM aqua.ClientLog info
-INFOS: list [madFish at 33x64,12x12,5]
-mai 05, 2017 9:41:27 PM aqua.ClientLog info
-INFOS: list [madFish at 37x70,12x12,5]
-mai 05, 2017 9:41:28 PM aqua.ClientLog info
+mai 05, 2017 10:18:16 PM aqua.ClientLog info
+INFOS: list [a at 37x29,10x10,5]
+mai 05, 2017 10:18:18 PM aqua.ClientLog info
+INFOS: list [a at 44x29,10x10,5]
+mai 05, 2017 10:18:19 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:28 PM aqua.ClientLog info
+mai 05, 2017 10:18:19 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:29 PM aqua.ClientLog info
-INFOS: list [madFish at 42x77,12x12,5] [test10 at 2x16,12x12,5]
-mai 05, 2017 9:41:31 PM aqua.ClientLog info
-INFOS: list [madFish at 42x69,12x12,5]
-mai 05, 2017 9:41:33 PM aqua.ClientLog info
+mai 05, 2017 10:18:20 PM aqua.ClientLog info
+INFOS: list [a at 41x36,10x10,5]
+mai 05, 2017 10:18:22 PM aqua.ClientLog info
+INFOS: list [a at 48x41,10x10,5]
+mai 05, 2017 10:18:24 PM aqua.ClientLog info
+INFOS: list [a at 52x39,10x10,5]
+mai 05, 2017 10:18:24 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:33 PM aqua.ClientLog info
+mai 05, 2017 10:18:24 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:33 PM aqua.ClientLog info
-INFOS: list [madFish at 42x64,12x12,5] [test10 at 3x16,12x12,5]
-mai 05, 2017 9:41:35 PM aqua.ClientLog info
-INFOS: list [madFish at 37x68,12x12,5] [test10 at 9x18,12x12,5]
-mai 05, 2017 9:41:37 PM aqua.ClientLog info
-INFOS: list [madFish at 30x72,12x12,5] [test10 at 12x17,12x12,5]
-mai 05, 2017 9:41:38 PM aqua.ClientLog info
+mai 05, 2017 10:18:26 PM aqua.ClientLog info
+INFOS: list [a at 57x36,10x10,5]
+mai 05, 2017 10:18:28 PM aqua.ClientLog info
+INFOS: list [a at 50x36,10x10,5]
+mai 05, 2017 10:18:29 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:38 PM aqua.ClientLog info
+mai 05, 2017 10:18:29 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:39 PM aqua.ClientLog info
-INFOS: list [madFish at 34x70,12x12,5] [test10 at 11x19,12x12,5]
-mai 05, 2017 9:41:41 PM aqua.ClientLog info
-INFOS: list [madFish at 31x76,12x12,5] [test10 at 7x25,12x12,5]
-mai 05, 2017 9:41:43 PM aqua.ClientLog info
+mai 05, 2017 10:18:30 PM aqua.ClientLog info
+INFOS: list [a at 49x34,10x10,5]
+mai 05, 2017 10:18:32 PM aqua.ClientLog info
+INFOS: list [a at 41x28,10x10,5]
+mai 05, 2017 10:18:34 PM aqua.ClientLog info
+INFOS: list [a at 45x35,10x10,5]
+mai 05, 2017 10:18:34 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:43 PM aqua.ClientLog info
+mai 05, 2017 10:18:34 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:43 PM aqua.ClientLog info
-INFOS: list [madFish at 34x71,12x12,5] [test10 at 15x22,12x12,5]
-mai 05, 2017 9:41:45 PM aqua.ClientLog info
-INFOS: list [madFish at 34x64,12x12,5] [test10 at 17x18,12x12,5]
-mai 05, 2017 9:41:47 PM aqua.ClientLog info
-INFOS: list [madFish at 39x63,12x12,5] [test10 at 19x12,12x12,5]
-mai 05, 2017 9:41:48 PM aqua.ClientLog info
+mai 05, 2017 10:18:36 PM aqua.ClientLog info
+INFOS: list [a at 47x37,10x10,5]
+mai 05, 2017 10:18:38 PM aqua.ClientLog info
+INFOS: list [a at 47x34,10x10,5]
+mai 05, 2017 10:18:39 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:48 PM aqua.ClientLog info
+mai 05, 2017 10:18:39 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:49 PM aqua.ClientLog info
-INFOS: list [madFish at 38x69,12x12,5] [test10 at 20x9,12x12,5]
-mai 05, 2017 9:41:51 PM aqua.ClientLog info
-INFOS: list [madFish at 43x66,12x12,5] [test10 at 13x11,12x12,5]
-mai 05, 2017 9:41:53 PM aqua.ClientLog info
+mai 05, 2017 10:18:40 PM aqua.ClientLog info
+INFOS: list [a at 53x29,10x10,5]
+mai 05, 2017 10:18:42 PM aqua.ClientLog info
+INFOS: list [a at 57x35,10x10,5]
+mai 05, 2017 10:18:44 PM aqua.ClientLog info
+INFOS: list [a at 62x36,10x10,5]
+mai 05, 2017 10:18:44 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:53 PM aqua.ClientLog info
+mai 05, 2017 10:18:44 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:53 PM aqua.ClientLog info
-INFOS: list [madFish at 45x73,12x12,5] [test10 at 17x4,12x12,5]
-mai 05, 2017 9:41:55 PM aqua.ClientLog info
-INFOS: list [madFish at 45x77,12x12,5] [test10 at 19x10,12x12,5]
-mai 05, 2017 9:41:57 PM aqua.ClientLog info
-INFOS: list [madFish at 40x83,12x12,5] [test10 at 13x18,12x12,5]
-mai 05, 2017 9:41:58 PM aqua.ClientLog info
+mai 05, 2017 10:18:46 PM aqua.ClientLog info
+INFOS: list [a at 68x36,10x10,5]
+mai 05, 2017 10:18:48 PM aqua.ClientLog info
+INFOS: list [a at 68x36,10x10,5]
+mai 05, 2017 10:18:49 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:41:58 PM aqua.ClientLog info
+mai 05, 2017 10:18:49 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:41:59 PM aqua.ClientLog info
-INFOS: list [madFish at 40x88,12x12,5] [test10 at 17x14,12x12,5]
-mai 05, 2017 9:42:01 PM aqua.ClientLog info
-INFOS: list [madFish at 36x80,12x12,5] [test10 at 11x17,12x12,5]
-mai 05, 2017 9:42:03 PM aqua.ClientLog info
+mai 05, 2017 10:18:50 PM aqua.ClientLog info
+INFOS: list [a at 65x37,10x10,5]
+mai 05, 2017 10:18:52 PM aqua.ClientLog info
+INFOS: list [a at 67x43,10x10,5]
+mai 05, 2017 10:18:54 PM aqua.ClientLog info
+INFOS: list [a at 63x36,10x10,5]
+mai 05, 2017 10:18:54 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:42:03 PM aqua.ClientLog info
+mai 05, 2017 10:18:54 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:42:03 PM aqua.ClientLog info
-INFOS: list [madFish at 44x74,12x12,5] [test10 at 4x14,12x12,5]
-mai 05, 2017 9:42:05 PM aqua.ClientLog info
-INFOS: list [madFish at 50x75,12x12,5] [test10 at 3x17,12x12,5]
-mai 05, 2017 9:42:07 PM aqua.ClientLog info
-INFOS: list [madFish at 50x67,12x12,5] [test10 at 6x10,12x12,5]
-mai 05, 2017 9:42:08 PM aqua.ClientLog info
+mai 05, 2017 10:18:56 PM aqua.ClientLog info
+INFOS: list [a at 63x32,10x10,5]
+mai 05, 2017 10:18:58 PM aqua.ClientLog info
+INFOS: list [a at 56x26,10x10,5]
+mai 05, 2017 10:18:59 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:42:08 PM aqua.ClientLog info
+mai 05, 2017 10:18:59 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:42:09 PM aqua.ClientLog info
-INFOS: list [madFish at 55x65,12x12,5] [test10 at 10x17,12x12,5]
-mai 05, 2017 9:42:11 PM aqua.ClientLog info
-INFOS: list [madFish at 52x67,12x12,5] [test10 at 4x11,12x12,5]
-mai 05, 2017 9:42:13 PM aqua.ClientLog info
+mai 05, 2017 10:19:00 PM aqua.ClientLog info
+INFOS: list [a at 62x33,10x10,5]
+mai 05, 2017 10:19:02 PM aqua.ClientLog info
+INFOS: list [a at 55x27,10x10,5]
+mai 05, 2017 10:19:04 PM aqua.ClientLog info
+INFOS: list [a at 50x27,10x10,5]
+mai 05, 2017 10:19:04 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:42:13 PM aqua.ClientLog info
+mai 05, 2017 10:19:04 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:42:13 PM aqua.ClientLog info
-INFOS: list [madFish at 57x74,12x12,5] [test10 at 7x15,12x12,5]
-mai 05, 2017 9:42:15 PM aqua.ClientLog info
-INFOS: list [madFish at 56x69,12x12,5] [test10 at 11x8,12x12,5]
-mai 05, 2017 9:42:17 PM aqua.ClientLog info
-INFOS: list [madFish at 55x66,12x12,5] [test10 at 18x3,12x12,5]
-mai 05, 2017 9:42:18 PM aqua.ClientLog info
+mai 05, 2017 10:19:06 PM aqua.ClientLog info
+INFOS: list [a at 45x33,10x10,5]
+mai 05, 2017 10:19:08 PM aqua.ClientLog info
+INFOS: list [a at 52x34,10x10,5]
+mai 05, 2017 10:19:09 PM aqua.ClientLog info
 INFOS: ping 12345
-mai 05, 2017 9:42:18 PM aqua.ClientLog info
+mai 05, 2017 10:19:09 PM aqua.ClientLog info
 INFOS: pong 12345
-mai 05, 2017 9:42:18 PM aqua.ClientLog info
-INFOS: Client sent log out
-mai 05, 2017 9:42:18 PM aqua.ClientLog info
-INFOS: Client received bye
+mai 05, 2017 10:19:10 PM aqua.ClientLog info
+INFOS: list [a at 52x41,10x10,5]
+mai 05, 2017 10:19:12 PM aqua.ClientLog info
+INFOS: list [a at 54x46,10x10,5]
+mai 05, 2017 10:19:14 PM aqua.ClientLog info
+INFOS: list [a at 57x48,10x10,5]
+mai 05, 2017 10:19:14 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:14 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:16 PM aqua.ClientLog info
+INFOS: list [a at 51x50,10x10,5]
+mai 05, 2017 10:19:18 PM aqua.ClientLog info
+INFOS: list [a at 44x48,10x10,5]
+mai 05, 2017 10:19:19 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:19 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:20 PM aqua.ClientLog info
+INFOS: list [a at 50x51,10x10,5]
+mai 05, 2017 10:19:22 PM aqua.ClientLog info
+INFOS: list [a at 50x53,10x10,5]
+mai 05, 2017 10:19:24 PM aqua.ClientLog info
+INFOS: list [a at 50x50,10x10,5]
+mai 05, 2017 10:19:24 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:24 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:26 PM aqua.ClientLog info
+INFOS: list [a at 51x57,10x10,5]
+mai 05, 2017 10:19:28 PM aqua.ClientLog info
+INFOS: list [a at 49x56,10x10,5]
+mai 05, 2017 10:19:29 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:29 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:30 PM aqua.ClientLog info
+INFOS: list [a at 53x59,10x10,5]
+mai 05, 2017 10:19:32 PM aqua.ClientLog info
+INFOS: list [a at 51x55,10x10,5]
+mai 05, 2017 10:19:34 PM aqua.ClientLog info
+INFOS: list [a at 54x57,10x10,5]
+mai 05, 2017 10:19:34 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:34 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:34 PM aqua.ClientLog info
+INFOS: Client sent addFish happyFish_2 at 20x60,10x10, RandomWayPoint
+mai 05, 2017 10:19:34 PM aqua.ClientLog info
+INFOS: Client received OK : Fish added to fish tank
+mai 05, 2017 10:19:39 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:39 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:42 PM aqua.ClientLog info
+INFOS: Client sent startFish happyFish_2
+mai 05, 2017 10:19:42 PM aqua.ClientLog info
+INFOS: Client received OK : Fish started
+mai 05, 2017 10:19:44 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:44 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:49 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:49 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:50 PM aqua.ClientLog info
+INFOS: Client sent getFishesContinuously
+mai 05, 2017 10:19:50 PM aqua.ClientLog info
+INFOS: list [a at 61x59,10x10,5] [happyFish_2 at 23x55,10x10,5]
+mai 05, 2017 10:19:50 PM aqua.ClientLog info
+INFOS: Client received getFishesContinuously Launched
+mai 05, 2017 10:19:52 PM aqua.ClientLog info
+INFOS: list [a at 65x56,10x10,5] [happyFish_2 at 17x50,10x10,5]
+mai 05, 2017 10:19:54 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:54 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:19:54 PM aqua.ClientLog info
+INFOS: list [a at 68x59,10x10,5] [happyFish_2 at 19x47,10x10,5]
+mai 05, 2017 10:19:56 PM aqua.ClientLog info
+INFOS: list [a at 74x61,10x10,5] [happyFish_2 at 22x40,10x10,5]
+mai 05, 2017 10:19:58 PM aqua.ClientLog info
+INFOS: list [a at 73x68,10x10,5] [happyFish_2 at 21x36,10x10,5]
+mai 05, 2017 10:19:59 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:19:59 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:20:00 PM aqua.ClientLog info
+INFOS: list [a at 74x62,10x10,5] [happyFish_2 at 27x40,10x10,5]
+mai 05, 2017 10:20:01 PM aqua.ClientLog info
+INFOS: Client sent getFishes
+mai 05, 2017 10:20:01 PM aqua.ClientLog info
+INFOS: Client received list [a at 73x66,10x10,5] [happyFish_2 at 26x44,10x10,5]
+mai 05, 2017 10:20:04 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:20:04 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:20:06 PM aqua.ClientLog info
+INFOS: Client sent getFishesContinuously
+mai 05, 2017 10:20:06 PM aqua.ClientLog info
+INFOS: list [a at 66x71,10x10,5] [happyFish_2 at 26x45,10x10,5]
+mai 05, 2017 10:20:06 PM aqua.ClientLog info
+INFOS: Client received getFishesContinuously Launched
+mai 05, 2017 10:20:08 PM aqua.ClientLog info
+INFOS: list [a at 63x73,10x10,5] [happyFish_2 at 18x40,10x10,5]
+mai 05, 2017 10:20:09 PM aqua.ClientLog info
+INFOS: Client sent getFishesContinuously
+mai 05, 2017 10:20:09 PM aqua.ClientLog info
+INFOS: list [a at 66x68,10x10,5] [happyFish_2 at 14x48,10x10,5]
+mai 05, 2017 10:20:09 PM aqua.ClientLog info
+INFOS: Client received getFishesContinuously Launched
+mai 05, 2017 10:20:09 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:20:09 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:20:10 PM aqua.ClientLog info
+INFOS: list [a at 72x62,10x10,5] [happyFish_2 at 11x45,10x10,5]
+mai 05, 2017 10:20:11 PM aqua.ClientLog info
+INFOS: list [a at 77x55,10x10,5] [happyFish_2 at 13x50,10x10,5]
+mai 05, 2017 10:20:12 PM aqua.ClientLog info
+INFOS: list [a at 72x58,10x10,5] [happyFish_2 at 11x48,10x10,5]
+mai 05, 2017 10:20:13 PM aqua.ClientLog info
+INFOS: list [a at 72x54,10x10,5] [happyFish_2 at 16x48,10x10,5]
+mai 05, 2017 10:20:14 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:20:14 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:20:14 PM aqua.ClientLog info
+INFOS: list [a at 65x47,10x10,5] [happyFish_2 at 22x48,10x10,5]
+mai 05, 2017 10:20:15 PM aqua.ClientLog info
+INFOS: list [a at 58x48,10x10,5] [happyFish_2 at 17x49,10x10,5]
+mai 05, 2017 10:20:16 PM aqua.ClientLog info
+INFOS: list [a at 61x52,10x10,5] [happyFish_2 at 21x41,10x10,5]
+mai 05, 2017 10:20:17 PM aqua.ClientLog info
+INFOS: list [a at 59x58,10x10,5] [happyFish_2 at 28x35,10x10,5]
+mai 05, 2017 10:20:18 PM aqua.ClientLog info
+INFOS: list [a at 54x62,10x10,5] [happyFish_2 at 24x28,10x10,5]
+mai 05, 2017 10:20:19 PM aqua.ClientLog info
+INFOS: list [a at 54x55,10x10,5] [happyFish_2 at 27x23,10x10,5]
+mai 05, 2017 10:20:19 PM aqua.ClientLog info
+INFOS: ping 12345
+mai 05, 2017 10:20:19 PM aqua.ClientLog info
+INFOS: pong 12345
+mai 05, 2017 10:20:20 PM aqua.ClientLog info
+INFOS: list [a at 50x55,10x10,5] [happyFish_2 at 32x21,10x10,5]

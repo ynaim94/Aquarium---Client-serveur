@@ -32,7 +32,9 @@ public class Aquarium {
     }
     
     private static void status(){
-	System.out.println(contentPane.fishesToString(contentPane.Fishes));
+	String rep = contentPane.fishesToString(contentPane.Fishes);
+        System.out.println(rep);
+        logger.info("Client received " + rep.substring(1));
     }
 
     private static void addFish(String cmd){
@@ -166,7 +168,8 @@ public class Aquarium {
 		//	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 		/*Handling response*/
 		if(pattern[2].matcher(response).matches())/* greeting*/
-		    {	
+		    {	 
+			logger.info("Client logging ..");  
 			/*Display the aquarium*/
 			new Aquarium().displayGUI(ImagesPath);
 		    }

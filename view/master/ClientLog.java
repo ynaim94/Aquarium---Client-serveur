@@ -22,7 +22,7 @@ public class ClientLog {
 		logger.setUseParentHandlers(false);
 		logger.addHandler(fh);
 		logger.setLevel(Level.CONFIG);
-	    logger.config("Client logging ..");  
+		//	    logger.config("Client logging ..");  
 
 	}
 	
