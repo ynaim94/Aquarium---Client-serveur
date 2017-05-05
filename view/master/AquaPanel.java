@@ -256,10 +256,11 @@ class AquaPanel extends JPanel implements ActionListener{
 	}
 
 	String fin = "";
+	String s = "s";
 	if (Fishes.size() == 1)
-		fin = "<OK: Connecté au controlleur: " + Fishes.size() + " poisson trouvé \n" + res;
-	else 
-		fin = "<OK: Connecté au controlleur: " + Fishes.size() + " poissons trouvés \n" + res;
+		s="";
+	
+	fin = "<OK : Connecté au contrôleur, " + Fishes.size() + " poisson" + s + " trouvé" + s + " \n" + res;
 	return fin;
 }
     
