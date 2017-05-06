@@ -1,4 +1,3 @@
-
 package aqua;
 import java.util.ArrayList;
 
@@ -13,22 +12,21 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.util.regex.Pattern;
 import java.util.*;
 
 
 class AquaPanel extends JPanel implements ActionListener{
 
-    private int x,y;//,z=0,w=0;
+    private int x=0,y=0;
     private static int height,width,scaleX,scaleY,firstX,firstY,destX,destY;  
-    private static double decX,decY,timeUnity,duration=0;//,fuiteX=0,fuiteY=0;
-
+    private static double decX,decY,timeUnity,duration=0;
     private BufferedImage[]images = new BufferedImage[8];
-    /*an array with the names of the fish images*/
+ /*an array with the names of the fish images*/
     private String[]fishImages={"background","sneakingFish","smilingFish","bubbleFish","oldFish","happyFish","madFish","lostFish"};
     ArrayList<Fish> Fishes=new ArrayList<Fish>();
     /*timer to repaint fishes in their new positions each 100 ms*/
     private Timer timer = new Timer(100, (ActionListener) this);
-    
   
 
         
@@ -64,18 +62,19 @@ class AquaPanel extends JPanel implements ActionListener{
 	int mobilityTime = 5; // par defaut
 	int started;
 	Fish tmpFish ;
-	int actualPosition[] = new int[2];
+	double actualPosition[] = new double[2];
 	initPosition.add(Integer.parseInt(items[3]));
 	initPosition.add(Integer.parseInt(items[4]));
 	dimensions[0] = Integer.parseInt(items[5]);
 	dimensions[1] = Integer.parseInt(items[6]);
 	started = 0;
-	tmpFish= new Fish(name, initPosition, mobilityTime, dimensions, started,actualPosition);//{initPosition.get(0),initPosition.get(1)});
+	tmpFish= new Fish(name, initPosition, mobilityTime, dimensions, started,actualPosition);
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
 	newFishes.add(tmpFish);
 	setFishes(newFishes);
     }
-public void setDelFish(String[] items){
+
+    public void setDelFish(String[] items){
 	Iterator<Fish> it = Fishes.iterator();
 	while (it.hasNext()) {
 	    if (it.next().name.equals(items[1])) {
@@ -84,7 +83,7 @@ public void setDelFish(String[] items){
 	}    
     }    
 
-  public void setGetFishes(String[][] items){
+    public void setGetFishes(String[][] items){
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
 	int added = 0;
 	for (String[] s: items){
@@ -94,7 +93,7 @@ public void setDelFish(String[] items){
 	    int mobilityTime; // par defaut
 	    Fish tmpFish ;
 	    int started = 1;
-	    int[] actualPosition=new int[2];
+	    double[] actualPosition=new double[2];
 	    for(Fish poiss : Fishes)
 		{
 		    if(poiss.name.equals(name)){ 
@@ -111,7 +110,7 @@ public void setDelFish(String[] items){
 	    tmpFish= new Fish(name, initPosition, mobilityTime, dimensions,started,actualPosition);
 	    newFishes.add(tmpFish);
 	}
-	
+
 	for(Fish fish : Fishes){
 	    if (!(newFishes.contains(fish))){
 		if (fish.started == 0){
@@ -120,9 +119,9 @@ public void setDelFish(String[] items){
 	    }
 	}
 	this.Fishes = newFishes;
-	
-  }
-    
+
+    }
+
     public String extractName (String s){
 	if(s.contains("_") == true) {
 	    Pattern p = Pattern.compile("_");
@@ -132,8 +131,6 @@ public void setDelFish(String[] items){
 	else 
 	    return s;	
     }
-    
-    
 
     public AquaPanel(String name) {
         timer.start();
@@ -153,11 +150,10 @@ public void setDelFish(String[] items){
     }
     
     
-    
     @Override
     public Dimension getPreferredSize(){
-	width=images[0].getWidth()/100; //8
-	height= images[0].getHeight()/100;//6
+	width=images[0].getWidth()/100;
+	height= images[0].getHeight()/100;
 	return (new Dimension(width*100,height*100));
     }
     
@@ -170,144 +166,103 @@ public void setDelFish(String[] items){
 	for(int i=0; i<Fishes.size();i++){
 	    /* match the fish name with the suitable image */
 	    for(int l=1;l<8;l++)
-        	if (((fishImages[l].equals(Fishes.get(i).name))  ||		      (fishImages[l].equals(extractName(Fishes.get(i).name))))){
+		if (((fishImages[l].equals(Fishes.get(i).name))  ||		      (fishImages[l].equals(extractName(Fishes.get(i).name))))){ 
 		    Fishes.get(i).imageIndex=l;
 		    break;
 		}
-		else /*image par défaut*/
-		    Fishes.get(i).imageIndex=2;
-	    System.out.println("My name is "+Fishes.get(i).name);
-	    System.out.print("My positions [ ");
-	    for(int poiss : Fishes.get(i).initPosition)
-		System.out.print(poiss+",");
-	    System.out.println(" ]");
+		    else /*image par défaut*/
+			Fishes.get(i).imageIndex=2;
+	    
 	    /*Actual Position*/
-	  
 	    firstX=width*Fishes.get(i).initPosition.get(0);
 	    firstY=height*Fishes.get(i).initPosition.get(1);
 	    timeUnity=Fishes.get(i).mobilityTime/100.0; //0.05
-	    //  x=firstX;
-	    //y=firstY;
-	    System.out.println("firstX= "+firstX+" ; firstY="+firstY);
 	    /*if the fish have an other position to move to*/
 	    if(Fishes.get(i).initPosition.size()>=4){
 		/* TODO: set intermediate positions & manage mobilityTime*/
 		/*destination*/
 		destX=width*Fishes.get(i).initPosition.get(2);
 		destY=height*Fishes.get(i).initPosition.get(3);
-
-		System.out.println("destX="+destX+" ; destY="+destY);
-		System.out.println("Fishes.get(i).actualPosition[0]="+Fishes.get(i).actualPosition[0]);
-		System.out.println("Fishes.get(i).actualPosition[1]="+Fishes.get(i).actualPosition[1]);
 		decX=(destX-firstX)*timeUnity;
 		decY=(destY-firstY)*timeUnity;
-		/*to avoid the non-movement when the step is <0*/
-		/*TODO: add more tests for more a more precise display*/
-
-	       
-		if ((decX<1)&&(decX>-1)&&(decX!=0))
+		/*	if ((decX<1)&&(decX>-1)&&(decX!=0))
 		    if(decX<0){
-			/*	if(decX>-0.5)
+				if(decX>-0.5)
 			decX=0;
 			else
-			*/  decX=-1;
+			  decX=-1;
 		    }
 		    else{
-			/*	if(decX<0.5)
+				if(decX<0.5)
 			decX=0;
 			else
-			*/decX=1;
+			decX=1;
 		    }
 		if ((decY<1)&&(decY>-1)&&(decX!=0))
 		    if(decY<0){
-			/*if(decY>-0.5)
+			if(decY>-0.5)
 			decY=0;
 			else
-			*/decY=-1;
+			decY=-1;
 			}
 		    else{
-			/*if(decY<0.5)
+			if(decY<0.5)
 			decY=0;
 			else;
-			*/decY=1;
-			}
-		System.out.println("decX="+decX+" ; decY="+decY);
-		
-		if((Math.abs(Fishes.get(i).actualPosition[0]-destX)<=Math.abs(decX))||decX==0){
+			decY=1;
+		    }*/
+		if((Math.abs(Fishes.get(i).actualPosition[0]-destX)<=Math.abs(decX))||decX==0.0)
 		    Fishes.get(i).actualPosition[0]=destX;
-		    System.out.println("Le zeeed est arrivé");
-		}
-		else if(decX!=0){
-		    Fishes.get(i).actualPosition[0]=(int)( Fishes.get(i).actualPosition[0]+decX);
-		    System.out.println(" Le Zeeed is  moving on->z="+Fishes.get(i).actualPosition[0] );
-		}
-	    if((Math.abs(Fishes.get(i).actualPosition[1]-destY)<=Math.abs(decY))||(decY==0)){
+		else if(decX!=0.0)
+		    Fishes.get(i).actualPosition[0]= Fishes.get(i).actualPosition[0]+decX;
+		if((Math.abs(Fishes.get(i).actualPosition[1]-destY)<=Math.abs(decY))||(decY==0.0))
 		    Fishes.get(i).actualPosition[1]=destY;
-		    System.out.println("Le Waaay est arrivé");
-		}
-		else if(decY!=0){
-		    Fishes.get(i).actualPosition[1]=(int)(Fishes.get(i).actualPosition[1]+decY);
-		    System.out.println("Le Waaay is  moving on->w="+Fishes.get(i).actualPosition[1] );
-		}
-		System.out.println(" Test Test: |decX|="+Math.abs(decX)+" |decY|="+Math.abs(decY));
-		
+		else if(decY!=0.0)
+		    Fishes.get(i).actualPosition[1]=Fishes.get(i).actualPosition[1]+decY;
 		if((Math.abs(Fishes.get(i).actualPosition[0]-destX)<=Math.abs(decX))&&(Math.abs(Fishes.get(i).actualPosition[1]-destY)<=Math.abs(decY))){
-		    System.out.println(" z et w sont  arrivés!!! :D");
-		  
-		    /*Remove the privious position*/
-		    System.out.print("Before Remove [ ");		    
-		    for(int poiss : Fishes.get(i).initPosition)
-			System.out.print(poiss+",");
-		    System.out.println(" ]");
+		/*Remove the previous position*/
 		    Fishes.get(i).initPosition.remove(0);
-		    System.out.print("0 Removed [ ");		    
-		    for(int poiss : Fishes.get(i).initPosition)
-			System.out.print(poiss+",");
-		    System.out.println(" ]");
 		    Fishes.get(i).initPosition.remove(0);
-		    System.out.print("1 Removed [ ");
-		    for(int poiss : Fishes.get(i).initPosition)
-			System.out.print(poiss+",");
-		    System.out.println(" ]");
-		   
-		    System.out.println("firstPosition Removed");
-		    System.out.println("NewFirstX="+firstX+" ;NewFirstY="+firstY);
-		}
-        
-	    }
+		} 
+	    } 
 	    else{
-	       	System.out.println("We are fixed here previous Z:"+	Fishes.get(i).actualPosition[0]+" ; previous W:"+	Fishes.get(i).actualPosition[1]);
 		Fishes.get(i).actualPosition[0]=firstX;
 		Fishes.get(i).actualPosition[1]=firstY;
-     
-		System.out.println("We are fixed here  z=firstX:"+	Fishes.get(i).actualPosition[0]+" ;w=firstY:"+	Fishes.get(i).actualPosition[1]);
 	    }
-	    
-	     System.out.println("Size= "+Fishes.get(i).initPosition.size());
+
+	   
 	    /*manage the proportional size*/
 	    scaleX=width*Fishes.get(i).dimensions[0];
 	    scaleY=height*Fishes.get(i).dimensions[1];
-	    x=	Fishes.get(i).actualPosition[0];
-	    y=	Fishes.get(i).actualPosition[1];
-	    System.out.println("x="+x+" ; y="+y);
+	    x=(int)	Fishes.get(i).actualPosition[0];
+	    y=(int)	Fishes.get(i).actualPosition[1];
 	    g.drawImage(images[Fishes.get(i).imageIndex],x,y,scaleX,scaleY,this);
+	    
 	}
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
- 	repaint();
+	repaint();
     }
     
     
     public String fishesToString(ArrayList<Fish> Fishes){
-	String res = "\n";
+	String res = "";
 	for (Fish fish: Fishes){
-	    res = res + "Fish " + fish.name +" at " +
+	    res =  res + "Fish " + fish.name +" at " +
 		fish.initPosition.get(0) + "x" + fish.initPosition.get(1)+ "," +
 		fish.dimensions[0] +"x"+ fish.dimensions[1] +" :  "+ ((fish.started == 1) ? "started" : "not started") +  "\n" ;
 	}
-	return res;
-    }
+
+	String fin = "";
+	String s = "s";
+	if (Fishes.size() == 1)
+		s="";
+	
+	fin = "<OK : Connecté au contrôleur, " + Fishes.size() + " poisson" + s + " trouvé" + s + " \n" + res;
+	return fin;
+}
     
 }
+
