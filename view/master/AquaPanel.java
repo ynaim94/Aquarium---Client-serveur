@@ -18,18 +18,26 @@ import java.util.*;
 
 class AquaPanel extends JPanel implements ActionListener{
 
-    private int x=0,y=0;
-    private static int height,width,scaleX,scaleY,firstX,firstY,destX,destY;  
-    private static double decX,decY,timeUnity,duration=0;
+    private static int height,width;
     private BufferedImage[]images = new BufferedImage[8];
-    /*an array with the names of the fish images*/
-    private String[]fishImages={"background","sneakingFish","smilingFish","bubbleFish","oldFish","happyFish","madFish","lostFish"};
     ArrayList<Fish> Fishes=new ArrayList<Fish>();
-    /*timer to repaint fishes in their new positions each 100 ms*/
     private Timer timer = new Timer(100, (ActionListener) this);
+    private String[]fishImages={"background","sneakingFish","smilingFish","bubbleFish","oldFish","happyFish","madFish","lostFish"};
   
 
-        
+
+    /** @brief  setFishes
+     * @param[in]  ArrayList<Fish> newFishes
+     *
+     * @param[out] ArrayList<Fish> Fishes
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Add new fishes to the list or add new positions to already existing fishes
+     *
+     */
+  
     void setFishes(ArrayList<Fish> newFishes){
 	
 	fishesToString(this.Fishes);
@@ -43,7 +51,19 @@ class AquaPanel extends JPanel implements ActionListener{
 	    }
 	}
     }
-    
+
+    /** @brief  setStartFish
+     * @param[in]  String cmd
+     *
+     * @param[out] ArrayList<Fish> Fishes
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Starts the fishes represented in the string
+     *
+     */
+  
     public void setStartFish(String cmd){
 	String tokens[] = cmd.split("[ ]+");
 	for(Fish fish : Fishes){
@@ -53,7 +73,19 @@ class AquaPanel extends JPanel implements ActionListener{
 	}
     }
 
-    
+
+    /** @brief  setAddFish
+     * @param[in]  String[] items
+     *
+     * @param[out] ArrayList<Fish> Fishes
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Add new fishes to the string array and calls setFishes
+     *
+     */
+  
     public void setAddFish(String[] items){
 	ArrayList<Integer> initPosition = new ArrayList<Integer>();
 	String name = new String(items[1]);
@@ -73,6 +105,19 @@ class AquaPanel extends JPanel implements ActionListener{
 	setFishes(newFishes);
     }
 
+
+    /** @brief  setDelFish
+     * @param[in]  String[] items
+     *
+     * @param[out] ArrayList<Fish> Fishes
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Delete the fishes represented in the string array
+     *
+     */
+  
     public void setDelFish(String[] items){
 	Iterator<Fish> it = Fishes.iterator();
 	while (it.hasNext()) {
@@ -82,6 +127,19 @@ class AquaPanel extends JPanel implements ActionListener{
 	}    
     }    
 
+
+    /** @brief  setGetFish
+     * @param[in]  String[][] items
+     *
+     * @param[out] ArrayList<Fish> Fishes
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Updates the fishes arraylist with the array of string arrays
+     *
+     */
+  
     public void setGetFishes(String[][] items){
 	ArrayList<Fish> newFishes = new ArrayList<Fish>();
 	int added = 0;
@@ -121,6 +179,19 @@ class AquaPanel extends JPanel implements ActionListener{
 
     }
 
+
+    /** @brief  extractName
+     * @param[in]  String s
+     *
+     * @param[out] NONE
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Returns a string without underscore and onwards
+     *
+     */
+  
     public String extractName (String s){
 	if(s.contains("_") == true) {
 	    Pattern p = Pattern.compile("_");
@@ -148,7 +219,21 @@ class AquaPanel extends JPanel implements ActionListener{
 	}	       
     }
     
-    
+        
+    /** @brief   getPreferredSize
+     * @param[in]  NONE
+     *
+     * @param[out]  int height
+     *              int width
+     *              
+     * 
+     *
+     * @return     Dimension
+     *
+     * @details    Return the Dimentions of our background to size the window
+     *
+     */
+
     @Override
     public Dimension getPreferredSize(){
 	width=images[0].getWidth()/100;
@@ -156,9 +241,27 @@ class AquaPanel extends JPanel implements ActionListener{
 	return (new Dimension(width*100,height*100));
     }
     
-    @Override
+
+    /** @brief   paintComponent
+     * @param[in]  Graphics g
+     *
+     * @param[out]  int height
+     *              int width
+     *              BufferedImage[]images
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Displays the Fish tank and the fishes within
+     *
+     */
+
+  
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+	int scaleX,scaleY,firstX,firstY,destX,destY, x=0,y=0;
+	double decX,decY,timeUnity;
+	
 	/*display the the background*/
         g.drawImage(images[0], 0, 0, this);
 	/*display the fishes*/
@@ -169,36 +272,42 @@ class AquaPanel extends JPanel implements ActionListener{
 		    Fishes.get(i).imageIndex=l;
 		    break;
 		}
-		    else /*image par défaut*/
-			Fishes.get(i).imageIndex=2;
+		else /* default image*/
+		    Fishes.get(i).imageIndex=2;
 	    
 	    /*Actual Position*/
 	    firstX=width*Fishes.get(i).initPosition.get(0);
 	    firstY=height*Fishes.get(i).initPosition.get(1);
-	    timeUnity=Fishes.get(i).mobilityTime/100.0; //0.05
+	    timeUnity=Fishes.get(i).mobilityTime/100.0; 
 	    /*if the fish have an other position to move to*/
 	    if(Fishes.get(i).initPosition.size()>=4){
 		/*destination*/
 		destX=width*Fishes.get(i).initPosition.get(2);
 		destY=height*Fishes.get(i).initPosition.get(3);
+		/*step*/
 		decX=(destX-firstX)*timeUnity;
 		decY=(destY-firstY)*timeUnity;
-
+		/*Test if the fish reached X Destination */
 		if((Math.abs(Fishes.get(i).actualPosition[0]-destX)<=Math.abs(decX))||decX==0.0)
 		    Fishes.get(i).actualPosition[0]=destX;
-		else if(decX!=0.0)
-		    Fishes.get(i).actualPosition[0]= Fishes.get(i).actualPosition[0]+decX;
+		else /* The fish X in moving */
+		    if(decX!=0.0)
+			Fishes.get(i).actualPosition[0]= Fishes.get(i).actualPosition[0]+decX;
+		/*Test if the fish reached Y Destination */
 		if((Math.abs(Fishes.get(i).actualPosition[1]-destY)<=Math.abs(decY))||(decY==0.0))
 		    Fishes.get(i).actualPosition[1]=destY;
-		else if(decY!=0.0)
-		    Fishes.get(i).actualPosition[1]=Fishes.get(i).actualPosition[1]+decY;
+		else
+		    if(decY!=0.0) /* The fish Y in moving */
+			Fishes.get(i).actualPosition[1]=Fishes.get(i).actualPosition[1]+decY;
+		/*Test if the fish reached its destination*/
 		if((Math.abs(Fishes.get(i).actualPosition[0]-destX)<=Math.abs(decX))&&(Math.abs(Fishes.get(i).actualPosition[1]-destY)<=Math.abs(decY))){
-		/*Remove the previous position*/
+		    /*Remove the previous position*/
 		    Fishes.get(i).initPosition.remove(0);
 		    Fishes.get(i).initPosition.remove(0);
 		} 
 	    } 
 	    else{
+		/*Staying still*/
 		Fishes.get(i).actualPosition[0]=firstX;
 		Fishes.get(i).actualPosition[1]=firstY;
 	    }
@@ -207,13 +316,29 @@ class AquaPanel extends JPanel implements ActionListener{
 	    /*manage the proportional size*/
 	    scaleX=width*Fishes.get(i).dimensions[0];
 	    scaleY=height*Fishes.get(i).dimensions[1];
+	    /*Convert to int Postions*/
 	    x=(int)	Fishes.get(i).actualPosition[0];
 	    y=(int)	Fishes.get(i).actualPosition[1];
+	    /*draw the Fish in its ne position*/
 	    g.drawImage(images[Fishes.get(i).imageIndex],x,y,scaleX,scaleY,this);
 	    
 	}
     }
-    
+
+
+    /** @brief   actionPerformed
+     * @param[in]  ActionEvent e
+     *
+     * @param[out]  NONE
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Called by the Timer each 100s
+     *             to repaint the Fishes in their new positions in the Tank
+     *
+     */
+
     @Override
     public void actionPerformed(ActionEvent e) {
 	repaint();

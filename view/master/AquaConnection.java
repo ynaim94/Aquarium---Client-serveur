@@ -4,7 +4,7 @@ import java.net.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class AquaConnection extends Thread{
+public class AquaConnection {
     Scanner scanner;
     private static String cmd,response;
     static private Socket socket;
@@ -170,7 +170,6 @@ public class AquaConnection extends Thread{
     }
 
     
-    public void  run(){}       
     
 
 
