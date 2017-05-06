@@ -26,22 +26,70 @@ public class Aquarium {
 
     private static Parser parser;
     
+    /** @brief  startFish
+     * @param[in]  String name
+     *
+     * @param[out] NONE
+     *
+     *
+     * @return     NONE
+     *
+     * @details    Calls setStartFish in the AquaPanel
+     *
+     */
 
     private static void startFish(String name){
 	contentPane.setStartFish(name);
     }
-    
+
+    /** @brief  status
+     * @param[in]  NONE
+     *
+     * @param[out] NONE
+     *
+     *
+     * @return     NONE
+     *
+     * @details    Prints the status of the view in the prompt
+     *
+     */
+
     private static void status(){
 	String rep = contentPane.fishesToString(contentPane.Fishes);
         System.out.println(rep);
         logger.info("Client received " + rep.substring(1));
     }
 
+    /** @brief  addFish
+     * @param[in]  String cmd
+     *
+     * @param[out] NONE
+     *
+     *
+     * @return     NONE
+     *
+     * @details    Stores the fish in a string array and calls setAddFish in AquaPanel
+     *
+     */
+
     private static void addFish(String cmd){
 	String[] items =  parser.parseFishPosition(cmd);
 	contentPane.setAddFish(items);
 	
     }
+
+    
+    /** @brief  delFish
+     * @param[in]  String cmd
+     *
+     * @param[out] NONE
+     *
+     *
+     * @return     NONE
+     *
+     * @details    Stores the fish in a string array and calls setDelFish in AquaPanel
+     *
+     */
 
     private static void delFish(String cmd){
         String[] items =  parser.parseFishPosition(cmd);
@@ -50,11 +98,36 @@ public class Aquarium {
         contentPane.setDelFish(items); 
     }
 
+    
+    /** @brief  delFish
+     * @param[in]  String cmd
+     *
+     * @param[out] NONE
+     *
+     *
+     * @return     NONE
+     *
+     * @details    Stores the fish in a string array and calls setDelFish in AquaPanel
+     *
+     */
+
     public static void getFishes(String response){
 	String[][] items = parser.parseListFishPosition(response);
 	contentPane.setGetFishes(items);
     }
     
+
+    /** @brief  displayGUI
+     * @param[in]  String ImagesPath
+     *
+     * @param[out] JFrame frame
+     * @param[out] AquaPanel contentPane
+     *
+     * @return     NONE
+     *
+     * @details    Initializes the frame for the aquarium display
+     *
+     */
 
     private void displayGUI(String ImagesPath){
         frame = new JFrame("Aquarium");
@@ -66,7 +139,19 @@ public class Aquarium {
 	frame.setVisible(true);
 	frame.setResizable(false);
     }
-    
+
+    /** @brief  promptIn
+     * @param[in]  NONE
+     *
+     * @param[out] NONE
+     * 
+     *
+     * @return     String cmd
+     *
+     * @details    Scans the prompt entry and sends the string it in the socket.
+     *
+     */
+
     static private String promptIn()throws IOException{
 	System.out.print(">"); 
 	/*get the input as a String*/
@@ -84,6 +169,20 @@ public class Aquarium {
 	}
 	return cmd;
     }
+
+    
+    /** @brief  promptOut
+     * @param[in]  String response
+     *
+     * @param[out] NONE
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Prints the server response on the prompt
+     *
+     */
+
     static private void promptOut(String response)throws IOException
     {	
 	System.out.print("<"+response+"\n"); //+server's response

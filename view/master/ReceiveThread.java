@@ -11,7 +11,19 @@ public class ReceiveThread extends Thread{
     public ReceiveThread(AquaConnection aquaCon){
 	this.aquaCon = aquaCon;
     }
-    
+
+    /** @brief  run
+     * @param[in]  NONE
+     *
+     * @param[out] AquaConnection aquaCon
+     * 
+     *
+     * @return     NONE
+     *
+     * @details    Receives and treats the server's response.
+     *
+     */
+
     public synchronized void run(){
 	ClientLog logger = new ClientLog();
 	Pattern[] pattern = new Pattern[2];
