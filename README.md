@@ -42,7 +42,7 @@ You can also load any alternative fish tank by using load command. If the fish t
 
 ##The client
 
-The file "affichage.cfg" contains the default values for the configuration variables.
+The file "affichage.cfg" in view/src  contains the default values for the configuration variables.
 The source files are in /view/src/. 
 **To build the client** : 
 
