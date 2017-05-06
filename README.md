@@ -42,8 +42,9 @@ You can also load any alternative fish tank by using load command. If the fish t
 
 ##The client
 
-The file "affichage.cfg" in view/src  contains the default values for the configuration variables.
 The source files are in /view/src/. 
+The file "affichage.cfg" is in src and contains the default values for the configuration variables.
+
 **To build the client** : 
 
 	> cd /view/
@@ -57,6 +58,42 @@ The source files are in /view/src/.
 
 **Fish names** : happyFish madFish smilingFish bubbleFish lostFish oldFish sneakingFish
 
+**Les commandes possibles** :
+
+hello to initiate the connection
+	
+	> hello[ in as Nx ]
+
+_x is an integer_
+
+status to get the status of the view
+
+	> status
+addFish to add a fish
+	
+	> addFish FishName at 60x60,10x5, RandomWayPoint
+
+delFish to delete a fish
+	
+	> delFish FishName
+
+getFishes to ask the server for new positions
+
+	> getFishes
+
+getFishesContinuously to ask constantly for new positions
+
+	> getFishesContinuously
+
+ping to make sure the server doesn't disconnect from us
+
+	> ping 12345
+_12345 is the port number of the view_
+
+log out to disconnect the view from the server
+
+	> log out
+	
 **In the folder /view/build/** :
      aqua/ contains the executables
      fishes/ contains the images of the fishes
