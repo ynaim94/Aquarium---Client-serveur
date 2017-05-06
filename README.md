@@ -58,7 +58,7 @@ The file "affichage.cfg" is in src and contains the default values for the confi
 
 **Fish names** : happyFish madFish smilingFish bubbleFish lostFish oldFish sneakingFish
 
-**Les commandes possibles** :
+**Les commandes disponibles** :
 
 hello to initiate the connection
 	
@@ -69,6 +69,7 @@ _x is an integer_
 status to get the status of the view
 
 	> status
+	
 addFish to add a fish
 	
 	> addFish FishName at 60x60,10x5, RandomWayPoint
