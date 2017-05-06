@@ -58,7 +58,7 @@ The file "affichage.cfg" is in src and contains the default values for the confi
 
 **Fish names** : happyFish madFish smilingFish bubbleFish lostFish oldFish sneakingFish
 
-**Les commandes disponibles** :
+**Available commands** :
 
 hello to initiate the connection
 	
@@ -86,7 +86,7 @@ getFishesContinuously to ask constantly for new positions
 
 	> getFishesContinuously
 
-ping to make sure the server doesn't disconnect from us
+ping to keep the view connected to the server
 
 	> ping 12345
 _12345 is the port number of the view_
