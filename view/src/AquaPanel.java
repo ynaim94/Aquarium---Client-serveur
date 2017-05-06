@@ -344,7 +344,18 @@ class AquaPanel extends JPanel implements ActionListener{
 	repaint();
     }
     
-    
+
+    /** @brief  fishesToString
+     * @param[in]  ArrayList<Fish> Fishes
+     *
+     * @param[out] String
+     *
+     *
+     * @return     NONE
+     *
+     * @details    Returns the status response
+     *
+     */
     public String fishesToString(ArrayList<Fish> Fishes){
 	String res = "";
 	for (Fish fish: Fishes){
