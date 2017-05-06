@@ -32,7 +32,9 @@ public class Aquarium {
     }
     
     private static void status(){
-	System.out.println(contentPane.fishesToString(contentPane.Fishes));
+	String rep = contentPane.fishesToString(contentPane.Fishes);
+        System.out.println(rep);
+        logger.info("Client received " + rep.substring(1));
     }
 
     private static void addFish(String cmd){
@@ -80,6 +82,8 @@ public class Aquarium {
 	aquaCon.setCmd(cmd);
 	logger.info("Client sent " + cmd);
 	cmd=cmd.intern();
+	if (cmd.equals("status"))
+		return cmd;
 	try {
 	    aquaCon.send(cmd);
 	}
@@ -99,6 +103,8 @@ public class Aquarium {
     
     public static void main(String[] args) throws Exception
     {
+	ScheduledExecutorService exec = null;
+	ReceiveThread rcvThread = null;
 	logger = new ClientLog();
 	/*Get Configuration data*/  
 	Config conf = new Config(args[0]);
@@ -111,7 +117,7 @@ public class Aquarium {
 	    pattern=new Pattern[11];  
 	    pattern[0]=Pattern.compile("^OK");//,Pattern.CASE_INSENSITIVE);
 	    //	pattern[1]= Pattern.compile("hello");
-	    pattern[2]= Pattern.compile("greeting \\w+");
+	    pattern[2]= Pattern.compile("^greeting \\w+");
 	    pattern[3]= Pattern.compile("^addFish ");
 	    pattern[4]= Pattern.compile("^delFish ");
 	    pattern[5]= Pattern.compile("^startFish \\w+");
@@ -127,9 +133,9 @@ public class Aquarium {
 	    while(cmd==""){  
 		if (connected==false){
 		    aquaCon.openConnection(address,port);
-		    ReceiveThread rcvThread = new ReceiveThread(aquaCon);
+		    rcvThread = new ReceiveThread(aquaCon);
 		    rcvThread.start();
-		    ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+		    exec = Executors.newSingleThreadScheduledExecutor();
 		    exec.scheduleAtFixedRate(new Runnable() {
 			    @Override
 			    public void run() {
@@ -148,23 +154,24 @@ public class Aquarium {
 		cmd=promptIn();
 		//System.out.println(cmd + "a");
 		
-		synchronized (aquaCon){
-		    aquaCon.wait();
+		if (!(cmd.equals("status"))){
+			synchronized (aquaCon){
+			    aquaCon.wait();
+			}
+			response=aquaCon.getResponse();
+			promptOut(response);
 		}
-		response=aquaCon.getResponse();
-		promptOut(response);
+
+		else
+			response=cmd;
 
 		//	  System.out.println(String.format("\nYour command is %s ; Your response is %s",cmd, response));
 		/*Handling response*/
 		if(pattern[2].matcher(response).matches())/* greeting*/
-		    {	
+		    {	 
+			logger.info("Client logging ..");  
 			/*Display the aquarium*/
-			SwingUtilities.invokeLater(new Runnable(){    
-				@Override
-				public void run() {
-				    new Aquarium().displayGUI(ImagesPath);
-				}
-			    });
+			new Aquarium().displayGUI(ImagesPath);
 		    }
 		else if (pattern[10].matcher(cmd).matches()){/*status*/
 		    status();
@@ -191,19 +198,26 @@ public class Aquarium {
 			    startFish(cmd);
 			}
 		    }
-		    if((pattern[6].matcher(cmd).find())&&(pattern[7].matcher(response).find())){/*log out & bye*/
+		    if((pattern[6].matcher(cmd).find())&&
+		       (pattern[7].matcher(response).find())){/*log out & bye*/
 			if(frame.isDisplayable())
 			    frame.setVisible(false);
 			aquaCon.closeConnection();
 			connected=false;	
+			exec.shutdownNow();
 		    }	
 		}
-		cmd="";
+
+		if(connected != false){
+		    cmd="";
+		}
 	    }
+	    System.exit(0);
 	}catch(IOException e){
 	    System.out.println("No Server!!!");}
     }
     
+
     
 }
 

@@ -6,6 +6,7 @@ public class ReceiveThread extends Thread{
     
     private AquaConnection aquaCon;
     private Aquarium aquarium;
+    private boolean connected = true;
     
     public ReceiveThread(AquaConnection aquaCon){
 	this.aquaCon = aquaCon;
@@ -19,7 +20,7 @@ public class ReceiveThread extends Thread{
 
 	try{
 	    
-	    while(true){
+	    while(connected == true){
 		
 		String response = aquaCon.receive();
 		String cmd = aquaCon.getCmd(); // Ne marche pas : Décalage
@@ -50,6 +51,9 @@ public class ReceiveThread extends Thread{
 		    // System.out.println(response);
 		    aquaCon.setResponse(response);
 		    aquaCon.setCmd("");
+		    if (response.charAt(0) == 'b'){
+			connected =  false;			    
+		    }
 		    synchronized(aquaCon){
 			//	System.out.println("Redonne la main2");
 			aquaCon.notify();
