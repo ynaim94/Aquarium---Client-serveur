@@ -43,6 +43,7 @@ You can also load any alternative fish tank by using load command. If the fish t
 ##The client
 
 The file "affichage.cfg" contains the default values for the configuration variables.
+The source files are in /view/src/. 
 **To build the client** : 
 
 	> cd /view/
@@ -55,3 +56,8 @@ The file "affichage.cfg" contains the default values for the configuration varia
   _in the /view/ folder_
 
 **Fish names** : happyFish madFish smilingFish bubbleFish lostFish oldFish sneakingFish
+
+**In the folder /view/build/** :
+     aqua/ contains the executables
+     fishes/ contains the images of the fishes
+     a log file generated with the execution
