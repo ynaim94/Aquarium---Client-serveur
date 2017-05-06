@@ -42,7 +42,7 @@ public class AquaConnection extends Thread{
     }
     public void openConnection(InetAddress address, int port) throws IOException{
 	socket=new Socket(address,port);
-}
+    }
     public void closeConnection()throws IOException{
 	socket.close();
     }
@@ -57,7 +57,6 @@ public class AquaConnection extends Thread{
 
     
     public void setCmd(String cmd){
-	//	System.out.println(cmd);
 	this.cmd = cmd;
     }
 

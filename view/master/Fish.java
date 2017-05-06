@@ -11,15 +11,14 @@ public class Fish implements Cloneable{
     int dimensions[];
     int started;
     int imageIndex;
-    int actualPosition[];
+    double actualPosition[];
     
-  public Fish(String name, ArrayList<Integer> initPosition, int mobilityTime, int dimensions[],int started, int actualPosition[]){
+    public Fish(String name, ArrayList<Integer> initPosition, int mobilityTime, int dimensions[],int started, double actualPosition[]){
 	this.name=name;
 	this.initPosition=new ArrayList<>(initPosition);
 	this.dimensions=Arrays.copyOf(dimensions, 2);
 	this.mobilityTime=mobilityTime;
 	this.started = started;
-	this.actualPosition=new int[2];
 	this.actualPosition=actualPosition;
     }
 

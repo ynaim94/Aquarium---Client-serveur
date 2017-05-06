@@ -11,7 +11,6 @@ public class ClientLog {
 	
 		
 	
-	// public static void init
 	ClientLog(){
 		try {
 			fh=new FileHandler("ClientLog.log", false);
@@ -22,7 +21,6 @@ public class ClientLog {
 		logger.setUseParentHandlers(false);
 		logger.addHandler(fh);
 		logger.setLevel(Level.CONFIG);
-		//	    logger.config("Client logging ..");  
 
 	}
 	
