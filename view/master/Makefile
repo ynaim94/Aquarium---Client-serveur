@@ -1,12 +1,13 @@
-all : aquarium
+all : 
+	javac -d build -cp build  src/*.java
 
-run:
-	cd build/ && java aqua.Aquarium ../affichage.cfg
 
-aquarium:  Fish.java Config.java AquaConnection.java AquaPanel.java ClientLog.java Parser.java  Aquarium.java ReceiveThread.java
-	   javac -d build -cp build  $^
+run: all
+	cd build/ && java aqua.Aquarium ../src/affichage.cfg
+
+
 clean: 
-	rm -r build/aqua
+	rm -rf build/aqua build/*.log*
 
 
 
