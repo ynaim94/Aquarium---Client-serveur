@@ -226,6 +226,7 @@ public class Aquarium {
 		    rcvThread.start();
 		    exec = Executors.newSingleThreadScheduledExecutor();
 		    exec.scheduleAtFixedRate(new Runnable() {
+	   
 			    @Override
 			    public void run() {
 				logger.info("ping "+ port);
@@ -236,7 +237,7 @@ public class Aquarium {
 				    System.out.println("IOException \n");
 				}
 			    }
-			}, 0, 5, TimeUnit.SECONDS);
+			}, 0, conf.getDtv(), TimeUnit.SECONDS);
 		    
 		    connected=true;
 		}
